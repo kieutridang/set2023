@@ -1,0 +1,1 @@
+const Thuy = "Ahihi do ngoc";
