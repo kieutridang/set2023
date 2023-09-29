@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Page</title>
+    <style>
+        body {
+            font-family:'Courier New', Courier, monospace;
+            background-color: #c4b7a6;
+            font-weight: lighter;
+            color: #d4ac6e;
+            margin-top: 10%;
+            padding: 0;
+        }
+
+        .container {
+           
+            width: 25%;
+            height: 100%;
+            margin: 0 auto;
+            padding: 10px 80px 10px;
+            text-align: left;
+            background-color: #4f3222;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
+            border-radius: 5px;
+        }
+
+        h2 {
+            text-align: center;
+            font-weight: bold;
+        }
+        p {
+         text-align: center;
+         font-weight: lighter; 
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 3;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 92%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            border: 0.7px solid;
+            border-radius: 3px;
+            border-color: darkslategray;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            text-align: center;
+            font-size: larger;
+            font-style: bold;
+            font-family:inherit;
+            background-color: #fff2df;
+            color: #e0e2e4;
+            font-style: bold;
+            border:#c2d4dd 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            color: #4f3222;
+        }
+
+        button:hover {
+            background-color:  #3e4444;
+            color: #fff2df;
+            border-color: #3e4444;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form>
+        <h2>Login</h2>
+        <p>Please fill in this form to create an account</p>
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullname" name="fullname" placeholder = 'Ex: Andree Right Hand'>
+                <span class="form-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email" placeholder = 'Ex: example@domain.com'>
+                <span class="form-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username">
+                <span class="form-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password">
+                <span class="form-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="password">Confirm Your Password</label>
+                <input type="password" id="passwordConfirm" name="passwordConfirm">
+                <span class="form-message"></span>
+            </div>
+            <button id="submit-button" type="submit">Signup</button>
+    
+        </form>
+    </div>
+    <script src="../Script/signupPage.js"></script>
+</body>
+</html>
