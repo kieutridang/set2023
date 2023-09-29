@@ -1,1 +1,1 @@
-alert('Login')
+alert('Login ang logi')
