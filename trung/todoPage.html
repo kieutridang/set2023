@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+      <link rel="stylesheet" href="styles/todoPage.css">
+          
+      <title>Sign up Form</title> 
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="title_proj">
+        <img src="assets/images/check-list.png" alt="avatar">
+        <span>To Do App Project</span>
+      </div>
+
+      <div class="info_user">
+        <span class="user_name" id="name"></span>
+        <img src="assets/images/hacker.png" alt="avatar">
+      </div>
+
+	  <input type="button" id="btnLogout" class="btn_logout" value="Logout">
+
+    </div>
+
+	<div class="container_task">
+		<div class="new-task">
+			<input type="text" placeholder="Enter The Task Here..." />
+			<button id="btnAddTask">Add</button>
+			<button id="btnCancelTask">Cancel</button>
+		</div>
+		<div id="lstTasks"></div>
+	</div>
+
+    <script type="module" src="scripts/todoPage.js"></script> 
+
+  </body>
+</html>
