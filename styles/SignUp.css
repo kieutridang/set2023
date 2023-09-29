@@ -1,0 +1,49 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    margin:0px;
+    padding:0px;
+    height: 100vh;
+    background-color: rgb(255, 255, 255);
+    background-image: url('https://i.pinimg.com/originals/07/f2/47/07f247ac6b78a85f8c582dad7be67cbf.jpg');
+    background-size: cover;
+    background-position: auto;
+  }
+  .input-group {
+    margin-bottom: 20px; }
+  
+  .main {
+    background-color:aliceblue;
+    border-radius: 10px;
+    padding:20px;
+    margin: 50px;
+    background: rgba(255, 255, 255, 0.6);
+
+  }
+  .login-header {
+    display:flex;
+    flex-direction: column;
+    text-align: center;
+  }
+  .login-header header {
+    font-family: 'Poopins', sans-serif;
+    color:#333;
+    font-size: 35px;
+  }
+  .login-header p{
+    color:#555;
+  }
+  .input-error {
+    color: red;
+    display:block;
+    font-size: 10px;
+    margin-top: 5px;
+  }
+  
+  button#button-register {
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 10px;
+    border-radius: 10px;
+  }
