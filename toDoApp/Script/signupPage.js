@@ -11,26 +11,20 @@ function redirectToSignin() {
 }
 
 const submitButton = document.getElementById("submit-button");
-submitButton.addEventListener('click',function (event) 
-{
-    event.preventDefault();
-    console.log('Haha');
-    redirectToSignin();
-});
 
 //B2: Verify User Data
 submitButton.addEventListener('click', function () {
-    let isValid = checkValidate();
-
-    if (isValid); 
     let verifyData = {
-    fullNameInput: fullname.value,
-    userNameInput: username.value,
-    emailInput: email.value,
-    passwordInput: password.value,
-    passwordConfirmInput: passwordConfirmInput.value
-}
-    localStorage.setItem('data', JSON.stringify(verifyData));
+        fullNameInput: fullname.value,
+        userNameInput: username.value,
+        emailInput: email.value,
+        passwordInput: password.value,
+        passwordConfirmInput: passwordConfirmInput.value
+    }
+    let oldData = JSON.parse(localStorage.getItem('users')) || []
+    oldData.push(verifyData);
+    localStorage.setItem('users', JSON.stringify(oldData));
 
-        window.location.href = "login.html";
-})
+    // window.location.href = "login.html";
+});
+

@@ -9,7 +9,7 @@ btn.addEventListener('click', function () {
     let isValid = checkValidate();
 
     if (isValid) {
-        alert('Gửi đăng ký thành công');
+        alert('Congrats!Register successfully');
         var data = {
             fullname: fullname.value,
             username: username.value,
