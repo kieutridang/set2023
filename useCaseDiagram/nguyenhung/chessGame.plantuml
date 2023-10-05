@@ -1,0 +1,40 @@
+@startuml chessGame
+actor "Player" as player
+actor "System" as system
+
+rectangle ChessGame {
+    ' player
+    usecase "Start Game" as startGame
+    usecase "restart" as restart
+    usecase "Exit game" as exitGame
+    usecase "Flip board" as flipBoard
+    usecase "Move piece" as movePiece
+    usecase "End game" as endGame
+    usecase "promote pawn" as PromotePawn
+    usecase "check mate" as checkMate
+    usecase "resign" as resign
+    usecase "Check" as check
+
+    ' system 
+    usecase "draw" as draw
+    usecase "time" as time
+    usecase "result" as result
+}
+
+player --> startGame
+player --> restart
+player --> exitGame
+player --> flipBoard
+player --> movePiece
+player --> endGame
+player --> PromotePawn
+player --> resign
+
+system --> draw
+system --> time
+system --> result
+system --> check
+system --> checkMate
+
+
+@enduml
