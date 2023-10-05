@@ -1,0 +1,24 @@
+@startuml chess
+actor "Player" as player
+rectangle ChessGame {
+    usecase "Start game" as start
+    usecase "Restart game" as restart
+    usecase "Flip board" as flip
+    usecase "Move piece" as move
+    usecase "Exit game" as exit
+    usecase "Claim a draw" as draw
+    usecase "Resign" as resign
+
+}
+
+
+player --> start
+player --> move
+player --> restart
+player --> flip
+player --> exit
+player --> draw
+player --> resign
+
+
+@enduml
