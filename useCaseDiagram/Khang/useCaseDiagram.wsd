@@ -1,0 +1,49 @@
+@startuml
+title Chessgmae
+
+:Admin: as admin
+:User: as user
+
+
+
+user -> (Start)
+user --> (Move)
+user ---> (Timeout)
+user -> (Draw)
+user -> (Win)
+user -> (Lose)
+user -> (Reset)
+user -> (internetProblem)
+user -> (createUserAccount)
+user -> (deleteUserAccount)
+user -> (login)
+user -> (logout)
+user -> (joinGame)
+user -> (update)
+user -> (piecePicked)
+user -> (eatPiece)
+user -> (pieceIsEaten)
+user -> (upgradeUserAccountPro)
+user -> (changeBoardColor)
+user -> (validMove)
+user -> (invalidMove)
+user -> (leaveGame)
+
+top to bottom direction
+admin -> (Start)
+admin-> (Reset)
+admin -> (internetProblem)
+admin -> (createUserAccount)
+admin -> (deleteUserAccount)
+admin-> (login)
+admin-> (logout)
+admin -> (update)
+admin -> (upgradeUserAccountPro)
+admin -> (changeBoardColor)
+admin-> (createAdminAccount)
+admin-> (deleteAdminAccount)
+admin-> (upgradeAccountPro)
+admin-> (blockAccount)
+admin-> (setupAdminAccount)
+
+@enduml
