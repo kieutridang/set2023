@@ -1,1 +1,0 @@
-alert('Login ang logi')
