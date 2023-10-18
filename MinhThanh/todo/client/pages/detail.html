@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detail | Alien</title>
+    <link rel="stylesheet" href="../styles/detail.css" />
+    <link
+      rel="shortcut icon"
+      href="../assets/favicon.ico"
+      type="image/x-icon"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+    />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="header">
+        <div class="logo">
+          <a href="index.html"
+            ><img src="../assets/LogoSVG.svg" alt="logo"
+          /></a>
+        </div>
+        <div class="header__welcome">
+          Welcome <span id="welcome-username"></span> to Alien's Todo
+        </div>
+        <button id="logout-button" class="logout">Log out</button>
+      </div>
+      <div class="wrapper-content">
+        <div class="content">
+          <h2 class="content__title" id="project-name"></h2>
+          <div class="create-task">
+            <p>Let's create and complete all the tasks here</p>
+            <div>
+              <input
+                type="text"
+                class="create-task__input"
+                id="create-task__input"
+                placeholder="Task content"
+              />
+              <button class="button-small" id="create-task__button">
+                Create
+              </button>
+            </div>
+          </div>
+          <table class="table-task" id="table-task"></table>
+        </div>
+        <div class="right-sidebar">
+          <div class="sidebar__header">
+            <h2>Members</h2>
+            <button class="invite-member button-small" id="open-modal-invite">
+              Invite +
+            </button>
+          </div>
+          <div class="sidebar__content">
+            <ul class="members" id="members"></ul>
+          </div>
+        </div>
+      </div>
+      <div class="modal-invite" id="modal-invite">
+        <div class="modal-invite-content">
+          <header class="modal-invite__header">
+            <span onclick="handleCloseModal()" class="close-modal">&times;</span>
+            <h3>Invite member</h3>
+          </header>
+          <div class="modal__main-content">
+            <p>Enter username of member you want invite right here</p>
+            <input
+              type="text"
+              placeholder="Enter username"
+              class="invite-input"
+              id="invite-input"
+            />
+            <p class="message-error" id="message-error"></p>
+          </div>
+          <footer class="modal-invite__footer">
+            <button class="button-small" id="confirm-invite">Invite+</button>
+            <button class="button-small cancel-invite" onclick="handleCloseModal()">
+              Cancel
+            </button>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <script src="../scripts/checkLogged.js"></script>
+    <script src="../scripts/logOut.js"></script>
+    <script src="../scripts/detail.js"></script>
+  </body>
+</html>
