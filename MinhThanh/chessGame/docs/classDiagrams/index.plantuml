@@ -56,33 +56,27 @@ class Piece as "piece"{
 
 class Pawn as "pawn"{
     promote()
-    checkRuleMove()
 }
 
 class Queen as "queen"{
-    checkRuleMove()
 }
 
 class King as "king"{
     isCastling
 
     castling()
-    checkRuleMove()
 }
 
 class Rock as "rock"{
     isCastling
 
     castling()
-    checkRuleMove()
 }
 
 class Bishop as "bishop"{
-    checkRuleMove()
 }
 
 class Knight as "knight"{
-    checkRuleMove()
 }
 
 Piece --|> Pawn
