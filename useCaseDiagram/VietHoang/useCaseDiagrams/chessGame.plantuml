@@ -1,0 +1,48 @@
+@startuml chess
+
+left to right direction
+actor Player as player
+actor Admin as admin
+actor Piece as piece
+
+package ChessGame {
+    usecase (Start game) as start
+    usecase (End game) as end
+    usecase (Restart game) as restart
+    usecase (Exit game) as exit
+    usecase (Flip board) as flip
+    usecase (Resign) as resign
+    usecase (Time out) as time
+}
+
+package SettingAccount {
+    usecase (Create account) as create
+    usecase (Delete account) as delete
+    usecase (Block account) as block
+}
+
+package PieceAction {
+    usecase (Move piece) as move
+    usecase (Promote Pawn) as promote
+    usecase (Capture piece) as capture
+    usecase (Check) as check
+    usecase (Checkmate) as mate
+}
+
+player --> start
+player --> end
+player --> restart
+player --> exit
+player --> flip
+player --> resign
+player --> time
+admin --> create
+admin --> delete
+admin --> block
+piece --> move
+piece --> promote
+piece --> capture
+piece --> check
+piece --> mate
+
+@enduml
