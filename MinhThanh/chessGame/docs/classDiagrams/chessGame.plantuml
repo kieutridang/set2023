@@ -1,10 +1,10 @@
 @startuml
 title chessGame
-class User as "user"{
-    id: string
-    username: string
-    password: string
-    point: number
+class User {
+    -id: string
+    -username: string
+    -password: string
+    -point: number
 
     startGame()
     leaveGame()
@@ -17,7 +17,7 @@ class User as "user"{
 
 }
 
-class Admin as "admin"{
+class Admin {
     id: string
     username: string
     password: string
@@ -40,7 +40,7 @@ enum PieceName{
 
 
 
-class Piece as "piece"{
+class Piece {
     name: PieceName
     color: string
     position: string
@@ -79,12 +79,12 @@ class Bishop as "bishop"{
 class Knight as "knight"{
 }
 
-Piece --|> Pawn
-Piece --|> Queen
-Piece --|> King
-Piece --|> Rock
-Piece --|> Bishop
-Piece --|> Knight
+Piece <|-- Pawn
+Piece <|-- Queen
+Piece <|-- King
+Piece <|-- Rock
+Piece <|-- Bishop
+Piece <|-- Knight
 
 
 

@@ -7,12 +7,12 @@ const user = {
   username: {
     type: "string",
     required: true,
-    unique: true,
+    // unique: true,
   },
   email: {
     type: "string",
     required: true,
-    unique: true,
+    // unique: true,
   },
   fullName: {
     type: "string",

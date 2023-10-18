@@ -4,22 +4,20 @@ const { handleError } = require("../helpers");
 
 function Repository(name, schema) {
   this.schema = schema;
-  // this.find = function find() {
-  //     return fileSystemDataSource.readCollection(DBCollections[name])
-  //         .then(data => {
-  //             if (where && Array.isArray(data) && data.length > 0) {
-  //                 const filteredData = data.filter(item =>
-  //                     Object.keys(where).every(field => where[field] === item[field])
-  //                 )
-  //                 return filteredData
-  //             }
-  //             return data
-  //         })
-  //         .catch(err => {
-  //             handleError(err, 'repositories/base.repository.js', 'find')
-  //             return []
-  //         })
-  // }
+  this.find = function find() {
+    return (
+      fileSystemDataSource
+        .readCollection(DBCollections[name])
+        // return fileSystemDataSource.readCollection(DBCollections[user]) = fileSystemDataSource.readCollection('users')
+        .then((data) => {
+          return data;
+        })
+        .catch((err) => {
+          handleError(err, "repositories/baseRepository.js", "find");
+          return [];
+        })
+    );
+  };
 
   // this.filterById = function findById(id) {
   //     return fileSystemDataSource.readCollection(DBCollections[name])
@@ -47,8 +45,7 @@ function Repository(name, schema) {
 
   this.createOne = function createOne(newItem) {
     return new Promise((resolve, reject) => {
-      // let validationError = validateEntityFields(this.schema, newItem)
-      let validationError = false;
+      let validationError = validateEntityFields(this.schema, newItem);
       if (validationError) {
         reject(validationError);
       } else {
@@ -62,14 +59,8 @@ function Repository(name, schema) {
             if (validationError) {
               throw new Error(validationError);
             }
-            latestID =
-              existingItems.length > 0
-                ? Number(existingItems[existingItems.length - 1].id) + 1
-                : 0;
-            existingItems.push({
-              id: latestID,
-              ...newItem,
-            });
+
+            existingItems.push(newItem);
             return fileSystemDataSource
               .updateCollection(DBCollections[name], existingItems)
               .catch((err) => {

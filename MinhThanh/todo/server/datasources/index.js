@@ -1,12 +1,14 @@
-const FileSystemDataSource = require('./file-system.datasource')
+const FileSystemDataSource = require("./fileSystem");
 
-const database = './database'
+const database = "./database";
 
 const DBCollections = {
-    user: 'users',
-    task: 'tasks'
-}
+  user: "users",
+  task: "tasks",
+  project: "projects",
+};
 
-const fileSystemDataSource = new FileSystemDataSource(database)
+const fileSystemDataSource = new FileSystemDataSource(database);
+// Example: const fileSystemDataSource = new FileSystemDataSource('./database');
 
-module.exports = { DBCollections, fileSystemDataSource }
+module.exports = { DBCollections, fileSystemDataSource };
