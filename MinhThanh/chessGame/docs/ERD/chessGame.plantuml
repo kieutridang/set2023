@@ -1,0 +1,30 @@
+@startuml
+title chessGame
+
+entity "User"{
+    id: string
+
+    username: string
+    password: string
+
+    point: number
+
+}
+
+entity "Admin"{
+    id: string
+    username: string
+    password: string
+}
+
+entity "Piece"{
+    name: emun
+    color: string
+    position: string
+}
+
+
+
+
+
+@enduml
