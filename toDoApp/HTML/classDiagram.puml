@@ -1,0 +1,44 @@
+@startuml
+
+class Admin {
+  userName: string
+  password: string
+  phoneNumber: number
+  --
+  signUp()
+  logIn()
+  updateProfile()
+  deleteAccount()
+  blockAccount()
+}
+
+
+class Piece {
+coordinate: string
+color: string
+
+--
+timeOut()
+win()
+draw()
+lose()
+captureOtherPieces()
+beingCaptured()
+check()
+inCheck()
+castling()
+promotePawn()
+}
+
+class User {
+userName: string
+password: string
+phoneNumber: number
+--
+startGame()
+changeTheme()
+endGame()
+restartGame()
+leaveGame()
+}
+@enduml

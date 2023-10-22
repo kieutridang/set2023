@@ -1,0 +1,45 @@
+@startuml
+
+entity "User" as user {
+  *id: number <<generated>>;
+  --
+  *fullName: text
+  'description: text
+  *username: string
+  'description: at least 8 characters with letters and numbers
+  *password: string
+  'description: at least 8 characters with letters, numbers, and {hyphen | underscore | at sign | dot}
+}
+
+entity "Project" as project {
+  *id: number <<generated>>
+  --
+  *projectId: number
+  --
+  *name: string
+  description: text
+}
+
+entity "Task" as task {
+  *id: number <<generated>>
+  --
+  *projectId: number
+  --
+  *authorId: number
+  *assigneeId: number
+  *description: text
+  dateCreated: date
+  deadline: date
+}
+
+entity "Project_User" as projectUser{
+  *id: number
+  --
+  *userId: number
+  *projectId: number
+}
+project ||..o{ task
+user ||..o{ task
+projectUser ||..o{ project
+projectUser ||..o{ user
+@enduml

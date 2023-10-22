@@ -23,7 +23,7 @@
             background-color: #4f3222;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
             border-radius: 5px;
-        }
+        };
 
         h2 {
             text-align: center;
@@ -70,6 +70,20 @@
             border-color: #3e4444;
             border: 2px solid;
         }
+
+        input {
+            display: block;
+            width: 10%;
+            padding: 10px;
+            text-align: right;
+            background-color: #fff2df;
+            color: #e0e2e4;
+            font-style: bold;
+            border:#c2d4dd 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            color: #4f3222;
+        }
     </style>
 </head>
 <body>
@@ -77,7 +91,7 @@
         <form action="/action_page.php"></form>
         <h2>Login</h2>
             <div class="form-group">
-                <label for="username">Email or Username *</label>
+                <label for="username">Username *</label>
                 <input type="text" id="username" name="username">
             </div>
             <div class="form-group">
