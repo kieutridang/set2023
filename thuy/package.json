@@ -1,0 +1,20 @@
+{
+  "name": "fullstack-backend-zero",
+  "version": "1.0.0",
+  "description": "An example MVC NodeJS app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon --config nodemon.json"
+  },
+  "author": "Thuy NP",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
+    "nodemon": "^2.0.4"
+  },
+  "keywords": [
+    "fullstack-backend-zẻo"
+  ]
+}
