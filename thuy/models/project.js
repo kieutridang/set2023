@@ -22,6 +22,6 @@ const project = {
         type: 'date',
         required: false
     },
+}
 
 module.exports = project
-}

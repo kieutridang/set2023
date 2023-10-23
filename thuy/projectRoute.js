@@ -1,29 +1,13 @@
 const url = require('url')
-const { handleNotFound, getTasks, addTask, editTask, deleteTask, signUp, signIn, pingWithAuth, createProject, findProject, updateProject, removeProject } = require('./controllers')
-const { authenticate, parseRequestBody } = require('./middlewares')
+const { findProject, updateProject, removeProject } = require('./helpers')
 const { handleError } = require('./helpers')
 
-const routes = {
-    '/sign-up': { 'POST': { controller: signUp, middlewares: [parseRequestBody] } },
-    '/sign-in': { 'POST': { controller: signIn, middlewares: [parseRequestBody] } },
-    '/add-task': { 'POST': { controller: addTask, middlewares: [parseRequestBody] } },
-    '/update-task': { 'POST': { controller: editTask, middlewares: [parseRequestBody] } },
-    '/delete-task': { 'POST': { controller: deleteTask, middlewares: [parseRequestBody] } },
-    '/get-task': { 'POST': { controller: getTasks }, middlewares: [parseRequestBody] },
-    "/project": {
-      POST: { controller: createProject, middlewares: [parseRequestBody] },
-      GET: { controller: findProject, middlewares: [parseRequestBody] },
-      PATCH: { controller: updateProject, middlewares: [parseRequestBody] },
-      DELETE: { controller: removeProject, middlewares: [parseRequestBody] },
-    },
-    '/ping-with-auth': {
-        'GET': {
-            controller: pingWithAuth,
-            middlewares: [authenticate]
-        }
-    }
-}
 
+const routes = {
+    '/find-project': { 'POST': { controller: findProject, middlewares: [parseRequestBody] } },
+    '/update-project': { 'POST': { controller: updateProject, middlewares: [parseRequestBody] } },
+    '/remove-project': { 'POST': { controller: removeProject, middlewares: [parseRequestBody] } },
+}
 
 function route(req) {
     const parsedUrl = url.parse(req.url, true)

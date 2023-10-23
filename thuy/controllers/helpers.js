@@ -1,7 +1,8 @@
 const crypto = require('crypto')
 const {
     userRepository,
-    taskRepository
+    taskRepository,
+    projectRepository
 } = require('../repositories')
 const { taskModel } = require('../models')
 
@@ -57,17 +58,25 @@ function handleAuthResponse(response, isSuccessful = false) {
     response.end(JSON.stringify(data));
 }
 
-function findProject(id) {
+
+function addProject(project) {
+    const newProject = {
+        projectName: project.projectName
+    }
+    return projectkRepository.createOne(newProject)
+}
+
+function getProject(id) {
     return projectRepository.filterById(id)
 }
 
-function updateProject(project) {
+function editProject(project) {
     return projectRepository.updateOne(project)
 }
 
-function deleteProject(project) {
+function removeProject(project) {
     return projectRepository.removeOne(project)
 }
 
 
-module.exports = { insertUser, verifyUser, handleAuthResponse, findTask, insertTask, updateTask, removeTask, findProject, removeProject, updateProject}
+module.exports = { insertUser, verifyUser, handleAuthResponse, findTask, insertTask, updateTask, removeTask, addProject, getProject, removeProject, editProject}

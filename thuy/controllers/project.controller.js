@@ -1,11 +1,24 @@
 const jwt = require('jsonwebtoken')
-const { handleAuthResponse, findProject, updateProject, removeProject } = require('./helpers')
+const { handleAuthResponse, getProject, editProject, deleteProject, addProject } = require('./helpers')
 const { handleError } = require('../helpers')
 
-
-function editProject(request, response) {
+function createProject(request, response) {
     const project = request.body
-    updateProject(project)
+    addProject(project)
+    .then((addedProject) => {
+        console.log('Log: signUp -> addedProject', addedProject)
+        handleAuthResponse(response, true)
+    })
+    .catch(err => {
+        handleError(err, 'controllers/index.js', 'addProject')
+        handleAuthResponse(response, false)
+        })
+}
+
+
+function updateProject(request, response) {
+    const project = request.body
+    editProject(project)
         .then((editedProject) => {
             console.log('Log: signUp -> editedProject', editedProject)
             handleAuthResponse(response, true)
@@ -16,9 +29,9 @@ function editProject(request, response) {
         })
 }
 
-function deleteProject(request, response) {
+function removeProject(request, response) {
     const project = request.body
-    removeProject(project)
+    deleteProject(project)
         .then((deletedProject) => {
             console.log('Log: signUp -> deletedProject', deletedProject)
             handleAuthResponse(response, true)
@@ -29,21 +42,22 @@ function deleteProject(request, response) {
         })
 }
 
-function addProject(request, response) {
+function findProject(request, response) {
     const project = request.body
-    insertProject(project)
+    getProject(project)
         .then((insertedProject) => {
             console.log('Log: signUp -> insertedProject', insertedProject)
             handleAuthResponse(response, true)
         })
         .catch(err => {
-            handleError(err, 'controllers/index.js', 'addProject')
+            handleError(err, 'controllers/index.js', 'getProject')
             handleAuthResponse(response, false)
         })
 }
 
 module.exports = {
-    addProject,
-    editProject,
-    deleteProject,
+    createProject,
+    findProject,
+    updateProject,
+    removeProject
 }
