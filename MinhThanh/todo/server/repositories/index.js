@@ -1,7 +1,9 @@
-const userRepository = require('./userRepository')
-const taskRepository = require('./task.repository')
+const userRepository = require("./userRepository");
+const projectRepository = require("./projectRepository");
+const projectUserRepository = require("./projectUserRepository");
 
 module.exports = {
-    userRepository,
-    taskRepository
-}
+  userRepository,
+  projectRepository,
+  projectUserRepository,
+};

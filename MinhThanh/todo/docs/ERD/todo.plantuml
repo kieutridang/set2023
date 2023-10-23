@@ -2,7 +2,7 @@
 
 
 
-entity "user" as user {
+entity "user"  {
     *username : string
     *email: string
     *phoneNumber : string
@@ -10,32 +10,34 @@ entity "user" as user {
     *fullName : string
     *password : string
 }
-entity "project-user" as projectUser {
+entity "projectsUsers" {
     *userId : string
     *projectId : string
     *userRole: string
 }
 
 
-entity "project" as project {
-    *id : string <<generated>>
+entity "project" {
+    id : String <<generated>>
     --
-    *author: string
+    name : String 
+    creator: String
     done: boolean
+    quantityOfTasks: Number
 }
 
 
-entity "task" as task {
+entity "task" {
     *id : string <<generated>>
     --
-    *author: string
+    *creator: string
     *name: string
     *done: boolean
     *projectId: string
 }
 
-user ||..o{ projectUser
-project ||..o{ projectUser
+user ||..o{ projectsUsers
+project ||..o{ projectsUsers
 project ||..o{ task
 
 

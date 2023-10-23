@@ -1,4 +1,4 @@
-const user = {
+const userModel = {
   id: {
     type: "string",
     required: true,
@@ -7,12 +7,12 @@ const user = {
   username: {
     type: "string",
     required: true,
-    // unique: true,
+    unique: true,
   },
   email: {
     type: "string",
     required: true,
-    // unique: true,
+    unique: true,
   },
   fullName: {
     type: "string",
@@ -28,4 +28,4 @@ const user = {
   },
 };
 
-module.exports = user;
+module.exports = userModel;

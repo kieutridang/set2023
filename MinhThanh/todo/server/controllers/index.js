@@ -1,6 +1,6 @@
 const url = require('url')
-const userControllers = require('./userController')
-const taskControllers = require('./taskController')
+const userController = require('./userController')
+const projectController = require('./projectController')
 
 function handleNotFound(req, res) {
     const parsedUrl = url.parse(req.url, true)
@@ -15,6 +15,6 @@ function pingWithAuth(req, res) {
 module.exports = {
     handleNotFound,
     pingWithAuth,
-    userControllers,
-    taskControllers
+    userController,
+    projectController,
 }
