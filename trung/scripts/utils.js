@@ -3,6 +3,7 @@ export let infoUserData = {
     "email": "",
     "userName": "",
     "password": "",
+    "projects": []
 };
 
 export let infoLoginData = {
