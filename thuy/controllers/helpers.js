@@ -63,7 +63,8 @@ function addProject(project) {
     const newProject = {
         projectName: project.projectName
     }
-    return projectkRepository.createOne(newProject)
+    console.log(newProject);
+    return projectRepository.createOne(newProject)
 }
 
 function getProject(id) {

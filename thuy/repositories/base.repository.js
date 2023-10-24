@@ -48,12 +48,13 @@ function Repository(name, schema) {
 
     this.createOne = function createOne(newItem) {
         return new Promise((resolve, reject) => {
-            let validationError = validateEntityFields(this.schema, newItem)
+            let validationError
+            // let validationError = validateEntityFields(schema, newItem)
             if (validationError) {
                 reject(validationError)
             } else {
                 resolve(this.find().then(existingItems => {
-                    validationError = validateEntityUniqueness(this.schema, newItem, existingItems)
+                    // validationError = validateEntityUniqueness(this.schema, newItem, existingItems)
                     if (validationError) {
                         throw new Error(validationError)
                     }

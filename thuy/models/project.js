@@ -1,27 +1,18 @@
 const project = {
-   
     projectName: {
         type: 'string',
         required: true,
         unique: true
     },
     owner: {
-        type: 'number',
-        required: true
-    },
-    tasks: {
-        type: 'array',
-        required: true
+        type: 'number'
     },
     description: {
         type: 'string',
-        required: false
     },
-
-    dateCreated: {
-        type: 'date',
-        required: false
-    },
+    id: {
+        type: 'number'
+    }
 }
 
 module.exports = project

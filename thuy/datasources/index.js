@@ -4,7 +4,8 @@ const database = './database'
 
 const DBCollections = {
     user: 'users',
-    task: 'tasks'
+    task: 'tasks',
+    project: 'project'
 }
 
 const fileSystemDataSource = new FileSystemDataSource(database)
