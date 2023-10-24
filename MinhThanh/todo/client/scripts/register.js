@@ -158,14 +158,6 @@ function setErrorMessage(element, message) {
   errorSpan.innerHTML = message;
 }
 
-function setLocalStorage(key, value) {
-  const data = localStorage.getItem(key);
-  console.log(data);
-}
-function getLocalStorage(key) {
-  const data = localStorage.getItem(key);
-  console.log(data);
-}
 function validateAlreadyExists(field, key, data) {
   let isValid = true;
   if (!data) {

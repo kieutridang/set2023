@@ -33,6 +33,38 @@ function createProject(request, response) {
     });
 }
 
+function editProject(request, response) {
+  const project = request.body;
+  console.log(project);
+  projectRepository
+    .updateOne(project)
+    .then(() => {
+      console.log("Edited project");
+      handleAuthResponse(response, true);
+    })
+    .catch((err) => {
+      handleError(err, "projectController", "editedProject");
+      handleAuthResponse(response, false);
+    });
+}
+
+function deleteProject(request, response) {
+  const projectId = request.body;
+  projectRepository.deleteById(projectId);
+  projectUserRepository
+    .deleteById(projectId)
+    .then(() => {
+      console.log("Delete project");
+      handleAuthResponse(response, true);
+    })
+    .catch((err) => {
+      handleError(err, "projectController", "deleteProject");
+      handleAuthResponse(response, false);
+    });
+}
+
 module.exports = {
   createProject,
+  editProject,
+  deleteProject,
 };

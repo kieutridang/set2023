@@ -1,5 +1,8 @@
 const { DBCollections, fileSystemDataSource } = require("../datasources");
-const { validateEntityFields, validateEntityUniqueness } = require("./validateField");
+const {
+  validateEntityFields,
+  validateEntityUniqueness,
+} = require("./validateField");
 const { handleError } = require("../helpers");
 
 class Repository {
@@ -63,6 +66,7 @@ class Repository {
               existingItems.push(newItem);
               return fileSystemDataSource
                 .updateCollection(DBCollections[name], existingItems)
+                .then(() => newItem)
                 .catch((err) => {
                   handleError(
                     err,
@@ -75,49 +79,61 @@ class Repository {
         }
       });
     };
-    // this.updateOne = function updateOne(newItem) {
-    //     return new Promise((resolve, reject) => {
-    //         let validationError = validateEntityFields(this.schema, newItem)
-    //         if (validationError) {
-    //             reject(validationError)
-    //         } else {
-    //             resolve(this.find().then(existingItems => {
-    //                 validationError = ''
-    //                 if (validationError) {
-    //                     throw new Error(validationError)
-    //                 }
-    //                 existingItems.forEach(element => {
-    //                     if (element.id == newItem.id)
-    //                         element.taskName = newItem.taskName
-    //                 });
-    //                 return fileSystemDataSource.updateCollection(DBCollections[name], existingItems)
-    //                     .catch(err => {
-    //                         handleError(err, 'repositories/base.repository.js', 'updateOne')
-    //                     })
-    //             }))
-    //         }
-    //     })
-    // }
-    // this.removeOne = function removeOne(newItem) {
-    //     return new Promise((resolve, reject) => {
-    //         let validationError = validateEntityFields(this.schema, newItem)
-    //         if (validationError) {
-    //             reject(validationError)
-    //         } else {
-    //             resolve(this.find().then(existingItems => {
-    //                 validationError = ''
-    //                 if (validationError) {
-    //                     throw new Error(validationError)
-    //                 }
-    //                 existingItems = existingItems.filter(item => item.id != newItem.id)
-    //                 return fileSystemDataSource.updateCollection(DBCollections[name], existingItems)
-    //                     .catch(err => {
-    //                         handleError(err, 'repositories/base.repository.js', 'removeOne')
-    //                     })
-    //             }))
-    //         }
-    //     })
-    // }
+    this.updateOne = function updateOne(newItem) {
+      return new Promise((resolve, reject) => {
+        let validationError = validateEntityFields(this.schema, newItem);
+        if (validationError) {
+          reject(validationError);
+        } else {
+          resolve(
+            this.find().then((existingItems) => {
+              validationError = "";
+              if (validationError) {
+                throw new Error(validationError);
+              }
+
+              const foundIndex = existingItems.findIndex(
+                (element) => element.id === newItem.id
+              );
+
+              existingItems.splice(foundIndex, 1, newItem);
+
+              return fileSystemDataSource
+                .updateCollection(DBCollections[name], existingItems)
+                .catch((err) => {
+                  handleError(
+                    err,
+                    "repositories/base.repository.js",
+                    "updateOne"
+                  );
+                });
+            })
+          );
+        }
+      });
+    };
+    this.deleteById = function removeOne(id) {
+      return new Promise((resolve, reject) => {
+        resolve(
+          this.find().then((existingItems) => {
+            validationError = "";
+            if (validationError) {
+              throw new Error(validationError);
+            }
+            existingItems = existingItems.filter((item) => item.id != id);
+            return fileSystemDataSource
+              .updateCollection(DBCollections[name], existingItems)
+              .catch((err) => {
+                handleError(
+                  err,
+                  "repositories/base.repository.js",
+                  "deleteById"
+                );
+              });
+          })
+        );
+      });
+    };
   }
 }
 

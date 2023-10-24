@@ -13,7 +13,9 @@ function FileSystemDataSource(databasePath = "") {
     return fs
       .readFile(collectionPath)
       .then((data) => {
-        const parsedData = JSON.parse(data) || [];
+        // const parsedData = JSON.parse(data) || [];
+        console.log(data);
+        const parsedData = (!!data) ? JSON.parse(data) : [];
         return parsedData;
       })
       .catch((err) => {

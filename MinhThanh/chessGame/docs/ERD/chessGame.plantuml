@@ -1,29 +1,33 @@
 @startuml
-title chessGame
 
-entity "User"{
+entity Game {
     id: string
-
-    username: string
-    password: string
-
-    point: number
-
+    name: string
+    start_time: datetime
+    end_time: datetime
+    winner: Player
 }
 
-entity "Admin"{
+entity Player {
     id: string
-    username: string
-    password: string
+    name: string
 }
 
-entity "Piece"{
-    name: emun
+entity Piece {
+    id: int
+    type: string
     color: string
-    position: string
+    position: Position
 }
 
+entity Position {
+    x: number
+    y: number
+}
 
+Game||--|{ Player
+Game||--|{ Piece
+Piece ||--|| Position
 
 
 

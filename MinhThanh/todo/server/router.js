@@ -22,6 +22,14 @@ const routes = {
       controller: projectController.createProject,
       middlewares: [parseRequestBody],
     },
+    PATCH: {
+      controller: projectController.editProject,
+      middlewares: [parseRequestBody],
+    },
+    DELETE: {
+      controller: projectController.deleteProject,
+      middlewares: [parseRequestBody],
+    },
   },
 };
 

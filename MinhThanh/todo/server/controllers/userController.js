@@ -9,7 +9,7 @@ function register(request, response) {
   const user = request.body;
 
   const id = "uid" + new Date().getTime();
-  console.log(user.password);
+
   const hashedPassword = user.password
     ? hashPassword(user.password)
     : undefined;

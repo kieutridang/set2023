@@ -1,4 +1,5 @@
 function validateEntityFields(schema, entity) {
+  console.log(entity);
   let validationError = "";
   Object.keys(schema).every((field) => {
     if (schema[field].required && entity[field] === undefined) {
