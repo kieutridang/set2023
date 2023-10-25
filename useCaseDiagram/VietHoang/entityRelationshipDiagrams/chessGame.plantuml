@@ -1,0 +1,79 @@
+@startuml chess
+skinparam linetype ortho
+
+enum TypePiece {
+  KING
+  QUEEN
+  ROOK
+  BISHOP
+  KNIGHT
+  PAWN
+}
+
+enum Result {
+    WIN
+    LOSE
+    DRAW
+}
+
+entity "HistoryMove" as history {
+    *id: number <<generated>>
+    --
+    *piece_id: number <<FK>>
+    --
+    pieceName: TypePiece
+    *coordinate_x: number
+    *coordinate_y: number
+    *time: Datetime
+}
+
+entity "Board" as board {
+    *id: number <<generated>>
+    --
+    *numberOfMove: number
+    result: Result
+    title: String
+    description: String
+}
+
+entity "Player" as player {
+    *id: number <<generated>>
+    --
+    *username: String
+    *password: String
+    isBlocked: Boolean
+    isTurn: Boolean
+    isWhite: Boolean
+    pieceColor: TypePlayer
+}
+
+entity "Piece" as piece {
+    *id: number <<generated>>
+    --
+    *pieceName: TypePiece
+    isCaptured: Boolean
+    isPromoted: Boolean
+    isCastling: Boolean
+}
+
+entity "Admin" as admin {
+    *id: number <<generated>>
+    --
+    *username: String
+    *password: String
+    isAdmin: Boolean
+}
+' prop:
+' time in historymove
+' result in board
+
+' entity HistoryMovePiece
+' entity HistoryMovePosition
+' entity BoardPlayer
+piece }|--|| TypePiece
+board }|--o{ player
+board ||--|| Result
+board ||--|{ piece
+history }|--|{ piece
+
+@enduml
