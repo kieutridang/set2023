@@ -1,0 +1,82 @@
+@startuml chessGame
+' pieces
+class Piece as "piece" {
+    isCaptured : boolean
+    isCheck : boolean
+    ruleMove: string
+    --
+    pick()
+    showValidMove()
+    move()
+    capture()
+    check()
+}
+
+class Pawn as "pawn" {
+    isEnd : boolean
+    --
+    promote()
+}
+
+ class Rock as "rock" {
+    isMove : boolean
+    --
+    castling()
+}
+
+class King as "king" {
+    isMove : boolean
+    isCheck : boolean
+    --
+    Castling()
+}
+
+class Bishop as "bishop" {
+    
+}
+
+class Queen as "queen" {
+
+}
+
+class Knight as "knight"{
+}
+
+' accounts
+class User as "user" {
+    id : number
+    username : string
+    email: string
+    password : string
+    phoneNumber : number
+    --
+    timeOut()
+    resign()
+    offerDraw()
+    leaveGame()
+    startGame()
+    resetGame()
+ }
+
+ class Admin as "admin" {
+    id : number
+    username : string
+    email: string
+    password : string
+    --
+    createUserAccount()
+    deleteUserAccount()
+    createAdminAccount()
+    deleteAdminAccount()
+    blockAccount()
+ }
+
+ Piece --|> Pawn
+ Piece --|> Rock
+ Piece --|> King
+ Piece --|> Queen
+ Piece --|> Knight
+ Piece --|> Bishop
+
+
+@enduml

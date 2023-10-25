@@ -1,0 +1,96 @@
+@startuml
+
+entity "User" as User {
+    *id : number <<generated>>
+    --
+    matchId: number <<FK>> 
+    boardId: number <<FK>>
+    adminBannedId: number <<FK>>
+    --
+    username: string
+    email: string
+    password: string
+    phoneNumber : number
+    color: string
+    canMove: boolean
+    isThinking: boolean
+    totalPositionalScore: number
+}
+
+entity "Admin" as Admin {
+    *id : number <<generated>>
+    --
+    username: string
+    email: string
+    password: string
+}
+
+entity "Piece" as Piece {
+    *id: number <<generated>>
+    --
+    boardId : number <<FK>>
+    --
+    moveRule: string
+    name: string
+    hasMove: boolean
+    place: number
+    isCapture: boolean
+}
+
+entity "ChessBoard" as ChessBoard {
+    *id: number <<generated>>
+    --
+    placePiece: number
+    timeLeft: number
+    result: string
+}
+
+entity "HistoryMovement" as HistoryMovement {
+    *id: number <<generated>>
+    --
+    userId : number <<FK>>
+    pieceId : number <<FK>>
+    --
+    moveFrom: string
+    moveTo: string
+    moveType: string
+    moveScore: number
+    time: datetime
+    isCheck: boolean
+    isCheckmate: boolean
+    isStalemate: boolean
+}
+
+entity "Game" as Game {
+    *id: number <<generated>>
+    --
+    boardId : number <<FK>>
+    --
+    startTime: datetime
+    endTime: datetime
+    result: string
+}
+
+entity "Comment" as Comment {
+    *id: number <<generated>>
+    --
+    userId : number <<FK>>
+    gameId : number <<FK>>
+    --
+    content: string
+    time: datetime
+}
+
+
+
+
+Admin ||--o{ User
+ChessBoard ||--|{ Piece
+ChessBoard ||--|{ User
+Piece ||--|{ HistoryMovement
+User ||--|{ HistoryMovement
+ChessBoard ||--|{ Game
+User ||--{ Comment
+Game ||--{ Comment
+
+@enduml
