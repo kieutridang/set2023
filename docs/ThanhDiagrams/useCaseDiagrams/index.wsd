@@ -1,0 +1,25 @@
+@startuml chess
+actor "User"
+actor "Admin"
+rectangle ChessGame {
+    usecase "Play game" as PlayGame
+    usecase "Login"
+    usecase "Register"
+    usecase "Authentication"
+    usecase "Show error" as ShowError
+    usecase "Setting"
+    usecase "Help"
+    usecase "Manager User" as ManagerUser
+}
+
+User --> Register
+User --> PlayGame
+User --> Setting
+User --> Help
+Login .> Authentication : include
+Register .> Authentication : include
+ShowError .> Login : extends
+ShowError .> Register : extends
+Admin --> ManagerUser
+Admin --|> User
+@enduml
