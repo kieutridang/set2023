@@ -1,0 +1,86 @@
+@startuml
+' hide the spot
+' hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+entity "Admin" as admin {
+  *adminId : number <<generated>>
+  --
+  username: string
+  email: string
+  password: string
+  role: enum
+  avatar: string
+}
+
+entity "Game" as game{
+  *gameId : number <<generated>>
+  --
+  boardId: number <<FK>>
+  whitePlayerId: user <<FK>>
+  blackPlayerId: user <<FK>>
+  --
+  result: boolean
+  time: time
+}
+
+entity "User" as user {
+  *userId : number <<generated>>
+  --
+  gameId: number <<FK>>
+  --
+  avatar: string
+  username: string
+  email: string
+  password: string
+  role: enum
+}
+
+entity "historyMovement" as history {
+  *historyId : number <<generated>>
+  --
+  gameId: number <<FK>>
+  blockId: number <<FK>>
+  --
+  location: string
+}
+
+entity "Board" as board {
+  *boardId : number <<generated>>
+  --
+  gameId: number <<FK>>
+  blockId: number <<FK>>
+  pieceId: number <<FK>>
+  --
+  quantityPiece: number
+  playTurn: User
+
+}
+
+entity "Piece" as piece {
+  *pieceId : number <<generated>>
+  --
+  pieceColor: string
+  location: string
+  role: enum
+  quantity: number
+}
+
+enum "pieceType" as type {
+  pawn
+  king
+  queen
+  rook
+  bishop
+  knight
+}
+
+user ||--o{ game
+game ||--|| board
+board ||--|{ piece
+board ||--|{ history
+piece }|--|| history
+piece }|--|{ type
+@enduml
