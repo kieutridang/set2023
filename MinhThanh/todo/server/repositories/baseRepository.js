@@ -23,17 +23,18 @@ class Repository {
       );
     };
 
-    // this.filterById = function findById(id) {
-    //     return fileSystemDataSource.readCollection(DBCollections[name])
-    //         .then(data => {
-    //             const foundEntity = data.filter(entity => entity.owner == id)
-    //             return foundEntity
-    //         })
-    //         .catch(err => {
-    //             handleError(err, 'repositories/base.repository.js', 'findById')
-    //             return undefined
-    //         })
-    // }
+    this.filterById = function findById(id) {
+        return fileSystemDataSource.readCollection(DBCollections[name])
+            .then(data => {
+                const foundEntity = data.filter(entity => entity.owner == id)
+                return foundEntity
+            })
+            .catch(err => {
+                handleError(err, 'repositories/base.repository.js', 'findById')
+                return undefined
+            })
+    }
+
     this.findById = function findById(id) {
       return fileSystemDataSource
         .readCollection(DBCollections[name])
@@ -46,6 +47,7 @@ class Repository {
           return undefined;
         });
     };
+
     this.createOne = function createOne(newItem) {
       return new Promise((resolve, reject) => {
         let validationError = validateEntityFields(this.schema, newItem);
@@ -79,6 +81,7 @@ class Repository {
         }
       });
     };
+
     this.updateOne = function updateOne(newItem) {
       return new Promise((resolve, reject) => {
         let validationError = validateEntityFields(this.schema, newItem);
@@ -112,6 +115,7 @@ class Repository {
         }
       });
     };
+    
     this.deleteById = function removeOne(id) {
       return new Promise((resolve, reject) => {
         resolve(

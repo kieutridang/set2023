@@ -1,5 +1,21 @@
 @startuml
 
+entity User{
+    id: string
+    username: string
+    password: string
+    point: number
+}
+
+entity Admin{
+    id: string
+    username: string
+    password: string
+    point: number
+}
+
+
+
 entity Game {
     id: string
     name: string
@@ -24,10 +40,12 @@ entity Position {
     x: number
     y: number
 }
-
+User ||--o{ Game
+Admin||--o{ Game
 Game||--|{ Player
 Game||--|{ Piece
 Piece ||--|| Position
+User||--||Player
 
 
 
