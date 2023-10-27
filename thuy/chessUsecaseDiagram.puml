@@ -1,0 +1,39 @@
+@startuml
+
+left to right direction
+actor Piece as p
+rectangle PieceAction as pa{
+  usecase "CapturePiece" as cp
+  usecase "MovePiece" as mp
+  usecase "Promote" as pr
+  usecase "Check" as check
+}
+
+actor User as us
+rectangle AccountSetting as accs {
+  usecase "CreateAccount" as ca
+  usecase "UpdateAccount" as ua
+  usecase "DeleteAccount" as da
+}
+rectangle GameControl as gc {
+  usecase "StartGame" as sg
+  usecase "RestartGame" as rg
+  usecase "PauseGame" as pg
+  usecase "CancelGame" as cg
+}
+
+p --> cp
+p --> mp
+p --> pr
+p --> check
+' us --> sg
+' us --> rg
+' us --> pg
+' us --> cg
+' us --> ca
+' us --> ua
+' us --> da
+
+us --> gc
+us --> accs
+@enduml

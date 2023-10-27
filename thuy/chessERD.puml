@@ -1,0 +1,71 @@
+@startuml Chess ERD
+
+entity "Player" {
+id: number <<generated, PK>>
+--
+*username: string
+*password: string
+*email: string
+}
+
+entity "Game" {
+id: number <<generated, PK>>
+--
+whitePlayerId: number
+blackPlayerId: number
+--
+result: string
+status: string
+timeStarted: time
+}
+
+entity "Piece" {
+id: number <<generated ,PK>>
+--
+type: string
+color: string
+--
+isKing: boolean
+isQueen: boolean
+isKnight: boolean
+isBishop: boolean
+isRock: boolean
+isPawn: boolean
+}
+
+entity "MovementHistory" {
+id: number <<generated, PK>>
+--
+gameId: number <<FK>>
+moveId: number <<FK>>
+playerId: number <<FK>>
+pieceId: number <<FK>>
+statusId: number <<FK>>
+--
+moveRecoredAt: time
+moveCreatedBy: user
+}
+
+entity "Move" {
+id: number <<generated, PK>>
+--
+timeRecorded: time
+takenBy: user
+}
+
+entity "GameStatus" {
+id: number <<generated, PK>>
+--
+isPaused: boolean
+isContinued: boolean
+isCompleted: boolean
+whoseTurnNext: user
+}
+
+MovementHistory ||--|{ GameStatus 
+MovementHistory ||--|{ Piece 
+Game ||--|| MovementHistory
+Game ||--|{ Move 
+Move ||--|| Piece
+Move ||--|| Player
+@enduml
