@@ -30,14 +30,12 @@ class AuthController {
     userRepository
       .createOne(newUser)
       .then(() => {
-        console.log("Log: register -> insertedUser");
-        response.statusCode = 201;
-        response.setHeader("Content-Type", "application/json");
-        response.end("Sign up successfully.");
+        console.log("Log: Registered");
+        handleAuthResponse(response, 201, true, "sign up successfully");
       })
       .catch((error) => {
         handleError(error, "controllers/index.js", "Register");
-        handleAuthResponse(response, false, error.toString());
+        handleAuthResponse(response, 402, false, error.toString());
       });
   }
 

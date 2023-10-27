@@ -5,12 +5,17 @@ function hashPassword(password) {
   return hash.update(password).digest("hex");
 }
 
-function handleAuthResponse(response, statusCode, isSuccessful = false, message = "") {
+function handleAuthResponse(
+  response,
+  statusCode,
+  isSuccessful = false,
+  message = ""
+) {
   const data = {
     status: isSuccessful ? "success" : "fail",
-
     message,
   };
+  response.statusCode = statusCode;
   response.setHeader("Content-Type", "application/json");
   response.end(JSON.stringify(data));
 }

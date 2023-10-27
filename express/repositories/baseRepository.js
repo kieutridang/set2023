@@ -9,17 +9,15 @@ class Repository {
   constructor(name, schema) {
     this.schema = schema;
     this.find = function find() {
-      return (
-        fileSystemDataSource
-          .readCollection(DBCollections[name])
-          .then((data) => {
-            return data;
-          })
-          .catch((err) => {
-            handleError(err, "repositories/baseRepository.js", "find");
-            return [];
-          })
-      );
+      return fileSystemDataSource
+        .readCollection(DBCollections[name])
+        .then((data) => {
+          return data;
+        })
+        .catch((err) => {
+          handleError(err, "repositories/baseRepository.js", "find");
+          return [];
+        });
     };
 
     this.filterById = function findById(id) {
@@ -55,28 +53,32 @@ class Repository {
           reject(validationError);
         } else {
           resolve(
-            this.find().then((existingItems) => {
-              validationError = validateEntityUniqueness(
-                this.schema,
-                newItem,
-                existingItems
-              );
-              if (validationError) {
-                throw new Error(validationError);
-              }
+            this.find()
+              .then((existingItems) => {
+                validationError = validateEntityUniqueness(
+                  this.schema,
+                  newItem,
+                  existingItems
+                );
+                if (validationError) {
+                  throw new Error(validationError);
+                }
 
-              existingItems.push(newItem);
-              return fileSystemDataSource
-                .updateCollection(DBCollections[name], existingItems)
-                .then(() => newItem)
-                .catch((err) => {
-                  handleError(
-                    err,
-                    "repositories/baseRepository.js",
-                    "createOne"
-                  );
-                });
-            })
+                existingItems.push(newItem);
+                return fileSystemDataSource
+                  .updateCollection(DBCollections[name], existingItems)
+                  .then(() => newItem)
+                  .catch((err) => {
+                    handleError(
+                      err,
+                      "repositories/baseRepository.js",
+                      "createOne"
+                    );
+                  });
+              })
+              .catch((error) => {
+                console.log("error: " + error);
+              })
           );
         }
       });
