@@ -1,5 +1,49 @@
 @startuml chessGame
+left to right direction
+actor "Player" as player
+actor "System" as system
 
+rectangle ChessGame {
+    ' player
+    usecase "Sign in" as signIn
+    usecase "Sign up" as signUp
+    usecase "Join room" as joinRoom
+    usecase "Start game" as startGame
+    usecase "End game" as endGame
+    usecase "Exit game" as exitGame
+    usecase "Resign" as resign
+    usecase "Flip board" as flipBoard
+    usecase "Move piece" as movePiece
+
+    ' system 
+    usecase "Timeout" as timeout
+    usecase "Game result" as gameResult
+    usecase "Validate move" as validateMove
+    usecase "Calculate score" as calculateScore
+    usecase "Show move history" as showMoveHistory
+    usecase "Checkmate" as checkmate
+
+}
+
+player --> signIn
+player --> signUp
+player --> joinRoom
+player --> startGame
+player --> endGame
+player --> exitGame
+player --> resign
+player --> flipBoard
+player --> movePiece
+
+system --> timeout
+system --> gameResult
+system --> validateMove
+system --> calculateScore
+system --> showMoveHistory
+system --> checkmate
 
 
 @enduml
+
+
+
