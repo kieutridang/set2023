@@ -1,0 +1,64 @@
+@startuml
+
+entity "Player" as Player {
+    *id : number <<generated>>
+    --
+    username: string
+    password: string
+}
+
+
+entity "Piece" as Piece {
+    *id: number <<generated>>
+    --
+    name: TypePiece
+    isCapture: boolean
+    isPromoted: boolean
+    isCastling: boolean
+}
+
+
+entity "Board" as Board {
+    *id: number <<generated>>
+    --
+    result: Result
+    whitePlayerId: Number
+    blackPlayerId: Number
+}
+
+entity "HistoryMovement" as HistoryMovement {
+    *id: number <<generated>>
+    --
+    boarId: number <<FK>>
+    userId : number <<FK>>
+    pieceId : number <<FK>>
+    --
+    coordinate_x: number
+    coordinate_y: number
+    time: datetime
+}
+
+
+entity "BoardPlayer" as BoardPlayer{
+    *id: number <<generated>>
+    --
+    boardId: number <<FK>>
+    userId: number <<FK>>
+}
+
+enum Result {
+    WIN
+    LOSE
+    DRAW
+}
+
+
+Board ||--|| Result
+Board ||--|{ Piece
+Board ||--|{ Player
+Piece ||--|{ HistoryMovement
+Player ||--|{ HistoryMovement
+Player ||--|{ BoardPlayer
+Board ||--|{ BoardPlayer
+
+@enduml

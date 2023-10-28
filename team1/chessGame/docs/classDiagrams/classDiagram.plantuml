@@ -1,0 +1,87 @@
+@startuml chess
+
+left to right direction
+enum TypePiece {
+  KING
+  QUEEN
+  ROOK
+  BISHOP
+  KNIGHT
+  PAWN
+}
+
+enum Pawn {
+    isPromoted: boolean
+    --
+    promote()
+}
+
+enum Rock {
+    isMoved: Boolean
+    --
+    castling()
+}
+
+
+
+enum King {
+    isMoved: Boolean
+    isChecked: Boolean
+    --
+    castling()
+}
+
+enum TypePlayer {
+    WHITE
+    BLACK
+}
+
+enum Result {
+    WIN
+    LOSE
+    DRAW
+}
+
+class Piece {
+    name: TypePiece
+    isCapture: Boolean
+    position: Array
+    isPick: Boolean
+    color: TypePlayer
+    --
+    showValidMove()
+    capture()
+    check()
+}
+
+class Player {
+    userName: String
+    password: String
+    isTurn: Boolean
+    color: TypePlayer
+    --
+    timeOut()
+    resign()
+    exitGame()
+    startGame()
+    getResult(): Result
+    --
+    pickPiece()
+    showValidMove()
+    move()
+    capture()
+    check()
+}
+
+
+
+Piece -> King
+Piece -> Pawn
+Piece -> Rock
+Piece -> TypePiece
+Piece -> TypePlayer
+Player -> TypePlayer
+Player -> Result
+
+
+@enduml

@@ -9,11 +9,11 @@ rectangle ChessGame {
     usecase "Sign up" as signUp
     usecase "Join room" as joinRoom
     usecase "Start game" as startGame
-    usecase "End game" as endGame
     usecase "Exit game" as exitGame
     usecase "Resign" as resign
     usecase "Flip board" as flipBoard
     usecase "Move piece" as movePiece
+    usecase "Check" as Check
 
     ' system 
     usecase "Timeout" as timeout
@@ -29,11 +29,11 @@ player --> signIn
 player --> signUp
 player --> joinRoom
 player --> startGame
-player --> endGame
 player --> exitGame
 player --> resign
 player --> flipBoard
 player --> movePiece
+player --> Check
 
 system --> timeout
 system --> gameResult
