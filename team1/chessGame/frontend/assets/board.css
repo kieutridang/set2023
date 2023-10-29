@@ -103,3 +103,38 @@ body {
 .chessboard div:nth-child(56) ~ div:nth-child(-2n + 63) {
     background-color: #B58863;
 }
+
+/* Responsive styles */
+@media only screen and (max-width: 768px) {
+    :root {
+      --board-size: 20rem;
+      --block-size: calc(var(--board-size)/8);
+    }
+    
+    .chessboard {
+      width: var(--board-size);
+      height: var(--board-size);
+      border-width: 0.3125rem;
+    }
+    
+    .order-block-width, .order-block-height {
+      font-size: 0.75rem;
+    }
+  }
+  
+  @media only screen and (max-width: 480px) {
+    :root {
+      --board-size: 16rem;
+      --block-size: calc(var(--board-size)/8);
+    }
+    
+    .chessboard {
+      width: var(--board-size);
+      height: var(--board-size);
+      border-width: 0.25rem;
+    }
+    
+    .order-block-width, .order-block-height {
+      font-size: 0.625rem;
+    }
+  }
