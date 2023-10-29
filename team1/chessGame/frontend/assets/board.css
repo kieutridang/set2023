@@ -60,6 +60,7 @@ body {
     line-height: normal;
     position: absolute;
     right: calc(3rem/16);
+    top: 0;
     color: black;
 }
 
@@ -68,6 +69,27 @@ body {
 }
 
 .order-block-width.even {
+    color: #F0D9B5;
+}
+
+.order-block-height {
+    font-family: Roboto;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    position: absolute;
+    left: calc(3rem/16);
+    bottom: 0;
+    bottom: calc(3rem/16);
+    color: black;
+}
+
+.order-block-height.odd {
+    color: #B58863;
+}
+
+.order-block-height.even {
     color: #F0D9B5;
 }
 
