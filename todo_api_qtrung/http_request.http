@@ -1,0 +1,29 @@
+POST http://localhost:3000/api/register-user
+Content-Type: application/json
+
+{
+  "email": "trung@gmail.aa",
+  "password": "Trung@12345"
+}
+
+###
+
+POST http://localhost:3000/api/login-user
+Content-Type: application/json
+
+{
+  "email": "trung@gmail.com",
+  "password": "Trung@12345"
+}
+
+###
+
+POST http://localhost:3000/api/add-task
+Content-Type: application/json
+
+{
+  "taskName": "do homework",
+  "isCompleted": true,
+}
+
+
