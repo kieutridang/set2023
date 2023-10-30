@@ -36,3 +36,12 @@ ol, ul {
     min-height: 5rem;
 }
 
+.footer__create {
+    margin-top: 3rem;
+    font-size: 1.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.5;
+}
+
