@@ -20,21 +20,14 @@ ol, ul {
 
 /* 1 rem = 16px */
 
-body {
-    background: rgb(255, 255, 255);
-    display: grid;
-    place-items: center;
-    min-height: 100vh;
-    font-size: 1rem;
-}
-
 :root{
-    --board-size: 34rem;
+    --board-size: 43rem;
     --block-size: calc(var(--board-size)/8);
 
 }
 
 .chessboard {
+  float: right;
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     grid-template-rows: repeat(8, 1fr);
@@ -43,6 +36,8 @@ body {
     border: black solid 0.625rem;
     background: #333333;
     position: relative;
+    flex: 1;
+    grid-column: 1 / span 8;
 }
 
 .chessboard__block {
