@@ -1,5 +1,5 @@
 .history-move {
-    grid-column: 8.1 / span 3;
+    grid-column: 9.1 / span 3;
     height: var(--board-size);
     width: 23rem;
     background-color: #F0D9B5;

@@ -37,7 +37,7 @@ ol, ul {
 }
 
 .footer__create {
-    margin-top: 3rem;
+    padding: 3rem 0;
     font-size: 1.8rem;
     display: flex;
     justify-content: center;
