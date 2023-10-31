@@ -55,11 +55,6 @@ enum Result {
     DRAW
 }
 
-class Position {
-    x: Integer
-    y: Integer
-}
-
 class Piece {
     pieceName: TypePiece
     isCaptured: Boolean
