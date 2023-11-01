@@ -1,9 +1,16 @@
-  .fa-solid {
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-  }
+.fa-solid {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+}
 
-  .pieces {
-    position: absolute;
-    font-size: 4.5rem;
-  }
+.pieces {
+  position: absolute;
+  font-size: 4.5rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.black-pieces {
+  color: black;
+}
