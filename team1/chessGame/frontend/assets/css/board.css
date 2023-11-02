@@ -27,6 +27,7 @@ ol, ul {
 }
 
 .chessboard {
+  margin-left: 9rem;
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     grid-template-rows: repeat(8, 1fr);
@@ -35,8 +36,6 @@ ol, ul {
     border: black solid 0.625rem;
     background: #333333;
     position: relative;
-    flex: 1;
-    grid-column: 1 / span 8;
 }
 
 .chessboard__block {
@@ -44,6 +43,17 @@ ol, ul {
     aspect-ratio: 1;
     background: #F0D9B5;
     position: relative;
+}
+
+.chessboard div:nth-child(-2n + 8),
+.chessboard div:nth-child(8) ~ div:nth-child(-2n + 15),
+.chessboard div:nth-child(16) ~ div:nth-child(-2n + 24),
+.chessboard div:nth-child(24) ~ div:nth-child(-2n + 31),
+.chessboard div:nth-child(32) ~ div:nth-child(-2n + 40),
+.chessboard div:nth-child(40) ~ div:nth-child(-2n + 47),
+.chessboard div:nth-child(48) ~ div:nth-child(-2n + 56),
+.chessboard div:nth-child(56) ~ div:nth-child(-2n + 63) {
+    background-color: #B58863;
 }
 
 .order-block-width {
@@ -87,16 +97,6 @@ ol, ul {
     color: #F0D9B5;
 }
 
-.chessboard div:nth-child(-2n + 8),
-.chessboard div:nth-child(8) ~ div:nth-child(-2n + 15),
-.chessboard div:nth-child(16) ~ div:nth-child(-2n + 24),
-.chessboard div:nth-child(24) ~ div:nth-child(-2n + 31),
-.chessboard div:nth-child(32) ~ div:nth-child(-2n + 40),
-.chessboard div:nth-child(40) ~ div:nth-child(-2n + 47),
-.chessboard div:nth-child(48) ~ div:nth-child(-2n + 56),
-.chessboard div:nth-child(56) ~ div:nth-child(-2n + 63) {
-    background-color: #B58863;
-}
 
 /* Responsive styles */
 @media only screen and (max-width: 768px) {
