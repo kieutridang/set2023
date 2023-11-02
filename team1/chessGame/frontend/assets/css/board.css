@@ -21,7 +21,7 @@ ol, ul {
 /* 1 rem = 16px */
 
 :root{
-    --board-size: 43rem;
+    --board-size: 40rem;
     --block-size: calc(var(--board-size)/8);
 
 }
