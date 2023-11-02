@@ -69,13 +69,15 @@ ol, ul {
 
 .content {
     background: linear-gradient(to bottom right, #cca75c, #f3e2b0);
-    display: grid;
     grid-gap: 0px;
     place-items: center;
     font-size: 1rem;
     grid-template-columns: repeat(8, 1fr) repeat(4, minmax(0, 1fr));
     padding: 2rem 0;
     padding-top: 6rem;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
 }   
 
 .footer {
