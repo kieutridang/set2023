@@ -1,18 +1,4 @@
-import {arrInfoPieces} from "../untils/untils.js"
-
-const idColor = {
-    WHITE: 0,
-    BLACK: 1
-};
-
-const idPiece = {
-    PAWN: 0,
-    ROOK: 1,
-    KNIGHT: 2,
-    BISHOP: 3,
-    QUEEN: 4,
-    KING: 5
-}
+import {arrInfoPieces, colorPiece} from "../untils/untils.js"
 
 function renderBoardGame() {
     const chessboard = document.getElementById("chessBoard");
@@ -32,8 +18,8 @@ function renderTextBoardGame() {
     for (let row = 1; row < 9; row++) {
         const numberIndex = document.getElementById(`${1}${row}`);
 
-        row % 2 === 0 ? numberIndex.innerHTML = `<span class="numWhite">${counter--}</span>`
-                      : numberIndex.innerHTML = `<span class="numBlack">${counter--}</span>`
+        row % 2 === 0 ? numberIndex.innerHTML += `<span class="numWhite">${counter--}</span>`
+                      : numberIndex.innerHTML += `<span class="numBlack">${counter--}</span>`
     }
     
     const bufferText = ["A", "B", "C", "D", "E", "F", "G", "H"];
@@ -45,23 +31,21 @@ function renderTextBoardGame() {
             continue;
         }
 
-        col % 2 === 0 ? textIndex.innerHTML = `<span class="textBlack">${bufferText[col - 1]}</span>`
-                      : textIndex.innerHTML = `<span class="textWhite">${bufferText[col - 1]}</span>`
+        col % 2 === 0 ? textIndex.innerHTML += `<span class="textBlack">${bufferText[col - 1]}</span>`
+                      : textIndex.innerHTML += `<span class="textWhite">${bufferText[col - 1]}</span>`
     }
 }
 
 function renderPiece() {
-    const square = document.getElementById(arrInfoPieces[idColor.WHITE][idPiece.PAWN].position);
+    for (let i = 0; i < 2; i++) {
+        for (let index = 0; index < arrInfoPieces[i].length; index++) {
+            const square = document.getElementById(`${arrInfoPieces[i][index].x}${arrInfoPieces[i][index].y}`);
+            square.innerHTML += `<img class="piece" src="../assets/images/pieces/${arrInfoPieces[i][index].color}-${arrInfoPieces[i][index].rank}.svg">`
 
-    square.innerHTML += `<img class="piece" src="../assets/images/pieces/${arrInfoPieces[idColor.WHITE][idPiece.PAWN].color}-${arrInfoPieces[idColor.WHITE][idPiece.PAWN].name}.svg">`
-    
-    // console.log(arrInfoPieces[idColor.WHITE][idPiece.PAWN].color);
-    // console.log(arrInfoPieces[idColor.WHITE][idPiece.PAWN].name);
-    
-    
-    // console.log("source file: ", `../assets/images/pieces/${arrInfoPieces[idColor.WHITE][idPiece.PAWN].color}-${arrInfoPieces[idColor.WHITE][idPiece.PAWN].name}.svg`) 
+        }
+    }
 }
 
 renderBoardGame();
-renderTextBoardGame();
+// renderTextBoardGame();
 renderPiece();
