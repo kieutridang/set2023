@@ -33,23 +33,23 @@ body {
     background-color: #B7C0D8;
 }
 
-/* .numWhite {
+.numWhite {
     color: #E8EDF9;  
     /* padding-top: 0px; */
     transform: translate(-280%, -120%);
 } */
 
-/* .numBlack {
+.numBlack {
     color: #B7C0D8;
     transform: translate(-280%, -120%);
-} */
+}
 
-/* .textWhite {
+.textWhite {
     color: #E8EDF9;  
     transform: translate(200%, 120%);
-} */
+}
 
-/* .textBlack {
+.textBlack {
     color: #B7C0D8;
     transform: translate(200%, 120%);
-} */
+}
