@@ -1,0 +1,55 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translate(0%, 10%);
+}
+
+.chessboard {
+    display: grid;
+    grid-template-columns: repeat(8, 68.5px);
+    grid-template-rows: repeat(8, 72px);
+}
+
+.square {
+    width: 68.5px;
+    height: 72px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.squareWhite {
+    background-color: #E8EDF9;
+}
+
+.squareBlack {
+    background-color: #B7C0D8;
+}
+
+.numWhite {
+    color: #E8EDF9;  
+    /* padding-top: 0px; */
+    transform: translate(-280%, -120%);
+} */
+
+.numBlack {
+    color: #B7C0D8;
+    transform: translate(-280%, -120%);
+}
+
+.textWhite {
+    color: #E8EDF9;  
+    transform: translate(200%, 120%);
+}
+
+.textBlack {
+    color: #B7C0D8;
+    transform: translate(200%, 120%);
+}
