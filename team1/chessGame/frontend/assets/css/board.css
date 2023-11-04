@@ -45,8 +45,13 @@ ol, ul {
     position: relative;
 }
 
+.chessboard__block.current-position {
+    opacity: 0.5;
+}
+
 .chessboard__block.valid-move {
     opacity: 0.5;
+    transition: opacity 0.3s ease;
 }
 
 .chessboard__block.valid-move::before {

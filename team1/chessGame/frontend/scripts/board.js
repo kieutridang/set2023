@@ -105,8 +105,61 @@ chessboard.addEventListener('click', (e) => {
 
 
 function showValidateMove(piece) {
-    console.log(piece.classList.contains("fa-chess-pawn"));
-    
+
+    //remove valid-move and current-position
+    const blocks = document.querySelectorAll('.chessboard__block.valid-move');
+    blocks.forEach(block => block.classList.remove('valid-move'));
+
+    const currentPositionBlocks = document.querySelectorAll('.chessboard__block.current-position');
+    currentPositionBlocks.forEach(block => block.classList.remove('current-position'));
+
+    //remove pick
+    const pick = document.querySelectorAll('.pieces.pick');
+    pick.forEach(pick => pick.classList.remove('pick'));
+
+
+    //handle các trường hợp đặc biệt
+    if (piece.classList.contains("fa-chess-pawn") && piece.classList.contains("black-pieces")) {
+        const currentPosition = parseInt(piece.parentElement.dataset.order);
+        piece.classList.add('pick');
+
+        const oneStepForward = currentPosition + 8;
+        const twoStepsForward = currentPosition + 16;
+
+        const currentPositionBlock = document.querySelector(`.chessboard__block[data-order='${currentPosition}']`);
+        const blockOneStepForward = document.querySelector(`.chessboard__block[data-order='${oneStepForward}']`);
+        const blockTwoStepsForward = document.querySelector(`.chessboard__block[data-order='${twoStepsForward}']`);
+
+        if (currentPositionBlock) {
+            currentPositionBlock.classList.add('current-position');
+        }
+
+        if (blockOneStepForward) {
+            blockOneStepForward.classList.add('valid-move');
+        }
+        if (blockTwoStepsForward) {
+            blockTwoStepsForward.classList.add('valid-move');
+        }
+    }
+
+    if (piece.classList.contains("fa-chess-pawn") && piece.classList.contains("white-pieces")) {
+        const currentPosition = parseInt(piece.parentElement.dataset.order);
+        piece.classList.add('pick');
+
+
+        const oneStepForward = currentPosition - 8;
+        const twoStepsForward = currentPosition - 16;
+
+        const blockOneStepForward = document.querySelector(`.chessboard__block[data-order='${oneStepForward}']`);
+        const blockTwoStepsForward = document.querySelector(`.chessboard__block[data-order='${twoStepsForward}']`);
+
+        if (blockOneStepForward) {
+            blockOneStepForward.classList.add('valid-move');
+        }
+        if (blockTwoStepsForward) {
+            blockTwoStepsForward.classList.add('valid-move');
+        }
+    }
 }
 
 function validateMove(piece, from, to) {
@@ -119,6 +172,10 @@ function validateMove(piece, from, to) {
     // move piece
     //}
     return Boolean;
+}
+
+function movePiece(piece, from, to) {
+    // move piece
 }
 
 function showMoveHistory() {

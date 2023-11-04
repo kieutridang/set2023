@@ -27,7 +27,7 @@
 }
 
 .pieces.pick {
-  animation: shake 3s; 
+  animation: shake 2.5s; 
   animation-iteration-count: infinite; 
 }
 
