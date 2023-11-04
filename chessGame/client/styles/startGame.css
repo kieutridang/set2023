@@ -1,0 +1,213 @@
+.arrow-big-right-lines-icon {
+    position: relative;
+    width: 62.2px;
+    height: 62.2px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .left-icon {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .text {
+    position: relative;
+    color: white;
+    font-size: 35px;
+    line-height: 60px;
+    font-weight: 600;
+  }
+  .label,
+  .right-icon {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .label {
+    display: flex;
+    padding: 0 15.544535636901855px;
+  }
+  .right-icon {
+    display: none;
+  }
+
+  .button,
+  .button1,
+  .button2,
+  .button3 {
+    border-radius: 15.54px;
+    background-color: #7b61ff;
+    width: 635px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 10.36302375793457px;
+    box-sizing: border-box;
+  }
+  .button1,
+  .button2,
+  .button3 {
+    background-color: #7b61ff;
+  }
+  .button:hover {
+    background-color: #45339e;
+  }
+  .button1:hover {
+    background-color: #45339e;
+  }
+  .button2:hover {
+    background-color: #45339e;
+  }
+  .button3:hover {
+    background-color: #45339e;
+  }
+  .button:active {
+    background-color: #584b9b;
+  }
+  .button1:active {
+    background-color: #584b9b;
+  }
+  .button2:active {
+    background-color: #584b9b;
+  }
+  .button3:active {
+    background-color: #584b9b;
+  }
+  .button-parent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 380px;
+    height: 440px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 31.09px;
+  }
+  .index-time {
+    display: flex;
+    position: absolute;
+    align-items: flex-end;
+    justify-content: flex-end;
+    top: 500px;
+    left: 470px;
+    color: black
+  }
+  .frame-wrapper {
+    position: relative;
+    width: 380px;
+    height: 440px;
+  }
+  .cover-child,
+  .cover-inner {
+    position: absolute;
+    box-sizing: border-box;
+  }
+  .cover-inner {
+    top: 300px;
+    left: 992px;
+    border-radius: 42.96px;
+    background-color: var(--white);
+    width: 721px;
+    height: 400px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 42.95616912841797px;
+  }
+  .cover-child {
+    top: 0;
+    left: 140px;
+    border: 1px solid var(--color-black);
+    width: 1640px;
+    height: 960px;
+    display: none;
+  }
+  .chess-by-team {
+    position: absolute;
+    top: 50px;
+    left: 574px;
+    font-size: 76.34px;
+    font-family: var(--font-poppins);
+    color: #7b61ff;
+    text-align: left;
+  }
+  .info-square-rounded-icon {
+    position: relative;
+    width: 122px;
+    height: 117px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .left-icon4,
+  .music-icon {
+    position: absolute;
+    top: 39px;
+  }
+  .left-icon4 {
+    left: 59px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .music-icon {
+    left: 1667px;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+  }
+  .image-2-icon {
+    position: absolute;
+    margin-bottom: 50px;
+    top: 220px;
+    left: 200px;
+    width: 620px;
+    height: 620px;
+    object-fit: cover;
+  }
+  .cover {
+    position: relative;
+    background-color: #f6f8fa;
+    width: 100%;
+    height: 900px;
+    overflow: hidden;
+    text-align: center;
+    font-size: 36.27px;
+    color: var(--white);
+    font-family: var(--font-lato);
+  }
+
+  body {
+    margin: 0;
+    line-height: normal;
+  }
+  
+  :root {
+    /* fonts */
+    --font-poppins: Poppins;
+    --font-lato: Lato;
+  
+    /* font sizes */
+    --font-size-17xl-3: 36.3px;
+  
+    /* Colors */
+    --color-black: #000;
+    --white: #fff;
+    --info-main: #17a2b8;
+    --secondary-main: #0e5ab4;
+    --warning-main: #fbbc05;
+    --primary-main: #00953b;
+  
+    /* Paddings */
+    --padding-2xs-4: 10.4px;
+    --padding-base-5: 15.5px;
+  
+    /* Border radiuses */
+    --br-base-5: 15.5px;
+  }
+  
