@@ -45,6 +45,27 @@ ol, ul {
     position: relative;
 }
 
+.chessboard__block.valid-move {
+    opacity: 0.5;
+}
+
+.chessboard__block.valid-move::before {
+  content: "";
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  background: #4b1b4b;
+  border: #f09400;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+
+
 .chessboard div:nth-child(-2n + 8),
 .chessboard div:nth-child(8) ~ div:nth-child(-2n + 15),
 .chessboard div:nth-child(16) ~ div:nth-child(-2n + 24),
