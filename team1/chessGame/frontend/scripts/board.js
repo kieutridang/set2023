@@ -146,12 +146,16 @@ function showValidateMove(piece) {
         const currentPosition = parseInt(piece.parentElement.dataset.order);
         piece.classList.add('pick');
 
-
         const oneStepForward = currentPosition - 8;
         const twoStepsForward = currentPosition - 16;
 
+        const currentPositionBlock = document.querySelector(`.chessboard__block[data-order='${currentPosition}']`);
         const blockOneStepForward = document.querySelector(`.chessboard__block[data-order='${oneStepForward}']`);
         const blockTwoStepsForward = document.querySelector(`.chessboard__block[data-order='${twoStepsForward}']`);
+
+        if (currentPositionBlock) {
+            currentPositionBlock.classList.add('current-position');
+        }
 
         if (blockOneStepForward) {
             blockOneStepForward.classList.add('valid-move');
