@@ -69,39 +69,44 @@ content.appendChild(chessboard);
     }
 
     function renderChessBoard(board) {
-        for (let i = 0; i < 8; i++) {
-            for (let j = 0; j < 8; j++) {
-
-                // Check if the block is odd or even
-                const isOdd = (i + j) % 2;
-                const piece = board[i][j];
-
-                // Generate the block
-                generateBlock(i * 8 + j, piece);
-            }
+        for (let i = 0; i < 64; i++) {
+            // Check if the block is odd or even
+            const isOdd = i % 2;
+            const piece = board[i];
+    
+            // Generate the block
+            generateBlock(i, piece);
         }
     }
 
 const board = [
-    ["Rook-black", "Knight-black", "Bishop-black", "Queen-black", "King-black", "Bishop-black", "Knight-black", "Rook-black"],
-    ["Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black"],
-    [null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null],
-    ["Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white"],
-    ["Rook-white", "Knight-white", "Bishop-white", "Queen-white", "King-white", "Bishop-white", "Knight-white", "Rook-white"]
+    "Rook-black", "Knight-black", "Bishop-black", "Queen-black", "King-black", "Bishop-black", "Knight-black", "Rook-black",
+    "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black",
+    null, null, null, null, null, null, null, null,
+    null, null, null, null, null, null, null, null,
+    null, null, null, null, null, null, null, null,
+    null, null, null, null, null, null, null, null,
+    "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white",
+    "Rook-white", "Knight-white", "Bishop-white", "Queen-white", "King-white", "Bishop-white", "Knight-white", "Rook-white"
 ];
-
 
 // Render the chess board
 renderChessBoard(board);
 
+chessboard.addEventListener('click', (e) => {
+    if (e.target.classList.contains('pieces')) {
+        showValidateMove(e.target);
+    }
+
+    if (e.target.classList.contains('chessboard__block')) {
+        console.log(e.target.dataset.order);
+    }
+} )
 
 
 function showValidateMove(piece) {
-    //var result = validateMove(piece) ? true : false;
-    //return result;
+    console.log(piece.classList.contains("fa-chess-pawn"));
+    
 }
 
 function validateMove(piece, from, to) {
