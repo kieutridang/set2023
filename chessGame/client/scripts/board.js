@@ -58,8 +58,8 @@ function renderPiece() {
     }
 }
 
-function highlightCurrentSquare(id) {
-    document.getElementById(id).classList.add("hightlightCurrentSquare");
+function highlightCurrentPosition(id) {
+    document.getElementById(id).classList.add("highlightSquare");
 }
 
 renderBoardGame();

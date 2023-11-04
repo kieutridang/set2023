@@ -32,8 +32,8 @@ body {
 .squareBlack {
     background-color: #b7c0d8;
 }
-.hightlightCurrentSquare {
-    background-color: var(--hightlight-square);
+.highlightSquare {
+    background-color: var(--highlight-square);
 }
 
 .numWhite {
