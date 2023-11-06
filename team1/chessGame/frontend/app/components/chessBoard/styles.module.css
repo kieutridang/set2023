@@ -1,0 +1,90 @@
+.chessBoard {
+    margin-left: 9rem;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    width: 40rem;
+    height: 40rem;
+    background: #333333;
+    position: relative;
+}
+
+
+.block {
+    width: calc(40rem / 8);
+    aspect-ratio: 1;
+    background: #F0D9B5;
+    position: relative;
+    background-clip: padding-box; 
+    box-shadow: 0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    
+  }
+
+.chessBoard div:nth-child(-2n + 8),
+.chessBoard div:nth-child(8) ~ div:nth-child(-2n + 15),
+.chessBoard div:nth-child(16) ~ div:nth-child(-2n + 24),
+.chessBoard div:nth-child(24) ~ div:nth-child(-2n + 31),
+.chessBoard div:nth-child(32) ~ div:nth-child(-2n + 40),
+.chessBoard div:nth-child(40) ~ div:nth-child(-2n + 47),
+.chessBoard div:nth-child(48) ~ div:nth-child(-2n + 56),
+.chessBoard div:nth-child(56) ~ div:nth-child(-2n + 63) {
+    background-color: #B58863;
+}
+
+.pieces {
+    position: absolute;
+    font-size: 3.7rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0.3rem 1.3rem; 
+  }
+  
+  .blackPieces {
+    color: black;
+  }
+  .whitePieces {
+    color: white;
+  }
+
+
+  .orderBlockWidth {
+    font-family: Roboto;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    position: absolute;
+    right: calc(3rem/16);
+    top: 0;
+    color: black;
+}
+
+.orderBlockWidthOdd {
+    color: #B58863;
+}
+
+.orderBlockWidthEven {
+    color: #F0D9B5;
+}
+
+.orderBlockHeight {
+    font-family: Roboto;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    position: absolute;
+    left: calc(3rem/16);
+    bottom: 0;
+    bottom: calc(3rem/16);
+    color: black;
+}
+
+.orderBlockHeightOdd {
+    color: #B58863;
+}
+
+.orderBlockHeightEven {
+    color: #F0D9B5;
+}
