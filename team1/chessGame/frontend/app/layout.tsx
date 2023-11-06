@@ -7,7 +7,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
 
 import { config } from "@fortawesome/fontawesome-svg-core";
-import { faChessBoard, faEllipsis, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons'
+import { faChessBoard, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons'
 config.autoAddCss = false; 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -35,7 +35,9 @@ export default function RootLayout({
                 <FontAwesomeIcon icon={faEllipsisVertical} className={styles.navAccounts} />
             </div>
         </header>
+
         {children}
+        
         <footer className={styles.footer}>
              <h1 className={styles.footerCreate}>By team 1 SET 2023</h1>
         </footer>
