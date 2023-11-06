@@ -8,7 +8,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    transform: translate(0%, 10%);
+    /* transform: translate(0%, 10%); */
 }
 
 .chessboard {
@@ -26,30 +26,32 @@ body {
 }
 
 .squareWhite {
-    background-color: #E8EDF9;
+    background-color: #e8edf9;
 }
 
 .squareBlack {
-    background-color: #B7C0D8;
+    background-color: #b7c0d8;
+}
+.highlightSquare {
+    background-color: var(--highlight-square);
 }
 
 .numWhite {
-    color: #E8EDF9;  
+    color: #e8edf9;
     /* padding-top: 0px; */
     transform: translate(-280%, -120%);
-} */
-
-.numBlack {
-    color: #B7C0D8;
+}
+*/ .numBlack {
+    color: #b7c0d8;
     transform: translate(-280%, -120%);
 }
 
 .textWhite {
-    color: #E8EDF9;  
+    color: #e8edf9;
     transform: translate(200%, 120%);
 }
 
 .textBlack {
-    color: #B7C0D8;
+    color: #b7c0d8;
     transform: translate(200%, 120%);
 }
