@@ -1,0 +1,33 @@
+.historyMove {
+    height: 40rem;
+    width: 23rem;
+    background-color: #F0D9B5;
+    position: relative;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    align-items: center;
+    border: black solid 0.625rem;
+  }
+
+  .time {
+    padding: 0.5rem 7rem;
+    font-family: Roboto;
+    font-size: 3rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    color: black;
+}
+
+.timeWhitePlayer {
+    background: linear-gradient(to bottom right, #F0D9B5, #E6B87C);
+    color: #333;
+}
+
+.timeBlackPlayer {
+    background: linear-gradient(to bottom right, #E6B87C, #F0D9B5);
+    color: #333;
+  }
+
+  
