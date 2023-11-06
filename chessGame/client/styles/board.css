@@ -11,7 +11,7 @@ body {
     /* transform: translate(0%, 10%); */
 }
 
-.chessboard {
+.chessBoard {
     display: grid;
     grid-template-columns: repeat(8, 68.5px);
     grid-template-rows: repeat(8, 72px);
@@ -23,35 +23,58 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
-.squareWhite {
+.whiteSquare {
     background-color: #e8edf9;
 }
 
-.squareBlack {
+.blackSquare {
     background-color: #b7c0d8;
 }
 .highlightSquare {
     background-color: var(--highlight-square);
 }
 
-.numWhite {
+.piece{
+    z-index: 2;
+}
+
+.whiteNumber {
     color: #e8edf9;
-    /* padding-top: 0px; */
     transform: translate(-280%, -120%);
 }
-*/ .numBlack {
+*/ .blackNumber {
     color: #b7c0d8;
     transform: translate(-280%, -120%);
 }
 
-.textWhite {
+.whiteText {
     color: #e8edf9;
     transform: translate(200%, 120%);
 }
 
-.textBlack {
+.blackText {
     color: #b7c0d8;
     transform: translate(200%, 120%);
+}
+.point {
+    position: absolute;
+    background-color: var(--primary);
+    margin: 0 auto;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    z-index: 1;
+}
+.bigPoint{
+    position: absolute;
+    background-color: var(--primary);
+    margin: 0 auto;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    z-index: 3;
+    opacity: 0.4;
 }
