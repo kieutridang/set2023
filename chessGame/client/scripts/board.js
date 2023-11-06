@@ -46,6 +46,48 @@ function renderPiece() {
     }
 }
 
+function renderShowVaildMove(currPosition, targetPosition) {
+    for (let index = 0; index < targetPosition.xTarget.length; index++) {
+        // console.log(targetPosition.xTarget[index]);
+        // console.log(currPosition.x);
+        
+        if (currPosition.x > targetPosition.xTarget[index]) {
+            for (let i = targetPosition.xTarget[index]; i < currPosition.x; i++) {
+                // console.log(`${i}${currPosition.y}`);
+                const square = document.getElementById(`${i}${currPosition.y}`);
+                const point = document.createElement("div");
+                point.classList.add("point");
+                square.appendChild(point);
+            }
+        } else {
+            for (let i = currPosition.x + 1; i <= targetPosition.xTarget[index]; i++) {
+                // console.log(`${i}${currPosition.y}`);
+                const square = document.getElementById(`${i}${currPosition.y}`);
+                const point = document.createElement("div");
+                point.classList.add("point");
+                square.appendChild(point);
+            }
+        }
+    }
+}
+
+function handleShowValidMove(currPosition) { // {x: 3, y: 3}
+    let xTarget = [];
+    let yTarget = [];
+
+    if (currPosition.x > 1 && currPosition.y > 1) {
+        xTarget.push(1, 8);
+        yTarget.push(1, 8);
+    }
+
+    renderShowVaildMove(currPosition, {xTarget: xTarget, yTarget: yTarget});
+
+    return {xTarget: xTarget, yTarget: yTarget}
+}
+
+
+
 renderBoardGame();
+handleShowValidMove({x: 3, y: 3});
 // renderTextBoardGame();
 renderPiece();

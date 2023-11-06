@@ -53,3 +53,11 @@ body {
     color: #B7C0D8;
     transform: translate(200%, 120%);
 }
+
+.point {
+    height: 24px;
+    width: 24px;
+    background-color: #7B61FF;
+    border-radius: 50%;
+    display: inline-block;
+  }

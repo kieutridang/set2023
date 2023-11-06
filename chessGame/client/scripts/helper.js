@@ -5,8 +5,8 @@ const REGEX = {
 };
 
 function validateRegExp(element, regExp, errorMessage) {
-  const value = element.value.trim();
-  let isValid = regExp.test(value);
+    const value = element.value.trim();
+    let isValid = regExp.test(value);
   if (!isValid) {
     setErrorMessage(element, errorMessage);
     return false;
