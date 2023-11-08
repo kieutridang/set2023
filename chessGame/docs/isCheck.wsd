@@ -1,0 +1,19 @@
+@startuml
+
+
+split
+    :sử lý bị chiếu;
+    switch (action)
+
+    case (condition1)
+    :Di chuyển vua;
+    case (condition2)
+    :Ăn quân chiếu;
+    case (condition3)
+    :Chặn đường chiếu;
+    endswitch
+    :isCheck = false;
+
+
+
+    @enduml

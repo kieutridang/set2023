@@ -1,0 +1,27 @@
+@startuml
+
+
+
+start
+:Click position;
+:Remove highlight other position;
+if(piece?) then (yes)
+    : highlight vị trí vừa click vào;
+    :handleShowValidMove;
+endif
+
+:click position can move;
+
+if (isCheck) then (yes)
+    split
+        :sử lý bị chiếu;
+    endsplit
+else (no)
+    if(position can move have piece) then (yes)
+        :capture;
+    else (no)
+        :move;
+    endif
+    endif
+    :disable bên vừa đi;
+    @enduml
