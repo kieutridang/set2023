@@ -1,0 +1,25 @@
+@startuml chessGame
+title Chess game
+
+start
+if (Have an account ?) then (no)
+  :Sign up;
+  :Login;
+else (yes)
+  :Login;
+endif
+  :Homepage;
+  :Start chess game;
+  :Render chess board;
+  :Move piece;
+  if (Invalid move ?) then (no)
+    :Show warning can not move;
+    :Move piece;
+    
+  endif
+  if (isChecked) then (no)
+    :checkmate;;
+    :Caculate result;
+  endif
+stop
+@enduml

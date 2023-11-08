@@ -1,0 +1,14 @@
+@startuml chessGame
+title Is checked ?
+
+start
+switch (isChecked?)
+case ( condition 1 )
+  :Di chuyển vua;
+case ( condition 2 ) 
+  :Chặn đường chiếu;
+case ( condition 3 )
+  :Ăn quân đang chiếu;
+endswitch
+stop
+@enduml
