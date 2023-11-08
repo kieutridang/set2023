@@ -10,7 +10,7 @@ content.appendChild(chessboard);
 
 
 // generate a block
-    function generateBlock(order, piece) {
+    function generateBlock(x,y, piece) {
         // Create a new block
         const newBlock = document.createElement('div');
         newBlock.className = 'chessboard__block';
@@ -37,29 +37,29 @@ content.appendChild(chessboard);
             }
         }
 
-        newBlock.setAttribute('data-order', order);
-        // console.log(newBlock.dataset.order);
+        newBlock.setAttribute('data-x', x);
+        newBlock.setAttribute('data-y', y);
  
-        if ( (parseInt(newBlock.dataset.order) + 1 ) % 8 === 0) {
+        if ( (parseInt(newBlock.dataset.x * newBlock.dataset.y) + 1 ) % 8 === 0) {
             const p = document.createElement('p');
-            if ((9 - Math.floor((parseInt(newBlock.dataset.order) + 1) / 8)) % 2 == 0) {
+            if ((9 - Math.floor((parseInt(newBlock.dataset.x * newBlock.dataset.y) + 1) / 8)) % 2 == 0) {
                 p.className = "order-block-width even"
             } else {
                 p.className = "order-block-width odd"
             }
-            p.textContent = 9 - Math.floor((parseInt(newBlock.dataset.order) + 1) / 8);
+            p.textContent = 9 - Math.floor((parseInt(newBlock.dataset.x * newBlock.dataset.y) + 1) / 8);
 
             newBlock.appendChild(p);
         }
 
-        if ( (parseInt(newBlock.dataset.order) + 1 ) > 56) {
+        if ( (parseInt(newBlock.dataset.x * newBlock.dataset.y) + 1 ) > 56) {
             const p = document.createElement('p');
-            if ((parseInt(newBlock.dataset.order) + 1) % 2 == 0) {
+            if ((parseInt(newBlock.dataset.x * newBlock.dataset.y) + 1) % 2 == 0) {
                 p.className = "order-block-height odd"
             } else {
                 p.className = "order-block-height even"
             }
-            p.textContent = String.fromCharCode(97 + parseInt(newBlock.dataset.order) % 8);
+            p.textContent = String.fromCharCode(97 + parseInt(newBlock.dataset.x * newBlock.dataset.y) % 8);
 
             newBlock.appendChild(p);
         }
@@ -69,25 +69,25 @@ content.appendChild(chessboard);
     }
 
     function renderChessBoard(board) {
-        for (let i = 0; i < 64; i++) {
-            // Check if the block is odd or even
-            const isOdd = i % 2;
-            const piece = board[i];
+        for (let i = 0; i < 8; i++) {
+            for (let j = 0; j < 8; j++) {
+                const index = i * 8 + j;
+                const piece = board[i][j];
     
-            // Generate the block
-            generateBlock(i, piece);
+                generateBlock(i,j, piece);
+            }
         }
     }
 
 const board = [
-    "Rook-black", "Knight-black", "Bishop-black", "Queen-black", "King-black", "Bishop-black", "Knight-black", "Rook-black",
-    "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black",
-    null, null, null, null, null, null, null, null,
-    null, null, null, null, null, null, null, null,
-    null, null, null, null, null, null, null, null,
-    null, null, null, null, null, null, null, null,
-    "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white",
-    "Rook-white", "Knight-white", "Bishop-white", "Queen-white", "King-white", "Bishop-white", "Knight-white", "Rook-white"
+    ["Rook-black", "Knight-black", "Bishop-black", "Queen-black", "King-black", "Bishop-black", "Knight-black", "Rook-black"],
+    ["Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black"],
+    [null, null, null, null, null, null, null, null],
+    [null, null, null, "Knight-white", null, null, null, null],
+    [null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null],
+    ["Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Knight-white"],
+    ["Rook-white", "Knight-white", "Knight-white", "Queen-white", "King-white", "Bishop-white", "Knight-white", "Rook-white"]
 ];
 
 // Render the chess board
@@ -163,6 +163,27 @@ function showValidateMove(piece) {
         if (blockTwoStepsForward) {
             blockTwoStepsForward.classList.add('valid-move');
         }
+
+        
+    }
+
+    if (piece.classList.contains("fa-chess-knight")) {
+        const currentPosition = parseInt(piece.parentElement.dataset.order);
+        piece.classList.add('pick');
+
+        const currentPositionBlock = document.querySelector(`.chessboard__block[data-order='${currentPosition}']`);
+        if (currentPositionBlock) {
+            currentPositionBlock.classList.add('current-position');
+        }
+
+
+        const validMoves = [currentPosition + 6,  currentPosition + 15, currentPosition + 17, currentPosition - 6,  currentPosition - 15, currentPosition - 17];
+        validMoves.forEach(move => {
+            const block = document.querySelector(`.chessboard__block[data-order='${move}']`);
+            if (block && board[move] === null) {
+                block.classList.add('valid-move');
+            }
+        })
     }
 }
 
