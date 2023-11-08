@@ -1,0 +1,63 @@
+.header {
+    min-height: 3.75rem;
+    background: linear-gradient(to right, #31302d, #3d3d38);
+    position: fixed;
+    display: flex;
+    z-index: 10;
+    width: 100%;
+    justify-content: space-between
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    margin-right: 2rem;
+    width: 20rem;
+    justify-content: space-around
+}
+
+.logoChessGame {
+    margin-left: 2rem;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+    font-size: 3rem;
+    color: #f3e2b0;
+    
+}
+
+.navAccounts {
+    padding: 0.6rem 1.4rem;
+    text-decoration: none;
+    color: #b3b6ac;
+    font-size: 1.5rem;
+    border-radius: 0.9rem;
+    white-space: nowrap;
+    background-color: inherit;
+
+}
+
+.navAccounts:hover {
+    background-color: #56574b;
+    opacity: 60%;
+
+} 
+
+.navBar {
+    font-size: 1.8rem;
+    color: #b3b6ac;
+    cursor: pointer;
+}
+
+.footer {
+    min-height: 10rem;
+}
+
+.footerCreate {
+    padding: 3rem 0;
+    font-size: 1.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.5;
+}
