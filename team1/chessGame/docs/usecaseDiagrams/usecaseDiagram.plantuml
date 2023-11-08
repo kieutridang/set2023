@@ -10,7 +10,7 @@ rectangle ChessGame {
     usecase "Start game" as startGame
     usecase "Resign" as resign
     usecase "Move piece" as movePiece
-    usecase "Check" as Check
+    ' usecase "Check" as Check
 
     ' system 
     usecase "Timeout" as timeout
