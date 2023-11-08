@@ -69,39 +69,101 @@ content.appendChild(chessboard);
     }
 
     function renderChessBoard(board) {
-        for (let i = 0; i < 8; i++) {
-            for (let j = 0; j < 8; j++) {
-
-                // Check if the block is odd or even
-                const isOdd = (i + j) % 2;
-                const piece = board[i][j];
-
-                // Generate the block
-                generateBlock(i * 8 + j, piece);
-            }
+        for (let i = 0; i < 64; i++) {
+            // Check if the block is odd or even
+            const isOdd = i % 2;
+            const piece = board[i];
+    
+            // Generate the block
+            generateBlock(i, piece);
         }
     }
 
 const board = [
-    ["Rook-black", "Knight-black", "Bishop-black", "Queen-black", "King-black", "Bishop-black", "Knight-black", "Rook-black"],
-    ["Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black"],
-    [null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null],
-    ["Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white"],
-    ["Rook-white", "Knight-white", "Bishop-white", "Queen-white", "King-white", "Bishop-white", "Knight-white", "Rook-white"]
+    "Rook-black", "Knight-black", "Bishop-black", "Queen-black", "King-black", "Bishop-black", "Knight-black", "Rook-black",
+    "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black",
+    null, null, null, null, null, null, null, null,
+    null, null, null, null, null, null, null, null,
+    null, null, null, null, null, null, null, null,
+    null, null, null, null, null, null, null, null,
+    "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white",
+    "Rook-white", "Knight-white", "Bishop-white", "Queen-white", "King-white", "Bishop-white", "Knight-white", "Rook-white"
 ];
-
 
 // Render the chess board
 renderChessBoard(board);
 
+chessboard.addEventListener('click', (e) => {
+    if (e.target.classList.contains('pieces')) {
+        showValidateMove(e.target);
+    }
+
+    if (e.target.classList.contains('chessboard__block')) {
+        console.log(e.target.dataset.order);
+    }
+} )
 
 
 function showValidateMove(piece) {
-    //var result = validateMove(piece) ? true : false;
-    //return result;
+
+    //remove valid-move and current-position
+    const blocks = document.querySelectorAll('.chessboard__block.valid-move');
+    blocks.forEach(block => block.classList.remove('valid-move'));
+
+    const currentPositionBlocks = document.querySelectorAll('.chessboard__block.current-position');
+    currentPositionBlocks.forEach(block => block.classList.remove('current-position'));
+
+    //remove pick
+    const pick = document.querySelectorAll('.pieces.pick');
+    pick.forEach(pick => pick.classList.remove('pick'));
+
+
+    //handle các trường hợp đặc biệt
+    if (piece.classList.contains("fa-chess-pawn") && piece.classList.contains("black-pieces")) {
+        const currentPosition = parseInt(piece.parentElement.dataset.order);
+        piece.classList.add('pick');
+
+        const oneStepForward = currentPosition + 8;
+        const twoStepsForward = currentPosition + 16;
+
+        const currentPositionBlock = document.querySelector(`.chessboard__block[data-order='${currentPosition}']`);
+        const blockOneStepForward = document.querySelector(`.chessboard__block[data-order='${oneStepForward}']`);
+        const blockTwoStepsForward = document.querySelector(`.chessboard__block[data-order='${twoStepsForward}']`);
+
+        if (currentPositionBlock) {
+            currentPositionBlock.classList.add('current-position');
+        }
+
+        if (blockOneStepForward) {
+            blockOneStepForward.classList.add('valid-move');
+        }
+        if (blockTwoStepsForward) {
+            blockTwoStepsForward.classList.add('valid-move');
+        }
+    }
+
+    if (piece.classList.contains("fa-chess-pawn") && piece.classList.contains("white-pieces")) {
+        const currentPosition = parseInt(piece.parentElement.dataset.order);
+        piece.classList.add('pick');
+
+        const oneStepForward = currentPosition - 8;
+        const twoStepsForward = currentPosition - 16;
+
+        const currentPositionBlock = document.querySelector(`.chessboard__block[data-order='${currentPosition}']`);
+        const blockOneStepForward = document.querySelector(`.chessboard__block[data-order='${oneStepForward}']`);
+        const blockTwoStepsForward = document.querySelector(`.chessboard__block[data-order='${twoStepsForward}']`);
+
+        if (currentPositionBlock) {
+            currentPositionBlock.classList.add('current-position');
+        }
+
+        if (blockOneStepForward) {
+            blockOneStepForward.classList.add('valid-move');
+        }
+        if (blockTwoStepsForward) {
+            blockTwoStepsForward.classList.add('valid-move');
+        }
+    }
 }
 
 function validateMove(piece, from, to) {
@@ -114,6 +176,10 @@ function validateMove(piece, from, to) {
     // move piece
     //}
     return Boolean;
+}
+
+function movePiece(piece, from, to) {
+    // move piece
 }
 
 function showMoveHistory() {
