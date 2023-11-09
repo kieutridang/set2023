@@ -2,7 +2,7 @@
 
 
 split
-    :sử lý bị chiếu;
+    :move piece;
     switch (action)
 
     case (condition1)

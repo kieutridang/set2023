@@ -3,14 +3,16 @@
 
 
 start
-:Click position;
+:Click any position;
 :Remove highlight other position;
 if(piece?) then (yes)
-    : highlight vị trí vừa click vào;
-    :handleShowValidMove;
+    :highlight this position;
+    :handle show valid move;
+else (no)
+    stop
 endif
 
-:click position can move;
+:click in highlight position;
 
 if (isCheck) then (yes)
     split
@@ -22,6 +24,7 @@ else (no)
     else (no)
         :move;
     endif
-    endif
-    :disable bên vừa đi;
-    @enduml
+endif
+:disable bên vừa đi;
+end
+@enduml
