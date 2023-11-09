@@ -94,12 +94,13 @@ renderChessBoard(board);
 
 chessboard.addEventListener("click", (e) => {
     if (e.target.classList.contains("pieces")) {
-        showValidateMove(e.target);
-    }
-
-    if (e.target.classList.contains("chessboard__block")) {
-        // handle move hear
-        console.log(e.target.dataset.order);
+        if (e.target.parentElement.classList.contains("valid-move")) {
+            // handle move here
+            movePiece(e.target);
+        } else {
+            // show valid moves
+            showValidateMove(e.target);
+        }
     }
 });
 
@@ -123,75 +124,30 @@ function showValidateMove(piece) {
 
     //pawn
     if (piece.classList.contains("fa-chess-pawn")) {
-
         const currentPositionX = parseInt(piece.parentElement.dataset.x);
         const currentPositionY = parseInt(piece.parentElement.dataset.y);
         piece.classList.add("pick");
 
-        const isBlack = piece.classList.contains("black-pieces") ? true : false;
+        isBlack = piece.classList.contains("black-pieces") ? true : false;
 
-        if (isBlack) {
-            let block = document.querySelector(
-                `.chessboard__block[data-x='${currentPositionX + 1}'][data-y='${currentPositionY}']`
-            );
-            if (block && board[currentPositionX + 1][currentPositionY] === null) {
-                block.classList.add("valid-move");
+        const direction = isBlack ? 1 : -1;
+
+        for (let dy = -1; dy <= 1; dy += 2) {
+            if (board[currentPositionX + direction][currentPositionY + dy] != null) {
+                const diagonalBlock = document.querySelector(`.chessboard__block[data-x='${currentPositionX + direction}'][data-y='${currentPositionY + dy}']`);
+                diagonalBlock.classList.add("valid-move");
             }
-
-            block = document.querySelector(
-                `.chessboard__block[data-x='${currentPositionX + 2}'][data-y='${currentPositionY}']`
-            );
-            if (
-                block &&
-                board[currentPositionX + 2][currentPositionY] === null &&
-                currentPositionX === 1
-            ) {
-                block.classList.add("valid-move");
-            }
-
-            block = document.querySelector(
-                `.chessboard__block[data-x='${currentPositionX + 1}'][data-y='${currentPositionY + 1}']`
-            );
-            if (
-                block &&
-                board[currentPositionX + 1][currentPositionY + 1] !== null &&
-                board[currentPositionX + 1][currentPositionY + 1].includes("white")
-            ) {
-                block.classList.add("valid-move");
-            }
-
-            block = document.querySelector(
-                `.chessboard__block[data-x='${currentPositionX + 1}'][data-y='${currentPositionY - 1}']`
-            );
-            if (
-                block &&
-                board[currentPositionX + 1][currentPositionY - 1] !== null &&
-                board[currentPositionX + 1][currentPositionY - 1].includes("white")
-            ) {
-                block.classList.add("valid-move");
-            }
-        } else {
-            let block = document.querySelector(
-                `.chessboard__block[data-x='${currentPositionX - 1}'][data-y='${currentPositionY}']`
-            );
-            if (block && board[currentPositionX - 1][currentPositionY] === null) {
-                block.classList.add("valid-move");
-            }
-
-            block = document.querySelector(
-                `.chessboard__block[data-x='${currentPositionX - 2}'][data-y='${currentPositionY}']`
-            );
-            if (
-                block &&
-                board[currentPositionX - 2][currentPositionY] === null &&
-                currentPositionX === 6
-            ) {
-                block.classList.add("valid-move");
-            }
-
-
-
         }
+
+        for (let dx = 1; dx <= 2; dx++) {
+            if (board[currentPositionX + dx * direction][currentPositionY] === null) {
+                const forwardBlock = document.querySelector(`.chessboard__block[data-x='${currentPositionX + dx * direction}'][data-y='${currentPositionY}']`);
+                forwardBlock.classList.add("valid-move");
+            } else {
+                break;
+            }
+        }
+
     }
 
 
@@ -468,20 +424,10 @@ function showValidateMove(piece) {
     }
 }
 
-function validateMove(piece, from, to) {
-    //if(piece === king) {
-    //   if (check(piece)) {
-    //      move king
-    //   }
-    //}
-    //else {
-    // move piece
-    //}
-    return Boolean;
-}
 
-function movePiece(piece, from, to) {
-    // move piece
+function movePiece(block) {
+    console.log("piece");
+
 }
 
 function showMoveHistory() {
