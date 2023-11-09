@@ -1,0 +1,48 @@
+' @startuml
+
+' start
+' :Pick piece;
+' :Remove highlight other position;
+' :highlight this position;
+' split
+'     :handle show valid move;
+' end split
+' :click in highlight position;
+' if(position want move have piece enemy) then (yes)
+'     :capture;
+' else (no)
+'     :move;
+' endif
+
+' :disable bên vừa đi;
+' end
+' @enduml
+@startuml
+start
+
+:Pick piece;
+:Remove highlight other position;
+:highlight this position;
+split
+    :handle show valid move;
+end split
+:click in highlight position;
+
+if (position want move have piece enemy) then (yes)
+    :capture;
+    :Update game state: Remove captured piece;
+else (no)
+    :move;
+    :Update game state: Move piece to new position;
+endif
+
+if (Move results in checkmate or stalemate) then (yes)
+    :Handle checkmate or stalemate condition;
+else (no)
+    :Disable previously moved piece;
+endif
+    :Switch player turn;
+
+
+end
+@enduml

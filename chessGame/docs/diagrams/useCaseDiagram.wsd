@@ -1,0 +1,53 @@
+@startuml
+title Chessgame
+
+:Admin: as admin
+:User: as user
+
+package Ingame {
+  usecase "Move Piece" as move
+'   Phong cấp (Chốt xuống đáy đổi hậu)
+  usecase "To Take" as totake
+'   Nhập thành (Vua và xe chuyển chỗ trong lần đầu)
+  usecase "Castling" as castling
+}
+package Game {
+  usecase "Timeout" as timeout
+  usecase "Draw" as draw
+  usecase "Win" as win
+  usecase "Lose" as lose
+  usecase "Leave game" as leave
+  usecase "Start game" as start
+  usecase "Reset game" as reset
+}
+package Setting-Account {
+  usecase "Create User Account" as create1
+  usecase "Delete User Account" as delete1
+  usecase "Create Admin Account" as create2
+  usecase "Delete Admin Account" as delete2
+  usecase "Block Account" as block
+}
+
+
+left to right direction
+user --> move
+user --> totake
+user --> castling
+user --> timeout
+user --> draw
+user --> win
+user --> lose
+user --> leave
+user --> start
+user --> reset
+user --> create1
+user --> delete1
+
+
+create1 <-- admin
+delete1 <-- admin
+create2 <-- admin
+delete2 <-- admin
+block <-- admin
+
+@enduml

@@ -1,0 +1,25 @@
+@startuml
+
+
+split
+    :handle show valid move;
+    switch (pieceName)
+    case(pawn)
+    :findValidMoveforPawn;
+    case(rock)
+    :findValidMoveforRock;
+    case(knight)
+    :findValidMoveforRock;
+    case(bishop)
+    :findValidMoveforRock;
+    case(queen)
+    :findValidMoveforRock;
+    case(king)
+    :findValidMoveforRock;
+    endswitch
+    if(isCheck) then(yes)
+        :giảm bớt những ô có thể đi của những quân cờ chỉ còn những nước đi gỡ chiếu;
+    endif
+    :show valid move;
+
+    @enduml
