@@ -65,7 +65,8 @@ function generateBlock(x, y, piece) {
     chessboard.appendChild(newBlock);
 }
 
-function renderChessBoard(board) {
+
+function renderChessBoard() {
     for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {
             const index = i * 8 + j;
@@ -81,10 +82,10 @@ const board = [
         "Rook-black", "Knight-black", "Bishop-black", "Queen-black", "King-black", "Bishop-black", "Knight-black", "Rook-black",
     ],
     ["Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", ],
-    [null, null, null, null, null, null, "Pawn-white", "Pawn-white"],
-    ["Rook-white", null, null, "Knight-white", null, null, null, "Queen-black"],
     [null, null, null, null, null, null, null, null],
-    [null, "Rook-white", "Pawn-black", "Pawn-white", null, null, null, null],
+    [null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null],
     ["Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Knight-white", ],
     ["Rook-white", "Knight-white", "Knight-white", "Queen-white", "King-white", "Bishop-white", "Knight-white", "Rook-white"],
 ];
@@ -92,16 +93,26 @@ const board = [
 // Render the chess board
 renderChessBoard(board);
 
+
 chessboard.addEventListener("click", (e) => {
     if (e.target.classList.contains("pieces")) {
         if (e.target.parentElement.classList.contains("valid-move")) {
             // handle move here
-            movePiece(e.target);
+            movePiece(e.target.parentElement);
         } else {
+            localStorage.setItem("coordinate", JSON.stringify([e.target.parentElement.dataset.x, e.target.parentElement.dataset.y]))
             // show valid moves
             showValidateMove(e.target);
         }
     }
+
+    if (e.target.classList.contains("chessboard__block")) {
+        if (e.target.classList.contains("valid-move")) {
+            // handle move here
+            movePiece(e.target);
+        }
+    }
+
 });
 
 function showValidateMove(piece) {
@@ -426,13 +437,23 @@ function showValidateMove(piece) {
 
 
 function movePiece(block) {
-    console.log("piece");
+    const currentPositionX = JSON.parse(localStorage.getItem("coordinate"))[0];
+    const currentPositionY = JSON.parse(localStorage.getItem("coordinate"))[1];
+    const positionX = parseInt(block.dataset.x);
+    const positionY = parseInt(block.dataset.y);
+
+    //move piece
+    board[positionX][positionY] = board[currentPositionX][currentPositionY]
+    board[currentPositionX][currentPositionY] = null;
+
+    //render board
+    chessboard.innerHTML = ""
+    renderChessBoard(board);
+
 
 }
 
-function showMoveHistory() {
-    // show move history
-}
+function showMoveHistory() {}
 
 //content
 content.appendChild(chessboard);
