@@ -8,6 +8,9 @@ const routes = {
   lifeCycle: {
     value: '/life-cycle'
   },
+  hook: {
+    value: '/hook'
+  },
   login: {
     value: '/login'
   }
