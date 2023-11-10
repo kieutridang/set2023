@@ -90,29 +90,31 @@ const board = [
     ["Rook-white", "Knight-white", "Knight-white", "Queen-white", "King-white", "Bishop-white", "Knight-white", "Rook-white"],
 ];
 
-// Render the chess board
+//render board
 renderChessBoard(board);
 
 
+let isWhiteTurn = true;
+
 chessboard.addEventListener("click", (e) => {
     if (e.target.classList.contains("pieces")) {
-        if (e.target.parentElement.classList.contains("valid-move")) {
-            // handle move here
-            movePiece(e.target.parentElement);
-        } else {
+        if ((isWhiteTurn && e.target.classList.contains("white-pieces")) || (!isWhiteTurn && e.target.classList.contains("black-pieces"))) {
             localStorage.setItem("coordinate", JSON.stringify([e.target.parentElement.dataset.x, e.target.parentElement.dataset.y]))
-            // show valid moves
             showValidateMove(e.target);
+        }
+
+        if (e.target.parentElement.classList.contains("valid-move")) {
+            movePiece(e.target.parentElement);
+            isWhiteTurn = !isWhiteTurn;
         }
     }
 
     if (e.target.classList.contains("chessboard__block")) {
         if (e.target.classList.contains("valid-move")) {
-            // handle move here
             movePiece(e.target);
+            isWhiteTurn = !isWhiteTurn;
         }
     }
-
 });
 
 function showValidateMove(piece) {
@@ -452,6 +454,9 @@ function movePiece(block) {
 
 
 }
+
+
+
 
 function showMoveHistory() {}
 
