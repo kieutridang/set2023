@@ -403,35 +403,17 @@ function showValidateMove(piece) {
             let block = document.querySelector(
                 `.chessboard__block[data-x='${validX}'][data-y='${validY}']`
             );
-            let hasCaptured = false;
 
-            while (block) {
+            if (block) {
                 if (isBlack) {
-                    if (board[validX][validY] === null) {
+                    if (board[validX][validY] === null || board[validX][validY].includes("white")) {
                         block.classList.add("valid-move");
-                    } else if (board[validX][validY].includes("white")) {
-                        block.classList.add("valid-move");
-                        break;
-                    } else {
-                        break;
                     }
                 } else {
-                    if (
-                        board[validX][validY] === null ||
-                        (board[validX][validY].includes("black") && !hasCaptured)
-                    ) {
+                    if (board[validX][validY] === null || board[validX][validY].includes("black")) {
                         block.classList.add("valid-move");
-                        if (board[validX][validY] !== null) hasCaptured = true;
-                    } else {
-                        break;
                     }
                 }
-
-                validX += dx;
-                validY += dy;
-                block = document.querySelector(
-                    `.chessboard__block[data-x='${validX}'][data-y='${validY}']`
-                );
             }
         });
     }
