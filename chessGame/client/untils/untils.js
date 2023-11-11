@@ -13,7 +13,7 @@ export const colorPiece = {
     WHITE: 1,
 };
 
-export const arrInfoPieces = [
+export const arrayInfoPieces = [
     [
         {
             name: "blackPawn1",

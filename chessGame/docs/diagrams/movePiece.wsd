@@ -1,47 +1,56 @@
-' @startuml
-
-' start
-' :Pick piece;
-' :Remove highlight other position;
-' :highlight this position;
-' split
-'     :handle show valid move;
-' end split
-' :click in highlight position;
-' if(position want move have piece enemy) then (yes)
-'     :capture;
-' else (no)
-'     :move;
-' endif
-
-' :disable bên vừa đi;
-' end
-' @enduml
 @startuml
 start
 
 :Pick piece;
 :Remove highlight other position;
 :highlight this position;
-split
-    :handle show valid move;
-end split
+
+switch (piece)
+case (pawn)
+:findValidMovePawn();
+case (rock)
+:findValidMovePawn();
+case (knight)
+:findValidMovePawn();
+case (bishop)
+:findValidMovePawn();
+case (queen)
+:findValidMovePawn();
+case (king)
+:findValidMovePawn();
+
+endswitch
+:decrease valid move();
+
+:showValidMove();
+
+
+if(isCheck?) then (yes)
+    :decrease valid move();
+endif
 :click in highlight position;
 
-if (position want move have piece enemy) then (yes)
-    :capture;
-    :Update game state: Remove captured piece;
-else (no)
-    :move;
-    :Update game state: Move piece to new position;
+if (checkPromote(piece, colorPiece, targetPosition)) then (yes)
+    :showSelectPieceWantPromote();
+    :const promotePiece = piece want to promote;
 endif
 
-if (Move results in checkmate or stalemate) then (yes)
-    :Handle checkmate or stalemate condition;
-else (no)
-    :Disable previously moved piece;
+
+if (position want move have piece enemy) then (yes)
+    :Remove captured piece;
 endif
-    :Switch player turn;
+:Remove piece in old position;
+
+if(promotePiece) then (yes)
+    :render promotePiece in new position;
+else (no)
+    :render piece in new position;
+endif
+if (Nước đi vừa rồi có chiếu quân đối phương hay không) then (yes)
+    :handle check enemy;
+endif
+:Disable previous moved;
+:Switch player turn;
 
 
 end

@@ -6,8 +6,7 @@ title Chessgame
 
 package Ingame {
   usecase "Move Piece" as move
-'   Phong cấp (Chốt xuống đáy đổi hậu)
-  usecase "To Take" as totake
+  usecase "Promote"
 '   Nhập thành (Vua và xe chuyển chỗ trong lần đầu)
   usecase "Castling" as castling
 }
@@ -31,7 +30,7 @@ package Setting-Account {
 
 left to right direction
 user --> move
-user --> totake
+user --> Promote
 user --> castling
 user --> timeout
 user --> draw
