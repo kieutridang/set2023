@@ -6,27 +6,27 @@ chessboard.className = "chessboard";
 // chess board
 content.appendChild(chessboard);
 
+// pieceTypes
+const pieceTypes = {
+    "Pawn-black": '<i class="fa-regular fa-chess-pawn pieces black-pieces"></i>',
+    "Pawn-white": '<i class="fa-regular fa-chess-pawn pieces white-pieces"></i>',
+    "Rook-black": '<i class="fa-regular fa-chess-rook pieces black-pieces"></i>',
+    "Rook-white": '<i class="fa-regular fa-chess-rook pieces white-pieces"></i>',
+    "Knight-black": '<i class="fa-regular fa-chess-knight pieces black-pieces"></i>',
+    "Knight-white": '<i class="fa-regular fa-chess-knight pieces white-pieces"></i>',
+    "Bishop-black": '<i class="fa-regular fa-chess-bishop pieces black-pieces"></i>',
+    "Bishop-white": '<i class="fa-regular fa-chess-bishop pieces white-pieces"></i>',
+    "Queen-black": '<i class="fa-regular fa-chess-queen pieces black-pieces"></i>',
+    "Queen-white": '<i class="fa-regular fa-chess-queen pieces white-pieces"></i>',
+    "King-black": '<i class="fa-regular fa-chess-king pieces black-pieces"></i>',
+    "King-white": '<i class="fa-regular fa-chess-king pieces white-pieces"></i>',
+};
+
 // generate a block
 function generateBlock(x, y, piece) {
     // Create a new block
     const newBlock = document.createElement("div");
     newBlock.className = "chessboard__block";
-
-    // pieceTypes
-    const pieceTypes = {
-        "Pawn-black": '<i class="fa-regular fa-chess-pawn pieces black-pieces"></i>',
-        "Pawn-white": '<i class="fa-regular fa-chess-pawn pieces white-pieces"></i>',
-        "Rook-black": '<i class="fa-regular fa-chess-rook pieces black-pieces"></i>',
-        "Rook-white": '<i class="fa-regular fa-chess-rook pieces white-pieces"></i>',
-        "Knight-black": '<i class="fa-regular fa-chess-knight pieces black-pieces"></i>',
-        "Knight-white": '<i class="fa-regular fa-chess-knight pieces white-pieces"></i>',
-        "Bishop-black": '<i class="fa-regular fa-chess-bishop pieces black-pieces"></i>',
-        "Bishop-white": '<i class="fa-regular fa-chess-bishop pieces white-pieces"></i>',
-        "Queen-black": '<i class="fa-regular fa-chess-queen pieces black-pieces"></i>',
-        "Queen-white": '<i class="fa-regular fa-chess-queen pieces white-pieces"></i>',
-        "King-black": '<i class="fa-regular fa-chess-king pieces black-pieces"></i>',
-        "King-white": '<i class="fa-regular fa-chess-king pieces white-pieces"></i>',
-    };
 
     for (const pieceType in pieceTypes) {
         if (piece === pieceType) {
@@ -86,7 +86,7 @@ const board = [
     [null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null],
-    ["Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Knight-white", ],
+    ["Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", ],
     ["Rook-white", "Knight-white", "Knight-white", "Queen-white", "King-white", "Bishop-white", "Knight-white", "Rook-white"],
 ];
 
@@ -452,13 +452,9 @@ function movePiece(block) {
     chessboard.innerHTML = ""
     renderChessBoard(board);
 
+    showHistoryMove(currentPositionX, currentPositionY, positionX, positionY);
 
 }
-
-
-
-
-function showMoveHistory() {}
 
 //content
 content.appendChild(chessboard);

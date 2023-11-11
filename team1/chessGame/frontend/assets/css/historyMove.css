@@ -30,4 +30,34 @@
     color: #333;
   }
 
-  
+  .history-move__log-content {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.5rem;
+    text-align: center; 
+    color: #160e0c; 
+    font-weight: 550; 
+    list-style: disc; 
+    margin-left: 20px; 
+    height: 100%;
+    width: 100%;
+    word-wrap: break-word;
+    overflow: scroll;
+    scrollbar-width: thin; 
+    scrollbar-color: #000000 #f5f5f5;
+}
+
+.history-move__log-content::-webkit-scrollbar {
+    width: 10px;
+}
+
+.history-move__log-content::-webkit-scrollbar-track {
+    background: #3d3d38;
+}
+
+.history-move__log-content::-webkit-scrollbar-thumb {
+    background: #000000;
+}
+
+.history-move__log-content::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
