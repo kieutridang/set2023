@@ -1,0 +1,57 @@
+@startuml
+start
+
+:Pick piece;
+:Remove highlight other position;
+:highlight this position;
+
+switch (piece)
+case (pawn)
+:findValidMovePawn();
+case (rock)
+:findValidMovePawn();
+case (knight)
+:findValidMovePawn();
+case (bishop)
+:findValidMovePawn();
+case (queen)
+:findValidMovePawn();
+case (king)
+:findValidMovePawn();
+
+endswitch
+:decrease valid move();
+
+:showValidMove();
+
+
+if(isCheck?) then (yes)
+    :decrease valid move();
+endif
+:click in highlight position;
+
+if (checkPromote(piece, colorPiece, targetPosition)) then (yes)
+    :showSelectPieceWantPromote();
+    :const promotePiece = piece want to promote;
+endif
+
+
+if (position want move have piece enemy) then (yes)
+    :Remove captured piece;
+endif
+:Remove piece in old position;
+
+if(promotePiece) then (yes)
+    :render promotePiece in new position;
+else (no)
+    :render piece in new position;
+endif
+if (Nước đi vừa rồi có chiếu quân đối phương hay không) then (yes)
+    :handle check enemy;
+endif
+:Disable previous moved;
+:Switch player turn;
+
+
+end
+@enduml
