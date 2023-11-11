@@ -141,26 +141,33 @@ function showValidateMove(piece) {
         const currentPositionY = parseInt(piece.parentElement.dataset.y);
         piece.classList.add("pick");
 
-        isBlack = piece.classList.contains("black-pieces") ? true : false;
+        const isBlack = piece.classList.contains("black-pieces") ? true : false;
 
         const direction = isBlack ? 1 : -1;
 
         for (let dy = -1; dy <= 1; dy += 2) {
-            if (board[currentPositionX + direction][currentPositionY + dy] != null) {
-                const diagonalBlock = document.querySelector(`.chessboard__block[data-x='${currentPositionX + direction}'][data-y='${currentPositionY + dy}']`);
+            let newX = currentPositionX + direction;
+            let newY = currentPositionY + dy;
+            if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8 && board[newX][newY] != null) {
+                const diagonalBlock = document.querySelector(`.chessboard__block[data-x='${newX}'][data-y='${newY}']`);
                 diagonalBlock.classList.add("valid-move");
             }
         }
 
-        for (let dx = 1; dx <= 2; dx++) {
-            if (board[currentPositionX + dx * direction][currentPositionY] === null) {
-                const forwardBlock = document.querySelector(`.chessboard__block[data-x='${currentPositionX + dx * direction}'][data-y='${currentPositionY}']`);
-                forwardBlock.classList.add("valid-move");
-            } else {
-                break;
-            }
+        let newX = currentPositionX + direction;
+        if (newX >= 0 && newX < 8 && board[newX][currentPositionY] === null) {
+            const forwardBlock = document.querySelector(`.chessboard__block[data-x='${newX}'][data-y='${currentPositionY}']`);
+            forwardBlock.classList.add("valid-move");
         }
 
+        if ((isBlack && currentPositionX === 1) || (!isBlack && currentPositionX === 6)) {
+            console.log("double forward");
+            newX = currentPositionX + 2 * direction;
+            if (newX >= 0 && newX < 8 && board[newX][currentPositionY] === null) {
+                const doubleForwardBlock = document.querySelector(`.chessboard__block[data-x='${newX}'][data-y='${currentPositionY}']`);
+                doubleForwardBlock.classList.add("valid-move");
+            }
+        }
     }
 
 
