@@ -86,7 +86,7 @@ const board = [
     [null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null],
-    ["Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Knight-white", ],
+    ["Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", ],
     ["Rook-white", "Knight-white", "Knight-white", "Queen-white", "King-white", "Bishop-white", "Knight-white", "Rook-white"],
 ];
 
@@ -452,13 +452,9 @@ function movePiece(block) {
     chessboard.innerHTML = ""
     renderChessBoard(board);
 
+    showHistoryMove(currentPositionX, currentPositionY, positionX, positionY);
 
 }
-
-
-
-
-function showMoveHistory() {}
 
 //content
 content.appendChild(chessboard);
