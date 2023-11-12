@@ -79,7 +79,7 @@ function renderChessBoard() {
 
 const board = [
     [
-        "Rook-black", "Knight-black", "Bishop-black", "Queen-black", "King-black", "Bishop-black", "Knight-black", "Rook-black",
+        "Rook-black", null, null, null, "King-black", null, null, "Rook-black",
     ],
     ["Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", ],
     [null, null, null, null, null, null, null, null],
@@ -87,7 +87,7 @@ const board = [
     [null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null],
     ["Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", ],
-    ["Rook-white", "Knight-white", "Knight-white", "Queen-white", "King-white", "Bishop-white", "Knight-white", "Rook-white"],
+    ["Rook-white", null, "Pawn-white", null, "King-white", null, null, "Rook-white"],
 ];
 
 //render board
@@ -97,6 +97,7 @@ renderChessBoard(board);
 let isWhiteTurn = true;
 
 chessboard.addEventListener("click", (e) => {
+    e.stopPropagation();
     if (e.target.classList.contains("pieces")) {
         if ((isWhiteTurn && e.target.classList.contains("white-pieces")) || (!isWhiteTurn && e.target.classList.contains("black-pieces"))) {
             localStorage.setItem("coordinate", JSON.stringify([e.target.parentElement.dataset.x, e.target.parentElement.dataset.y]))
@@ -423,7 +424,43 @@ function showValidateMove(piece) {
                 }
             }
         });
+
+        //castling
+        if (isBlack) {
+            if (board[0][4] === "King-black") {
+                if (board[0][5] === null && board[0][6] === null) {
+                    let block = document.querySelector(
+                        `.chessboard__block[data-x='0'][data-y='6']`
+                    );
+                    block.classList.add("valid-move");
+                }
+
+                if (board[0][3] === null && board[0][2] === null && board[0][1] === null) {
+                    let block = document.querySelector(
+                        `.chessboard__block[data-x='0'][data-y='2']`
+                    );
+                    block.classList.add("valid-move");
+                }
+            }
+        } else {
+            if (board[7][4] === "King-white") {
+                if (board[7][5] === null && board[7][6] === null) {
+                    const block1 = document.querySelector(
+                        `.chessboard__block[data-x='7'][data-y='6']`
+                    );
+                    block1.classList.add("valid-move");
+                }
+
+                if (board[7][3] === null && board[7][2] === null && board[7][1] === null) {
+                    const block2 = document.querySelector(
+                        `.chessboard__block[data-x='7'][data-y='2']`
+                    );
+                    block2.classList.add("valid-move");
+                }
+            }
+        }
     }
+
 }
 
 
@@ -437,6 +474,38 @@ function movePiece(block) {
     board[positionX][positionY] = board[currentPositionX][currentPositionY]
     board[currentPositionX][currentPositionY] = null;
 
+    //castling
+    if (positionX == 7 && positionY == 2) {
+        if (board[7][1] == null && board[7][3] == null) {
+            board[7][3] = "Rook-white";
+            board[7][0] = null;
+        }
+    }
+
+    if (positionX == 7 && positionY == 6) {
+        if (board[7][5] == null) {
+            board[7][5] = "Rook-white";
+            board[7][7] = null;
+        }
+
+    }
+
+    if (positionX == 0 && positionY == 2) {
+        if (board[0][1] == null && board[0][3] == null) {
+            board[0][3] = "Rook-black";
+            board[0][0] = null;
+        }
+    }
+
+    if (positionX == 0 && positionY == 6) {
+        if (board[0][5] == null) {
+            board[0][5] = "Rook-black";
+            board[0][7] = null;
+        }
+
+    }
+
+
     //render board
     chessboard.innerHTML = ""
     renderChessBoard(board);
@@ -444,6 +513,8 @@ function movePiece(block) {
     showHistoryMove(currentPositionX, currentPositionY, positionX, positionY);
 
 }
+
+
 
 //content
 content.appendChild(chessboard);
