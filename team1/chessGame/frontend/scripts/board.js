@@ -475,14 +475,14 @@ function movePiece(block) {
     board[currentPositionX][currentPositionY] = null;
 
     //castling
-    if (positionX == 7 && positionY == 2) {
+    if (positionX == 7 && positionY == 2 && board[7][2] == "King-white") {
         if (board[7][1] == null && board[7][3] == null) {
             board[7][3] = "Rook-white";
             board[7][0] = null;
         }
     }
 
-    if (positionX == 7 && positionY == 6) {
+    if (positionX == 7 && positionY == 6 && board[7][6] == "King-white") {
         if (board[7][5] == null) {
             board[7][5] = "Rook-white";
             board[7][7] = null;
@@ -491,13 +491,13 @@ function movePiece(block) {
     }
 
     if (positionX == 0 && positionY == 2) {
-        if (board[0][1] == null && board[0][3] == null) {
+        if (board[0][1] == null && board[0][3] == null && board[0][2] == "King-black") {
             board[0][3] = "Rook-black";
             board[0][0] = null;
         }
     }
 
-    if (positionX == 0 && positionY == 6) {
+    if (positionX == 0 && positionY == 6 && board[0][6] == "King-black") {
         if (board[0][5] == null) {
             board[0][5] = "Rook-black";
             board[0][7] = null;
@@ -505,15 +505,254 @@ function movePiece(block) {
 
     }
 
+    //isCheckKing
+    isCheckKing(board, positionX, positionY);
+
 
     //render board
     chessboard.innerHTML = ""
     renderChessBoard(board);
 
     showHistoryMove(currentPositionX, currentPositionY, positionX, positionY);
+    check();
 
 }
 
+
+function isCheckKing(board, positionX, positionY) {
+    if (board[positionX][positionY] == "Knight-black") {
+        for (let dx = -2; dx <= 2; dx++) {
+            for (let dy = -2; dy <= 2; dy++) {
+                if (Math.abs(dx * dy) == 2) {
+                    let validX = positionX + dx;
+                    let validY = positionY + dy;
+                    if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
+                        if (board[validX][validY] == "King-white") {
+                            console.log("check");
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if (board[positionX][positionY] == "Knight-white") {
+        for (let dx = -2; dx <= 2; dx++) {
+            for (let dy = -2; dy <= 2; dy++) {
+                if (Math.abs(dx * dy) == 2) {
+                    let validX = positionX + dx;
+                    let validY = positionY + dy;
+                    if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
+                        if (board[validX][validY] == "King-black") {
+                            console.log("check");
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if (board[positionX][positionY] == "Pawn-black") {
+        let validX = positionX + 1;
+        let validY = positionY + 1;
+        if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
+            if (board[validX][validY] == "King-white") {
+                currentBlock.classList.add("check");
+            }
+        }
+
+        validX = positionX + 1;
+        validY = positionY - 1;
+        if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
+            if (board[validX][validY] == "King-white") {
+                renderChessBoard(board);
+                const currentBlock = document.querySelector(`.chessboard__block[data-x='${positionX}'][data-y='${positionY}']`);
+                console.log(currentBlock);
+                currentBlock.classList.add("check");
+            }
+        }
+    }
+
+    if (board[positionX][positionY] == "Pawn-white") {
+        let validX = positionX - 1;
+        let validY = positionY + 1;
+        if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
+            if (board[validX][validY] == "King-black") {
+                currentBlock.classList.add("check");
+            }
+        }
+
+        validX = positionX - 1;
+        validY = positionY - 1;
+        if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
+            if (board[validX][validY] == "King-black") {
+                currentBlock.classList.add("check");
+            }
+        }
+    }
+
+    if (board[positionX][positionY] == "Rook-black") {
+        for (let dx = -1; dx <= 1; dx++) {
+            for (let dy = -1; dy <= 1; dy++) {
+                if (Math.abs(dx * dy) == 0) {
+                    let validX = positionX + dx;
+                    let validY = positionY + dy;
+                    if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
+                        if (board[validX][validY] == "King-white") {
+                            currentBlock.classList.add("check");
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if (board[positionX][positionY] == "Rook-white") {
+        for (let dx = -1; dx <= 1; dx++) {
+            for (let dy = -1; dy <= 1; dy++) {
+                if (Math.abs(dx * dy) == 0) {
+                    let validX = positionX + dx;
+                    let validY = positionY + dy;
+                    if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
+                        if (board[validX][validY] == "King-black") {
+                            currentBlock.classList.add("check");
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if (board[positionX][positionY] == "Bishop-black") {
+        for (let dx = -1; dx <= 1; dx++) {
+            for (let dy = -1; dy <= 1; dy++) {
+                if (Math.abs(dx * dy) == 1) {
+                    let validX = positionX + dx;
+                    let validY = positionY + dy;
+                    if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
+                        if (board[validX][validY] == "King-white") {
+                            currentBlock.classList.add("check");
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if (board[positionX][positionY] == "Bishop-white") {
+        for (let dx = -1; dx <= 1; dx++) {
+            for (let dy = -1; dy <= 1; dy++) {
+                if (Math.abs(dx * dy) == 1) {
+                    let validX = positionX + dx;
+                    let validY = positionY + dy;
+                    if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
+                        if (board[validX][validY] == "King-black") {
+                            currentBlock.classList.add("check");
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if (board[positionX][positionY] == "Queen-black") {
+        for (let dx = -1; dx <= 1; dx++) {
+            for (let dy = -1; dy <= 1; dy++) {
+                if (Math.abs(dx * dy) == 1) {
+                    let validX = positionX + dx;
+                    let validY = positionY + dy;
+                    if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
+                        if (board[validX][validY] == "King-white") {
+                            currentBlock.classList.add("check");
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if (board[positionX][positionY] == "Queen-white") {
+        for (let dx = -1; dx <= 1; dx++) {
+            for (let dy = -1; dy <= 1; dy++) {
+                if (Math.abs(dx * dy) == 1) {
+                    let validX = positionX + dx;
+                    let validY = positionY + dy;
+                    if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
+                        if (board[validX][validY] == "King-black") {
+                            currentBlock.classList.add("check");
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if (board[positionX][positionY] == "King-black") {
+        for (let dx = -1; dx <= 1; dx++) {
+            for (let dy = -1; dy <= 1; dy++) {
+                let validX = positionX + dx;
+                let validY = positionY + dy;
+                if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
+                    if (board[validX][validY] == "King-white") {
+                        currentBlock.classList.add("check");
+                    }
+                }
+            }
+        }
+    }
+
+    if (board[positionX][positionY] == "King-white") {
+        for (let dx = -1; dx <= 1; dx++) {
+            for (let dy = -1; dy <= 1; dy++) {
+                let validX = positionX + dx;
+                let validY = positionY + dy;
+                if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
+                    if (board[validX][validY] == "King-black") {
+                        currentBlock.classList.add("check");
+                    }
+                }
+            }
+        }
+    }
+
+    //checkmate
+    if (board[positionX][positionY] == "King-black") {
+        let isCheckmate = true;
+        for (let dx = -1; dx <= 1; dx++) {
+            for (let dy = -1; dy <= 1; dy++) {
+                let validX = positionX + dx;
+                let validY = positionY + dy;
+                if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
+                    if (board[validX][validY] == null) {
+                        isCheckmate = false;
+                    }
+                }
+            }
+        }
+        if (isCheckmate) {
+            console.log("checkmate");
+        }
+    }
+
+    if (board[positionX][positionY] == "King-white") {
+        let isCheckmate = true;
+        for (let dx = -1; dx <= 1; dx++) {
+            for (let dy = -1; dy <= 1; dy++) {
+                let validX = positionX + dx;
+                let validY = positionY + dy;
+                if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
+                    if (board[validX][validY] == null) {
+                        isCheckmate = false;
+                    }
+                }
+            }
+        }
+        if (isCheckmate) {
+            console.log("checkmate");
+        }
+    }
+
+}
 
 
 //content

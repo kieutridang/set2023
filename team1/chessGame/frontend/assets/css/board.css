@@ -26,6 +26,12 @@ ol, ul {
 
 }
 
+@keyframes blink {
+  0% { background-color: #98a3c7; }
+  50% { background-color: rgb(107, 68, 68); }
+  100% { background-color: #6b83cf; }
+}
+
 .chessboard {
   margin-left: 9rem;
     display: grid;
@@ -43,6 +49,10 @@ ol, ul {
     aspect-ratio: 1;
     background: #F0D9B5;
     position: relative;
+}
+
+.chessboard__block.check {
+    animation: blink 1s infinite;
 }
 
 .chessboard__block.current-position {
