@@ -257,6 +257,19 @@ function findValidMoveForBishop(currentPosition) {
     return collectMove;
 }
 
+function findValidMoveForKing(currentPosition) {
+    for (let dx = -1; dx < 2; ++dx) {
+        for (let dy = -1; dy < 2; ++dy) {
+            const validX = currentPosition.x + dx;
+            const validY = currentPosition.y + dy;
+            
+            collectMove.push({x: validX, y: validY})
+        }
+    }
+
+    return collectMove;
+}
+
 function initial() {
     renderBoardGame();
     renderPiece();
