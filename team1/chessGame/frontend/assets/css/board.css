@@ -27,9 +27,9 @@ ol, ul {
 }
 
 @keyframes blink {
-  0% { background-color: #98a3c7; }
-  50% { background-color: rgb(107, 68, 68); }
-  100% { background-color: #6b83cf; }
+  0% { background-color: #F0D9B5; }
+  50% { background-color: rgb(243, 0, 0); }
+  100% { background-color: #B58863; }
 }
 
 .chessboard {
@@ -78,6 +78,7 @@ ol, ul {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
 
 
 

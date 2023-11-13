@@ -509,8 +509,19 @@ function movePiece(block) {
     chessboard.innerHTML = ""
     renderChessBoard(board);
 
+
     if (isCheckKing(board, positionX, positionY)) {
-        console.log("check");
+        for (i = 0; i < 8; i++) {
+            for (j = 0; j < 8; j++)
+                if (board[i][j] != null) {
+                    if (board[i][j].split("-")[0] == "King") {
+                        const block = document.querySelector(
+                            `.chessboard__block[data-x='${i}'][data-y='${j}']`
+                        );
+                        block.classList.add("check");
+                    }
+                }
+        }
     }
 
 }
@@ -602,7 +613,6 @@ function isCheckKing(board, positionX, positionY) {
     //bishop
     if (piece) {
         if (piece.includes("Bishop")) {
-            console.log("bishop");
             const moves = [
                 [1, 1],
                 [-1, -1],
