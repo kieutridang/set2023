@@ -1,5 +1,11 @@
 import { arrayInfoPieces, colorPiece } from "../untils/untils.js";
 
+function getPieceName(string) {
+    const regexFindNamePiece = /^(white|black)(\D+)(\d)?$/;
+    const pieceName = string.split(regexFindNamePiece)[2].toLowerCase();
+    return pieceName;
+}
+
 function renderBoardGame() {
     const chessBoard = document.getElementById("chessBoard");
 
@@ -58,6 +64,22 @@ function renderPiece() {
     }
 }
 
+function addEventForPiece() {
+    const pieces = document.querySelectorAll(".piece");
+    pieces.forEach((piece) => {
+        piece.addEventListener("click", () => {
+            const pieceName = getPieceName(piece.id);
+            const currentPosition = {
+                x: piece.parentNode.id[0],
+                y: piece.parentNode.id[1],
+            };
+            console.log(pieceName, currentPosition);
+            highlightCurrentPosition(piece.parentNode.id);
+            handleShowValidMove(pieceName, currentPosition);
+        });
+    });
+}
+
 function highlightCurrentPosition(id) {
     document.getElementById(id).classList.add("highlightSquare");
 }
@@ -76,7 +98,8 @@ function highlightPositionCanCapture(id) {
     square.appendChild(point);
 }
 
-function findValidMove(pieceName, currentPosition) {
+function handleShowValidMove(pieceName, currentPosition) {
+    console.log(pieceName, currentPosition);
     switch (pieceName) {
         case "pawn":
             return [11, 22];
@@ -100,7 +123,7 @@ function findValidMove(pieceName, currentPosition) {
 
 function showValidMove(arrayPostion) {
     arrayPostion.forEach((position) => {
-        highlightPositionCanMove(position);
+        highlightPositionValidMove(position);
     });
 }
 
@@ -109,19 +132,7 @@ function handleMoveTopPiece(currentPosition) {
     // currentPosition.x : const
     const collectMove = [];
 
-    for (let index = currentPosition.y - 1; index >= 1; index--) {
-        collectMove.push(`${currentPosition.x}${index}`);
-    }
-
-    return collectMove;
-}
-
-function handleMoveBottomPiece(currentPosition) {
-    // currentPosition.y : increase
-    // currentPosition.x : const
-    const collectMove = [];
-
-    for (let index = currentPosition.y + 1; index <= 8; index++) {
+    for (let index = currentPosition.y*1 - 1; index >= 1; index--) {
         collectMove.push(`${currentPosition.x}${index}`);
     }
 
@@ -133,19 +144,34 @@ function handleMoveRightPiece(currentPosition) {
     // currentPosition.y : const
     const collectMove = [];
 
-    for (let index = currentPosition.x + 1; index <= 8; index++) {
+    for (let index = currentPosition.x*1 + 1; index <= 8; index++) {
         collectMove.push(`${index}${currentPosition.y}`);
     }
 
     return collectMove;
 }
 
+function handleMoveBottomPiece(currentPosition) {
+    console.log(currentPosition);
+    // currentPosition.y : increase
+    // currentPosition.x : const
+    const collectMove = [];
+    let index = currentPosition.y + 1;
+
+    for (let index = currentPosition.y*1 + 1; index <= 8; index++) {
+        collectMove.push(`${currentPosition.x}${index}`);
+    }
+
+    return collectMove;
+}
+
+
 function handleMoveLeftPiece(currentPosition) {
     // currentPosition.x : decrease
     // currentPosition.y : const
     const collectMove = [];
 
-    for (let index = currentPosition.x - 1; index >= 1; index--) {
+    for (let index = currentPosition.x*1 - 1; index >= 1; index--) {
         collectMove.push(`${index}${currentPosition.y}`);
     }
 
@@ -156,9 +182,9 @@ function handleMoveTopRightPiece(currentPosition) {
     // currentPosition.x : increase
     // currentPosition.y : decrease
     const collectMove = [];
-    let yTemporary = currentPosition.y;
+    let yTemporary = currentPosition.y*1;
 
-    for (let index = currentPosition.x + 1; index <= 8; index++) {
+    for (let index = currentPosition.x*1 + 1; index <= 8; index++) {
         collectMove.push(`${index}${--yTemporary}`);
         if (yTemporary === 0) {
             return [];
@@ -174,34 +200,13 @@ function handleMoveTopRightPiece(currentPosition) {
     return collectMove;
 }
 
-function handleMoveTopLeftPiece(currentPosition) {
-    // currentPosition.x : decrease
-    // currentPosition.y : decrease
-    const collectMove = [];
-    let yTemporary = currentPosition.y;
-
-    for (let index = currentPosition.x - 1; index >= 1; index--) {
-        collectMove.push(`${index}${--yTemporary}`);
-
-        if (yTemporary === 0) {
-            return [];
-        }
-
-        if (yTemporary <= 1) {
-            break;
-        }
-    }
-
-    return collectMove;
-}
-
 function handleMoveBottomRightPiece(currentPosition) {
     // currentPosition.x : increase
     // currentPosition.y : increase
     const collectMove = [];
-    let yTemporary = currentPosition.y;
+    let yTemporary = currentPosition.y*1;
 
-    for (let index = currentPosition.x + 1; index <= 8; index++) {
+    for (let index = currentPosition.x*1 + 1; index <= 8; index++) {
         collectMove.push(`${index}${++yTemporary}`);
 
         if (yTemporary === 9) {
@@ -220,9 +225,9 @@ function handleMoveBottomLeftPiece(currentPosition) {
     // currentPosition.x : decrease
     // currentPosition.y : increase
     const collectMove = [];
-    let yTemporary = currentPosition.y;
+    let yTemporary = currentPosition.y*1;
 
-    for (let index = currentPosition.x - 1; index >= 1; index--) {
+    for (let index = currentPosition.x*1 - 1; index >= 1; index--) {
         collectMove.push(`${index}${++yTemporary}`);
 
         if (yTemporary === 9) {
@@ -230,6 +235,27 @@ function handleMoveBottomLeftPiece(currentPosition) {
         }
 
         if (yTemporary >= 8) {
+            break;
+        }
+    }
+
+    return collectMove;
+}
+
+function handleMoveTopLeftPiece(currentPosition) {
+    // currentPosition.x : decrease
+    // currentPosition.y : decrease
+    const collectMove = [];
+    let yTemporary = currentPosition.y*1;
+
+    for (let index = currentPosition.x*1 - 1; index >= 1; index--) {
+        collectMove.push(`${index}${--yTemporary}`);
+
+        if (yTemporary === 0) {
+            return [];
+        }
+
+        if (yTemporary <= 1) {
             break;
         }
     }
@@ -254,6 +280,7 @@ function findValidMoveForBishop(currentPosition) {
         ...handleMoveBottomRightPiece(currentPosition),
         ...handleMoveBottomLeftPiece(currentPosition),
     ];
+    console.log(collectMove);
     return collectMove;
 }
 
