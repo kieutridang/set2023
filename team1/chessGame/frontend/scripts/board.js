@@ -87,7 +87,7 @@ const board = [
     [null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null],
     ["Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", ],
-    ["Rook-white", null, "Pawn-white", null, "King-white", null, null, "Rook-white"],
+    ["Rook-white", "Knight-white", "Pawn-white", "Queen-white", "King-white", null, null, "Rook-white"],
 ];
 
 //render board
@@ -162,7 +162,6 @@ function showValidateMove(piece) {
         }
 
         if ((isBlack && currentPositionX === 1) || (!isBlack && currentPositionX === 6)) {
-            console.log("double forward");
             newX = currentPositionX + 2 * direction;
             if (newX >= 0 && newX < 8 && board[newX][currentPositionY] === null) {
                 const doubleForwardBlock = document.querySelector(`.chessboard__block[data-x='${newX}'][data-y='${currentPositionY}']`);
@@ -505,252 +504,206 @@ function movePiece(block) {
 
     }
 
-    //isCheckKing
-    isCheckKing(board, positionX, positionY);
-
 
     //render board
     chessboard.innerHTML = ""
     renderChessBoard(board);
 
-    showHistoryMove(currentPositionX, currentPositionY, positionX, positionY);
-    check();
+    if (isCheckKing(board, positionX, positionY)) {
+        console.log("check");
+    }
 
 }
 
 
+
+
 function isCheckKing(board, positionX, positionY) {
-    if (board[positionX][positionY] == "Knight-black") {
-        for (let dx = -2; dx <= 2; dx++) {
-            for (let dy = -2; dy <= 2; dy++) {
-                if (Math.abs(dx * dy) == 2) {
-                    let validX = positionX + dx;
-                    let validY = positionY + dy;
-                    if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
-                        if (board[validX][validY] == "King-white") {
-                            console.log("check");
-                        }
-                    }
+    const piece = board[positionX][positionY];
+    // const isBlack = piece.includes("black");
+
+
+    //pawn
+    if (piece) {
+        if (piece.includes("Pawn")) {
+            const isBlack = piece.includes("black");
+            const direction = isBlack ? 1 : -1;
+
+            for (let dy = -1; dy <= 1; dy += 2) {
+                let newX = positionX + direction;
+                let newY = positionY + dy;
+                if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8 && board[newX][newY] != null) {
+                    if (board[newX][newY].includes("King")) {
+                        return true;
+                    } else false;
                 }
             }
         }
     }
 
-    if (board[positionX][positionY] == "Knight-white") {
-        for (let dx = -2; dx <= 2; dx++) {
-            for (let dy = -2; dy <= 2; dy++) {
-                if (Math.abs(dx * dy) == 2) {
-                    let validX = positionX + dx;
-                    let validY = positionY + dy;
-                    if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
-                        if (board[validX][validY] == "King-black") {
-                            console.log("check");
-                        }
-                    }
-                }
-            }
-        }
-    }
 
-    if (board[positionX][positionY] == "Pawn-black") {
-        let validX = positionX + 1;
-        let validY = positionY + 1;
-        if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
-            if (board[validX][validY] == "King-white") {
-                currentBlock.classList.add("check");
-            }
-        }
+    //knight
+    if (piece) {
+        if (piece.includes("Knight")) {
+            const moves = [
+                [2, 1],
+                [2, -1],
+                [-2, 1],
+                [-2, -1],
+                [1, 2],
+                [1, -2],
+                [-1, 2],
+                [-1, -2],
+            ];
 
-        validX = positionX + 1;
-        validY = positionY - 1;
-        if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
-            if (board[validX][validY] == "King-white") {
-                renderChessBoard(board);
-                const currentBlock = document.querySelector(`.chessboard__block[data-x='${positionX}'][data-y='${positionY}']`);
-                console.log(currentBlock);
-                currentBlock.classList.add("check");
-            }
-        }
-    }
-
-    if (board[positionX][positionY] == "Pawn-white") {
-        let validX = positionX - 1;
-        let validY = positionY + 1;
-        if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
-            if (board[validX][validY] == "King-black") {
-                currentBlock.classList.add("check");
-            }
-        }
-
-        validX = positionX - 1;
-        validY = positionY - 1;
-        if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
-            if (board[validX][validY] == "King-black") {
-                currentBlock.classList.add("check");
-            }
-        }
-    }
-
-    if (board[positionX][positionY] == "Rook-black") {
-        for (let dx = -1; dx <= 1; dx++) {
-            for (let dy = -1; dy <= 1; dy++) {
-                if (Math.abs(dx * dy) == 0) {
-                    let validX = positionX + dx;
-                    let validY = positionY + dy;
-                    if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
-                        if (board[validX][validY] == "King-white") {
-                            currentBlock.classList.add("check");
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    if (board[positionX][positionY] == "Rook-white") {
-        for (let dx = -1; dx <= 1; dx++) {
-            for (let dy = -1; dy <= 1; dy++) {
-                if (Math.abs(dx * dy) == 0) {
-                    let validX = positionX + dx;
-                    let validY = positionY + dy;
-                    if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
-                        if (board[validX][validY] == "King-black") {
-                            currentBlock.classList.add("check");
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    if (board[positionX][positionY] == "Bishop-black") {
-        for (let dx = -1; dx <= 1; dx++) {
-            for (let dy = -1; dy <= 1; dy++) {
-                if (Math.abs(dx * dy) == 1) {
-                    let validX = positionX + dx;
-                    let validY = positionY + dy;
-                    if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
-                        if (board[validX][validY] == "King-white") {
-                            currentBlock.classList.add("check");
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    if (board[positionX][positionY] == "Bishop-white") {
-        for (let dx = -1; dx <= 1; dx++) {
-            for (let dy = -1; dy <= 1; dy++) {
-                if (Math.abs(dx * dy) == 1) {
-                    let validX = positionX + dx;
-                    let validY = positionY + dy;
-                    if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
-                        if (board[validX][validY] == "King-black") {
-                            currentBlock.classList.add("check");
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    if (board[positionX][positionY] == "Queen-black") {
-        for (let dx = -1; dx <= 1; dx++) {
-            for (let dy = -1; dy <= 1; dy++) {
-                if (Math.abs(dx * dy) == 1) {
-                    let validX = positionX + dx;
-                    let validY = positionY + dy;
-                    if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
-                        if (board[validX][validY] == "King-white") {
-                            currentBlock.classList.add("check");
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    if (board[positionX][positionY] == "Queen-white") {
-        for (let dx = -1; dx <= 1; dx++) {
-            for (let dy = -1; dy <= 1; dy++) {
-                if (Math.abs(dx * dy) == 1) {
-                    let validX = positionX + dx;
-                    let validY = positionY + dy;
-                    if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
-                        if (board[validX][validY] == "King-black") {
-                            currentBlock.classList.add("check");
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    if (board[positionX][positionY] == "King-black") {
-        for (let dx = -1; dx <= 1; dx++) {
-            for (let dy = -1; dy <= 1; dy++) {
+            for (let i = 0; i < moves.length; i++) {
+                let [dx, dy] = moves[i];
                 let validX = positionX + dx;
                 let validY = positionY + dy;
-                if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
-                    if (board[validX][validY] == "King-white") {
-                        currentBlock.classList.add("check");
+                if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8 && board[validX][validY] != null) {
+                    if (board[validX][validY].split("-")[0] == "King") {
+                        return true;
                     }
                 }
             }
         }
     }
 
-    if (board[positionX][positionY] == "King-white") {
-        for (let dx = -1; dx <= 1; dx++) {
-            for (let dy = -1; dy <= 1; dy++) {
+    //rook
+    if (piece) {
+        if (piece.includes("Rook")) {
+            const moves = [
+                [1, 0],
+                [-1, 0],
+                [0, 1],
+                [0, -1],
+            ];
+
+            for (let i = 0; i < moves.length; i++) {
+                let [dx, dy] = moves[i];
                 let validX = positionX + dx;
                 let validY = positionY + dy;
-                if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
-                    if (board[validX][validY] == "King-black") {
-                        currentBlock.classList.add("check");
+
+                while (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
+                    if (board[validX][validY] != null) {
+                        const targetPiece = board[validX][validY].split("-")[0];
+                        if (targetPiece == "King") {
+                            return true;
+                        }
+                        break;
                     }
+                    validX += dx;
+                    validY += dy;
                 }
             }
         }
     }
 
-    //checkmate
-    if (board[positionX][positionY] == "King-black") {
-        let isCheckmate = true;
-        for (let dx = -1; dx <= 1; dx++) {
-            for (let dy = -1; dy <= 1; dy++) {
+    //bishop
+    if (piece) {
+        if (piece.includes("Bishop")) {
+            console.log("bishop");
+            const moves = [
+                [1, 1],
+                [-1, -1],
+                [1, -1],
+                [-1, 1],
+            ];
+
+            for (let i = 0; i < moves.length; i++) {
+                let [dx, dy] = moves[i];
                 let validX = positionX + dx;
                 let validY = positionY + dy;
-                if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
-                    if (board[validX][validY] == null) {
-                        isCheckmate = false;
+
+                while (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
+                    if (board[validX][validY] != null) {
+                        const targetPiece = board[validX][validY].split("-")[0];
+                        if (targetPiece == "King") {
+                            return true;
+                        }
+                        break;
                     }
+                    validX += dx;
+                    validY += dy;
                 }
             }
-        }
-        if (isCheckmate) {
-            console.log("checkmate");
         }
     }
 
-    if (board[positionX][positionY] == "King-white") {
-        let isCheckmate = true;
-        for (let dx = -1; dx <= 1; dx++) {
-            for (let dy = -1; dy <= 1; dy++) {
+    //queen
+    if (piece) {
+        if (piece.includes("Queen")) {
+            const moves = [
+                [1, 0],
+                [-1, 0],
+                [0, 1],
+                [0, -1],
+                [1, 1],
+                [1, -1],
+                [-1, 1],
+                [-1, -1],
+            ];
+
+            for (let i = 0; i < moves.length; i++) {
+                let [dx, dy] = moves[i];
                 let validX = positionX + dx;
                 let validY = positionY + dy;
-                if (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
-                    if (board[validX][validY] == null) {
-                        isCheckmate = false;
+
+                while (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
+                    if (board[validX][validY] != null) {
+                        const targetPiece = board[validX][validY].split("-")[0];
+                        if (targetPiece == "King") {
+                            return true;
+                        }
+                        break;
                     }
+                    validX += dx;
+                    validY += dy;
                 }
             }
         }
-        if (isCheckmate) {
-            console.log("checkmate");
+    }
+
+    //king
+    if (piece) {
+        if (piece.includes("King")) {
+            const moves = [
+                [1, 0],
+                [-1, 0],
+                [0, 1],
+                [0, -1],
+                [1, 1],
+                [1, -1],
+                [-1, 1],
+                [-1, -1],
+            ];
+
+            for (let i = 0; i < moves.length; i++) {
+                let [dx, dy] = moves[i];
+                let validX = positionX + dx;
+                let validY = positionY + dy;
+
+                while (validX >= 0 && validX < 8 && validY >= 0 && validY < 8) {
+                    if (board[validX][validY] != null) {
+                        const targetPiece = board[validX][validY].split("-")[0];
+                        if (targetPiece == "King") {
+                            return true;
+                        }
+                        break;
+                    }
+                    validX += dx;
+                    validY += dy;
+                }
+            }
         }
     }
+    return false;
+
+
+
+
+
+
 
 }
 
