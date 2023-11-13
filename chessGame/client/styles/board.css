@@ -39,6 +39,7 @@ body {
 
 .piece{
     z-index: 2;
+    user-select: none;
 }
 
 .whiteNumber {
