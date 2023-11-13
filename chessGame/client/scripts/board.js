@@ -1,4 +1,4 @@
-import { arrInfoPieces, colorPiece } from "../untils/untils.js";
+import { arrayInfoPieces, colorPiece } from "../untils/untils.js";
 
 function renderBoardGame() {
     const chessBoard = document.getElementById("chessBoard");
@@ -49,11 +49,11 @@ function renderTextBoardGame() {
 
 function renderPiece() {
     for (let i = 0; i < 2; i++) {
-        for (let index = 0; index < arrInfoPieces[i].length; index++) {
+        for (let index = 0; index < arrayInfoPieces[i].length; index++) {
             const square = document.getElementById(
-                `${arrInfoPieces[i][index].x}${arrInfoPieces[i][index].y}`
+                `${arrayInfoPieces[i][index].x}${arrayInfoPieces[i][index].y}`
             );
-            square.innerHTML += `<img class="piece" id="${arrInfoPieces[i][index].name}" src="../assets/images/pieces/${arrInfoPieces[i][index].color}-${arrInfoPieces[i][index].rank}.svg">`;
+            square.innerHTML += `<img class="piece" id="${arrayInfoPieces[i][index].name}" src="../assets/images/pieces/${arrayInfoPieces[i][index].color}-${arrayInfoPieces[i][index].rank}.svg">`;
         }
     }
 }
@@ -62,8 +62,7 @@ function highlightCurrentPosition(id) {
     document.getElementById(id).classList.add("highlightSquare");
 }
 
-function highlightPositionCanMove(id) {
-    console.log(id);
+function highlightPositionValidMove(id) {
     const square = document.getElementById(id);
     const point = document.createElement("div");
     point.classList.add("point");
@@ -77,64 +76,18 @@ function highlightPositionCanCapture(id) {
     square.appendChild(point);
 }
 
-renderBoardGame();
-// renderTextBoardGame();
-renderPiece();
-
-function renderShowValidMove(currentPosition, targetPosition) {
-    for (let index = 0; index < targetPosition.xTarget.length; index++) {
-        console.log(
-            "targetPosition.xTarget[index]",
-            targetPosition.xTarget[index]
-        );
-        console.log("currentPosition.x", currentPosition.x);
-
-        if (currentPosition.x > targetPosition.xTarget[index]) {
-            for (
-                let i = targetPosition.xTarget[index];
-                i < currentPosition.x;
-                i++
-            ) {
-                highlightPositionCanMove(`${i}${currentPosition.y}`);
-            }
-        } else {
-            for (
-                let i = currentPosition.x + 1;
-                i <= targetPosition.xTarget[index];
-                i++
-            ) {
-                highlightPositionCanMove(`${i}${currentPosition.y}`);
-            }
-        }
-    }
-}
-
-function handleShowValidMove(currentPosition) {
-    // {x: 3, y: 3}
-    let xTarget = [];
-    let yTarget = [];
-
-    if (currentPosition.x > 1 && currentPosition.y > 1) {
-        xTarget.push(1, 8);
-        yTarget.push(1, 8);
-    }
-    renderShowValidMove(currentPosition, { xTarget, yTarget });
-
-    return { xTarget, yTarget };
-}
-
-// handleShowValidMove({ x: 3, y: 3 });
-
-function findPositionCanMove(pieceName, currentPosition) {
+function findValidMove(pieceName, currentPosition) {
     switch (pieceName) {
         case "pawn":
             return [11, 22];
         case "rock":
-            return [33, 44];
+            showValidMove(findValidMoveForRock(currentPosition));
+            break;
         case "knight":
             return [55, 66];
         case "bishop":
-            return [77, 88];
+            showValidMove(findValidMoveForBishop(currentPosition));
+            break;
         case "queen":
             return [12, 21];
         case "king":
@@ -151,17 +104,162 @@ function showValidMove(arrayPostion) {
     });
 }
 
-const squares = document.querySelectorAll(".square");
-squares.forEach((square) => {
-    square.addEventListener("click", (event) => {
-        if (!square.children[0]?.id) return;
-        const currentPosition = square.id;
-        const pieceName = square.children[0].id;
-        highlightCurrentPosition(currentPosition);
-        const arrayPositionCanMove = findPositionCanMove(
-            pieceName,
-            currentPosition
-        );
-        showValidMove(arrayPositionCanMove);
-    });
-});
+function handleMoveTopPiece(currentPosition) {
+    // currentPosition.y : decrease
+    // currentPosition.x : const
+    const collectMove = [];
+
+    for (let index = currentPosition.y - 1; index >= 1; index--) {
+        collectMove.push(`${currentPosition.x}${index}`);
+    }
+
+    return collectMove;
+}
+
+function handleMoveBottomPiece(currentPosition) {
+    // currentPosition.y : increase
+    // currentPosition.x : const
+    const collectMove = [];
+
+    for (let index = currentPosition.y + 1; index <= 8; index++) {
+        collectMove.push(`${currentPosition.x}${index}`);
+    }
+
+    return collectMove;
+}
+
+function handleMoveRightPiece(currentPosition) {
+    // currentPosition.x : increase
+    // currentPosition.y : const
+    const collectMove = [];
+
+    for (let index = currentPosition.x + 1; index <= 8; index++) {
+        collectMove.push(`${index}${currentPosition.y}`);
+    }
+
+    return collectMove;
+}
+
+function handleMoveLeftPiece(currentPosition) {
+    // currentPosition.x : decrease
+    // currentPosition.y : const
+    const collectMove = [];
+
+    for (let index = currentPosition.x - 1; index >= 1; index--) {
+        collectMove.push(`${index}${currentPosition.y}`);
+    }
+
+    return collectMove;
+}
+
+function handleMoveTopRightPiece(currentPosition) {
+    // currentPosition.x : increase
+    // currentPosition.y : decrease
+    const collectMove = [];
+    let yTemporary = currentPosition.y;
+
+    for (let index = currentPosition.x + 1; index <= 8; index++) {
+        collectMove.push(`${index}${--yTemporary}`);
+        if (yTemporary === 0) {
+            return [];
+        }
+
+        if (yTemporary <= 1) {
+            break;
+        }
+    }
+
+    console.log("collectMove", collectMove);
+
+    return collectMove;
+}
+
+function handleMoveTopLeftPiece(currentPosition) {
+    // currentPosition.x : decrease
+    // currentPosition.y : decrease
+    const collectMove = [];
+    let yTemporary = currentPosition.y;
+
+    for (let index = currentPosition.x - 1; index >= 1; index--) {
+        collectMove.push(`${index}${--yTemporary}`);
+
+        if (yTemporary === 0) {
+            return [];
+        }
+
+        if (yTemporary <= 1) {
+            break;
+        }
+    }
+
+    return collectMove;
+}
+
+function handleMoveBottomRightPiece(currentPosition) {
+    // currentPosition.x : increase
+    // currentPosition.y : increase
+    const collectMove = [];
+    let yTemporary = currentPosition.y;
+
+    for (let index = currentPosition.x + 1; index <= 8; index++) {
+        collectMove.push(`${index}${++yTemporary}`);
+
+        if (yTemporary === 9) {
+            return [];
+        }
+
+        if (yTemporary >= 8) {
+            break;
+        }
+    }
+
+    return collectMove;
+}
+
+function handleMoveBottomLeftPiece(currentPosition) {
+    // currentPosition.x : decrease
+    // currentPosition.y : increase
+    const collectMove = [];
+    let yTemporary = currentPosition.y;
+
+    for (let index = currentPosition.x - 1; index >= 1; index--) {
+        collectMove.push(`${index}${++yTemporary}`);
+
+        if (yTemporary === 9) {
+            return [];
+        }
+
+        if (yTemporary >= 8) {
+            break;
+        }
+    }
+
+    return collectMove;
+}
+
+function findValidMoveForRock(currentPosition) {
+    const collectMove = [
+        ...handleMoveTopPiece(currentPosition),
+        ...handleMoveBottomPiece(currentPosition),
+        ...handleMoveRightPiece(currentPosition),
+        ...handleMoveLeftPiece(currentPosition),
+    ];
+    return collectMove;
+}
+
+function findValidMoveForBishop(currentPosition) {
+    const collectMove = [
+        ...handleMoveTopRightPiece(currentPosition),
+        ...handleMoveTopLeftPiece(currentPosition),
+        ...handleMoveBottomRightPiece(currentPosition),
+        ...handleMoveBottomLeftPiece(currentPosition),
+    ];
+    return collectMove;
+}
+
+function initial() {
+    renderBoardGame();
+    renderPiece();
+    addEventForPiece();
+}
+initial();
