@@ -511,16 +511,21 @@ function movePiece(block) {
 
 
     if (isCheckKing(board, positionX, positionY)) {
-        for (i = 0; i < 8; i++) {
-            for (j = 0; j < 8; j++)
+        const currentPiece = board[positionX][positionY];
+        const isCurrentPieceBlack = currentPiece.includes("black");
+        const oppositeKing = isCurrentPieceBlack ? "King-white" : "King-black";
+
+        for (let i = 0; i < 8; i++) {
+            for (let j = 0; j < 8; j++) {
                 if (board[i][j] != null) {
-                    if (board[i][j].split("-")[0] == "King") {
+                    if (board[i][j] == oppositeKing) {
                         const block = document.querySelector(
                             `.chessboard__block[data-x='${i}'][data-y='${j}']`
                         );
                         block.classList.add("check");
                     }
                 }
+            }
         }
     }
 
