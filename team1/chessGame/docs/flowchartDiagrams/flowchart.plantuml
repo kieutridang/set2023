@@ -2,24 +2,33 @@
 title Chess game
 
 start
-if (Have an account ?) then (no)
-  :Sign up;
+:Start;
+if (Have account ?) then (no)
+  :Signup;
   :Login;
 else (yes)
   :Login;
 endif
-  :Homepage;
-  :Start chess game;
-  :Render chess board;
-  :Move piece;
-  if (Invalid move ?) then (no)
-    :Show warning can not move;
-    :Move piece;
-    
-  endif
-  if (isChecked) then (no)
-    :checkmate;;
+:Homepage;
+:Start chess game;
+:Render chess board;
+:Move piece;
+if (Invalid move ?) then (yes)
+  :Show warning can not move;
+  :Choose another move;
+else (no)
+endif
+:Who's next?;
+if (isChecked) then (yes)
+  if (Checkmate ?) then (yes)
+    :End game;
     :Caculate result;
+    :Play again or Exit?;
+  else (no)
+    :Continue playing;
   endif
+else (no)
+  :Continue playing;
+endif
 stop
 @enduml
