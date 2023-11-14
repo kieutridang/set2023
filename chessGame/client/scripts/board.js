@@ -247,6 +247,7 @@ function findValidMoveForRock(currentPosition) {
     return collectMove;
 }
 
+
 function findValidMoveForBishop(currentPosition) {
     const collectMove = [
         ...handleMoveTopRightPiece(currentPosition),
@@ -258,15 +259,18 @@ function findValidMoveForBishop(currentPosition) {
 }
 
 function findValidMoveForKing(currentPosition) {
+    let collectMove = [];
     for (let dx = -1; dx < 2; ++dx) {
         for (let dy = -1; dy < 2; ++dy) {
             const validX = currentPosition.x + dx;
             const validY = currentPosition.y + dy;
             
-            collectMove.push({x: validX, y: validY})
+            if(validX !== 4 || validY !== 4) {
+                collectMove.push(`${validX}${validY}`)
+            }
         }
     }
-
+    
     return collectMove;
 }
 
