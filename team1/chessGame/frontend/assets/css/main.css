@@ -26,7 +26,8 @@ ol, ul {
     display: flex;
     z-index: 10;
     width: 100%;
-    justify-content: space-between
+    justify-content: space-between;
+    z-index: 1200;
 }
 
 .header__logo-chess-game {
@@ -79,6 +80,10 @@ ol, ul {
     flex-direction: row;
     justify-content: space-around;
 }   
+
+.content.result {
+    display: none;
+}
 
 .footer {
     min-height: 100rem;
