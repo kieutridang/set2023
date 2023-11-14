@@ -274,6 +274,17 @@ function findValidMoveForKing(currentPosition) {
     return collectMove;
 }
 
+function findValidMoveForKnight(currentPosition) {
+    let collectMove = [
+        `${currentPosition.x + 2}${currentPosition.y + 1}`, `${currentPosition.x - 2}${currentPosition.y + 1}`,
+        `${currentPosition.x + 2}${currentPosition.y - 1}`, `${currentPosition.x - 2}${currentPosition.y - 1}`,
+        `${currentPosition.x + 1}${currentPosition.y + 2}`, `${currentPosition.x - 1}${currentPosition.y + 2}`,
+        `${currentPosition.x + 1}${currentPosition.y - 2}`, `${currentPosition.x - 1}${currentPosition.y - 2}`
+    ]
+    
+    return collectMove;
+}
+
 function initial() {
     renderBoardGame();
     renderPiece();
