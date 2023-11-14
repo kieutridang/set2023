@@ -504,6 +504,53 @@ function movePiece(block) {
 
     }
 
+    function checkmate(board) {
+        let countBlackKing = 0;
+        let countWhiteKing = 0;
+        outer: for (let i = 0; i < 8; i++) {
+            for (let j = 0; j < 8; j++) {
+                if (board[i][j] == "King-black") {
+                    countBlackKing++;
+                }
+                if (board[i][j] == "King-white") {
+                    countWhiteKing++;
+                }
+                if (countBlackKing > 0 && countWhiteKing > 0) {
+                    break outer;
+                }
+            }
+        }
+
+        if (countBlackKing == 0) {
+            const result = document.createElement("p");
+            result.innerHTML = "White win";
+            result.className = "result";
+
+            const againButton = document.createElement("button");
+            againButton.innerHTML = "Play again";
+            againButton.className = "again-button";
+
+            againButton.addEventListener("click", () => {
+                location.reload();
+            });
+
+
+
+            content.append(result);
+            content.append(againButton);
+        }
+
+        if (countWhiteKing == 0) {
+            const result = document.createElement("p");
+            result.innerHTML = "Black win";
+            result.className = "result";
+
+            content.append(result);
+        }
+    }
+
+    checkmate(board);
+
 
     //render board
     chessboard.innerHTML = ""
@@ -713,14 +760,8 @@ function isCheckKing(board, positionX, positionY) {
         }
     }
     return false;
-
-
-
-
-
-
-
 }
+
 
 
 //content
