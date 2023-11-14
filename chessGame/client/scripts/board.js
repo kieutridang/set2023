@@ -265,8 +265,10 @@ function findValidMoveForKing(currentPosition) {
             const validX = currentPosition.x + dx;
             const validY = currentPosition.y + dy;
             
-            if(validX !== 4 || validY !== 4) {
-                collectMove.push(`${validX}${validY}`)
+            if(validX !== currentPosition.x || validY !== currentPosition.y) {
+                if(validX !== 0 && validY !== 0){
+                    collectMove.push(`${validX}${validY}`)
+                }
             }
         }
     }
@@ -275,12 +277,23 @@ function findValidMoveForKing(currentPosition) {
 }
 
 function findValidMoveForKnight(currentPosition) {
-    let collectMove = [
+    let collectMove = [];
+
+    let moves = [
         `${currentPosition.x + 2}${currentPosition.y + 1}`, `${currentPosition.x - 2}${currentPosition.y + 1}`,
         `${currentPosition.x + 2}${currentPosition.y - 1}`, `${currentPosition.x - 2}${currentPosition.y - 1}`,
         `${currentPosition.x + 1}${currentPosition.y + 2}`, `${currentPosition.x - 1}${currentPosition.y + 2}`,
         `${currentPosition.x + 1}${currentPosition.y - 2}`, `${currentPosition.x - 1}${currentPosition.y - 2}`
-    ]
+    ];
+      
+    for (const move of moves) {
+        const x = move[0];
+        const y = move[1];
+      
+        if (x > 0 && y > 0) {
+            collectMove.push(move);
+        }
+    }
     
     return collectMove;
 }
