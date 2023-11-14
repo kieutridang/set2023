@@ -266,7 +266,7 @@ function findValidMoveForKing(currentPosition) {
             const validY = currentPosition.y + dy;
             
             if(validX !== currentPosition.x || validY !== currentPosition.y) {
-                if(validX !== 0 && validY !== 0){
+                if(validX !== 0 && validX !== 9 && validY !== 0 && validY !== 9){
                     collectMove.push(`${validX}${validY}`)
                 }
             }
@@ -286,22 +286,17 @@ function findValidMoveForKnight(currentPosition) {
         `${currentPosition.x + 1}${currentPosition.y - 2}`, `${currentPosition.x - 1}${currentPosition.y - 2}`
     ];
       
-<<<<<<< HEAD
-      for (const move of moves) {
-=======
     for (const move of moves) {
->>>>>>> fixLogicMove
         const x = move[0];
         const y = move[1];
-      
-        if (x > 0 && y > 0) {
-            collectMove.push(move);
+
+        
+        if (x > 0 && x < 9 && y > 0 && y < 9) {
+            if(!move[2]){
+                collectMove.push(`${x}${y}`);
+            }
         }
-<<<<<<< HEAD
-      }
-=======
     }
->>>>>>> fixLogicMove
     
     return collectMove;
 }
