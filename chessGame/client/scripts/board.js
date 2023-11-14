@@ -286,14 +286,22 @@ function findValidMoveForKnight(currentPosition) {
         `${currentPosition.x + 1}${currentPosition.y - 2}`, `${currentPosition.x - 1}${currentPosition.y - 2}`
     ];
       
+<<<<<<< HEAD
       for (const move of moves) {
+=======
+    for (const move of moves) {
+>>>>>>> fixLogicMove
         const x = move[0];
         const y = move[1];
       
         if (x > 0 && y > 0) {
             collectMove.push(move);
         }
+<<<<<<< HEAD
       }
+=======
+    }
+>>>>>>> fixLogicMove
     
     return collectMove;
 }
