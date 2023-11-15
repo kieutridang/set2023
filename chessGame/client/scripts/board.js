@@ -136,7 +136,7 @@ function findCollectMoveForRock(currentPosition) {
 }
 
 function findValidMove(pieceColor, _collectMove) {
-    const collectMove = [..._collectMove];
+    const collectMove = JSON.parse(JSON.stringify(_collectMove));
     const validMove = [];
 
     collectMove.forEach((direction) => {
@@ -148,9 +148,6 @@ function findValidMove(pieceColor, _collectMove) {
             }
             return true;
         });
-
-        direction.splice(0, 1);
-        direction.splice(0, 1);
         if (targetStep !== -1) {
             const _validMove = direction.splice(0, targetStep);
             if (_validMove) {
@@ -162,9 +159,6 @@ function findValidMove(pieceColor, _collectMove) {
             }
         }
     });
-    console.log("_collectMove", _collectMove);
-    console.log("collectMove", collectMove);
-    console.log("validMove", validMove);
     return validMove;
 }
 
@@ -190,7 +184,6 @@ function handleShowValidMove(piece, currentPosition) {
                 colorPiece,
                 collectMoveOfRock
             );
-            console.log(collectMoveOfRock);
             showValidMove(validMoveOfRock);
             break;
         case "knight":
@@ -223,6 +216,7 @@ function showValidMove(collectMove) {
             square.appendChild(point);
         });
     });
+    
 }
 
 function initial() {
