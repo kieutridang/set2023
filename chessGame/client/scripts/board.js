@@ -114,6 +114,20 @@ function removeHighlight() {
     }
 }
 
+function findCollectMoveForQueen(currentPosition) {
+    const collectMove = [
+        handlerMove.handleMoveTopPiece(currentPosition),
+        handlerMove.handleMoveTopRightPiece(currentPosition),
+        handlerMove.handleMoveRightPiece(currentPosition),
+        handlerMove.handleMoveBottomRightPiece(currentPosition),
+        handlerMove.handleMoveBottomPiece(currentPosition),
+        handlerMove.handleMoveBottomLeftPiece(currentPosition),
+        handlerMove.handleMoveLeftPiece(currentPosition),
+        handlerMove.handleMoveTopLeftPiece(currentPosition),
+    ];
+    return collectMove;
+}
+
 function findCollectMoveForBishop(currentPosition) {
     const collectMove = [
         handlerMove.handleMoveTopRightPiece(currentPosition),
@@ -198,7 +212,13 @@ function handleShowValidMove(piece, currentPosition) {
             showValidMove(validMoveOfBishop);
             break;
         case "queen":
-            return [12, 21];
+            const collectMoveOfQueen = findCollectMoveForQueen(currentPosition);
+            const validMoveOfQueen = findValidMove(
+                colorPiece,
+                collectMoveOfQueen
+            );
+            showValidMove(validMoveOfQueen);
+            break;
         case "king":
             return [55];
 
@@ -216,7 +236,6 @@ function showValidMove(collectMove) {
             square.appendChild(point);
         });
     });
-    
 }
 
 function initial() {
