@@ -114,6 +114,35 @@ function removeHighlight() {
     }
 }
 
+function findValidMoveForKnight(currentPosition) {
+    currentPosition.x*=1;
+    currentPosition.y*=1;
+    console.log(currentPosition);
+    let collectMove = [
+        `${currentPosition.x + 2}${currentPosition.y - 1}`,
+        `${currentPosition.x + 2}${currentPosition.y + 1}`,
+        `${currentPosition.x + 1}${currentPosition.y + 2}`,
+        `${currentPosition.x - 1}${currentPosition.y + 2}`,
+        `${currentPosition.x - 2}${currentPosition.y + 1}`,
+        `${currentPosition.x - 2}${currentPosition.y - 1}`,
+        `${currentPosition.x - 1}${currentPosition.y - 2}`,
+        `${currentPosition.x + 1}${currentPosition.y - 2}`,
+    ];
+
+    // const validMove = collectMove.map((step) => {
+    //     const x = step[0];
+    //     const y = step[1];
+
+    //     if (x > 0 && x < 9 && y > 0 && y < 9) {
+    //         return step;
+    //     }
+    // });
+
+    console.log("validMove", collectMove);
+
+    return collectMove;
+}
+
 function findCollectMoveForQueen(currentPosition) {
     const collectMove = [
         handlerMove.handleMoveTopPiece(currentPosition),
@@ -201,7 +230,8 @@ function handleShowValidMove(piece, currentPosition) {
             showValidMove(validMoveOfRock);
             break;
         case "knight":
-            return [55];
+            findValidMoveForKnight(currentPosition);
+            break;
         case "bishop":
             const collectMoveOfBishop =
                 findCollectMoveForBishop(currentPosition);
