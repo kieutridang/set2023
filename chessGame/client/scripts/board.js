@@ -135,7 +135,8 @@ function findCollectMoveForRock(currentPosition) {
     return collectMove;
 }
 
-function findValidMove(pieceColor, collectMove) {
+function findValidMove(pieceColor, _collectMove) {
+    const collectMove = [..._collectMove];
     const validMove = [];
 
     collectMove.forEach((direction) => {
@@ -147,9 +148,13 @@ function findValidMove(pieceColor, collectMove) {
             }
             return true;
         });
+
+        direction.splice(0, 1);
+        direction.splice(0, 1);
         if (targetStep !== -1) {
-            if (direction.splice(0, targetStep).length) {
-                validMove.push(direction.splice(0, targetStep));
+            const _validMove = direction.splice(0, targetStep);
+            if (_validMove) {
+                validMove.push(_validMove);
             }
         } else {
             if (direction.length) {
@@ -157,6 +162,9 @@ function findValidMove(pieceColor, collectMove) {
             }
         }
     });
+    console.log("_collectMove", _collectMove);
+    console.log("collectMove", collectMove);
+    console.log("validMove", validMove);
     return validMove;
 }
 
@@ -182,6 +190,7 @@ function handleShowValidMove(piece, currentPosition) {
                 colorPiece,
                 collectMoveOfRock
             );
+            console.log(collectMoveOfRock);
             showValidMove(validMoveOfRock);
             break;
         case "knight":
