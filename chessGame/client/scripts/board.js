@@ -168,6 +168,22 @@ function findValidMoveForKnight(colorPiece, currentPosition) {
     return validMove;
 }
 
+function findCollectMoveForKing(currentPosition) {
+    let collectMove = [];
+    for (let dx = -1; dx < 2; ++dx) {
+        for (let dy = -1; dy < 2; ++dy) {
+            const x = currentPosition.x * 1 + dx;
+            const y = currentPosition.y * 1 + dy;
+            if (x != currentPosition.x || y != currentPosition.y) {
+                if (x > 0 && x < 9 && y > 0 && y < 9) {
+                    collectMove.push([`${x}${y}`]);
+                }
+            }
+        }
+    }
+    return collectMove;
+}
+
 function findCollectMoveForQueen(currentPosition) {
     const collectMove = [
         handlerMove.handleMoveTopPiece(currentPosition),
@@ -279,8 +295,13 @@ function handleShowValidMove(piece, currentPosition) {
             showValidMove(validMoveOfQueen);
             break;
         case "king":
-            return [55];
-
+            const collectMoveOfKing = findCollectMoveForKing(currentPosition);
+            const validMoveOfKing = findValidMove(
+                colorPiece,
+                collectMoveOfKing
+            );
+            showValidMove(validMoveOfKing);
+            break;
         default:
             return [55];
     }
