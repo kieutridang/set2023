@@ -114,33 +114,58 @@ function removeHighlight() {
     }
 }
 
-function findValidMoveForKnight(currentPosition) {
-    currentPosition.x*=1;
-    currentPosition.y*=1;
-    console.log(currentPosition);
+function findValidMoveForKnight(colorPiece, currentPosition) {
+    const x = (currentPosition.x *= 1);
+    const y = (currentPosition.y *= 1);
+    const validMove = [];
     let collectMove = [
-        `${currentPosition.x + 2}${currentPosition.y - 1}`,
-        `${currentPosition.x + 2}${currentPosition.y + 1}`,
-        `${currentPosition.x + 1}${currentPosition.y + 2}`,
-        `${currentPosition.x - 1}${currentPosition.y + 2}`,
-        `${currentPosition.x - 2}${currentPosition.y + 1}`,
-        `${currentPosition.x - 2}${currentPosition.y - 1}`,
-        `${currentPosition.x - 1}${currentPosition.y - 2}`,
-        `${currentPosition.x + 1}${currentPosition.y - 2}`,
+        {
+            x: x + 2,
+            y: y - 1,
+        },
+        {
+            x: x + 2,
+            y: y + 1,
+        },
+        {
+            x: x + 1,
+            y: y + 2,
+        },
+        {
+            x: x - 1,
+            y: y + 2,
+        },
+        {
+            x: x - 2,
+            y: y + 1,
+        },
+        {
+            x: x - 2,
+            y: y - 1,
+        },
+        {
+            x: x + 2,
+            y: y + 1,
+        },
+        {
+            x: x - 1,
+            y: y - 2,
+        },
+        {
+            x: x + 1,
+            y: y - 2,
+        },
     ];
 
-    // const validMove = collectMove.map((step) => {
-    //     const x = step[0];
-    //     const y = step[1];
+    collectMove.map((step) => {
+        if (step.x > 0 && step.x < 9 && step.y > 0 && step.y < 9) {
+            if (!checkFriendlyPiece(colorPiece, `${step.x}${step.y}`)) {
+                validMove.push([`${step.x}${step.y}`]);
+            }
+        }
+    });
 
-    //     if (x > 0 && x < 9 && y > 0 && y < 9) {
-    //         return step;
-    //     }
-    // });
-
-    console.log("validMove", collectMove);
-
-    return collectMove;
+    return validMove;
 }
 
 function findCollectMoveForQueen(currentPosition) {
@@ -230,7 +255,11 @@ function handleShowValidMove(piece, currentPosition) {
             showValidMove(validMoveOfRock);
             break;
         case "knight":
-            findValidMoveForKnight(currentPosition);
+            const validMoveOfKnight = findValidMoveForKnight(
+                colorPiece,
+                currentPosition
+            );
+            showValidMove(validMoveOfKnight);
             break;
         case "bishop":
             const collectMoveOfBishop =
