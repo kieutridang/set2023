@@ -1,5 +1,5 @@
 
-const rankPiece = {
+export const rankPiece = {
     PAWN: "pawn",
     ROCK: "rock",
     KNIGHT: "knight",

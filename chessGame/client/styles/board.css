@@ -32,6 +32,8 @@ body {
 }
 
 .piece {
+    padding: 8px;
+    cursor: pointer;
     z-index: 2;
     user-select: none;
 }

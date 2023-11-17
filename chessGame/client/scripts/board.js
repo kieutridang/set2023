@@ -1,10 +1,10 @@
-import { arrayInfoPieces, colorPiece } from "../untils/untils.js";
+import { arrayInfoPieces, rankPiece } from "../untils/untils.js";
 import handlerMove from "./piece.js";
 
-function getNamePiece(string) {
-    const regexFindNamePiece = /^(white|black)(\D+)(\d)?$/;
-    const pieceName = string.split(regexFindNamePiece)[2].toLowerCase();
-    return pieceName;
+function getRankPiece(string) {
+    const regexFindRankPiece = /^(white|black)(\D+)(\d)?$/;
+    const rankPiece = string.split(regexFindRankPiece)[2].toLowerCase();
+    return rankPiece;
 }
 
 function getColorPiece(string) {
@@ -65,7 +65,11 @@ function renderPiece() {
             const square = document.getElementById(
                 `${arrayInfoPieces[i][index].x}${arrayInfoPieces[i][index].y}`
             );
-            square.innerHTML += `<img class="piece" id="${arrayInfoPieces[i][index].name}" src="../assets/images/pieces/${arrayInfoPieces[i][index].color}-${arrayInfoPieces[i][index].rank}.svg">`;
+            square.innerHTML += `<img 
+                class="piece ${arrayInfoPieces[i][index].color}Piece" 
+                id="${arrayInfoPieces[i][index].name}" 
+                alt="${arrayInfoPieces[i][index].name}" 
+                src="../assets/images/pieces/${arrayInfoPieces[i][index].color}-${arrayInfoPieces[i][index].rank}.svg">`;
         }
     }
 }
@@ -246,11 +250,11 @@ function checkFriendlyPiece(color, idPosition) {
 }
 
 function handleShowValidMove(piece, currentPosition) {
-    const namePiece = getNamePiece(piece);
+    const _rankPiece = getRankPiece(piece);
     const colorPiece = getColorPiece(piece);
-    console.log(namePiece, "pick", currentPosition);
-    switch (namePiece) {
-        case "pawn":
+    console.log(_rankPiece, "pick", currentPosition);
+    switch (_rankPiece) {
+        case rankPiece.PAWN:
             return [11, 22];
         case "rock":
             const collectMoveOfRock = findCollectMoveForRock(currentPosition);
@@ -260,14 +264,14 @@ function handleShowValidMove(piece, currentPosition) {
             );
             showValidMove(validMoveOfRock);
             break;
-        case "knight":
+        case rankPiece.KNIGHT:
             const validMoveOfKnight = findValidMoveForKnight(
                 colorPiece,
                 currentPosition
             );
             showValidMove(validMoveOfKnight);
             break;
-        case "bishop":
+        case rankPiece.BISHOP:
             const collectMoveOfBishop =
                 findCollectMoveForBishop(currentPosition);
             const validMoveOfBishop = findValidMove(
@@ -276,7 +280,7 @@ function handleShowValidMove(piece, currentPosition) {
             );
             showValidMove(validMoveOfBishop);
             break;
-        case "queen":
+        case rankPiece.QUEEN:
             const collectMoveOfQueen = findCollectMoveForQueen(currentPosition);
             const validMoveOfQueen = findValidMove(
                 colorPiece,
@@ -284,7 +288,7 @@ function handleShowValidMove(piece, currentPosition) {
             );
             showValidMove(validMoveOfQueen);
             break;
-        case "king":
+        case rankPiece.KING:
             const collectMoveOfKing = findCollectMoveForKing(currentPosition);
             const validMoveOfKing = findValidMove(
                 colorPiece,
@@ -337,9 +341,33 @@ function removePieceInOldPosition() {}
 
 function renderPieceInNewPosition() {}
 
+function allowMove(whiteTurn) {
+    const whitePieces = document.querySelectorAll(".whitePiece");
+    const blackPieces = document.querySelectorAll(".blackPiece");
+    if (whiteTurn) {
+        whitePieces.forEach((piece) => {
+            piece.style.pointerEvents = "auto";
+        });
+        blackPieces.forEach((piece) => {
+            piece.style.pointerEvents = "none";
+        });
+    } else {
+        whitePieces.forEach((piece) => {
+            piece.style.pointerEvents = "none";
+        });
+        blackPieces.forEach((piece) => {
+            piece.style.pointerEvents = "auto";
+        });
+    }
+}
+
+
+
 function initial() {
+    let whiteTurn = true;
     renderBoardGame();
     renderPiece();
     addEventForPiece();
+    allowMove(whiteTurn);
 }
 initial();
