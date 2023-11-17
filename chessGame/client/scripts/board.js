@@ -249,9 +249,9 @@ function checkFriendlyPiece(color, idPosition) {
     return false;
 }
 
-function handleShowValidMove(piece, currentPosition) {
-    const _rankPiece = getRankPiece(piece);
-    const colorPiece = getColorPiece(piece);
+function handleShowValidMove(idPiece, currentPosition) {
+    const _rankPiece = getRankPiece(idPiece);
+    const colorPiece = getColorPiece(idPiece);
     console.log(_rankPiece, "pick", currentPosition);
     switch (_rankPiece) {
         case rankPiece.PAWN:
@@ -262,14 +262,14 @@ function handleShowValidMove(piece, currentPosition) {
                 colorPiece,
                 collectMoveOfRock
             );
-            showValidMove(validMoveOfRock);
+            showValidMove(idPiece, validMoveOfRock);
             break;
         case rankPiece.KNIGHT:
             const validMoveOfKnight = findValidMoveForKnight(
                 colorPiece,
                 currentPosition
             );
-            showValidMove(validMoveOfKnight);
+            showValidMove(idPiece, validMoveOfKnight);
             break;
         case rankPiece.BISHOP:
             const collectMoveOfBishop =
@@ -278,7 +278,7 @@ function handleShowValidMove(piece, currentPosition) {
                 colorPiece,
                 collectMoveOfBishop
             );
-            showValidMove(validMoveOfBishop);
+            showValidMove(idPiece, validMoveOfBishop);
             break;
         case rankPiece.QUEEN:
             const collectMoveOfQueen = findCollectMoveForQueen(currentPosition);
@@ -286,7 +286,7 @@ function handleShowValidMove(piece, currentPosition) {
                 colorPiece,
                 collectMoveOfQueen
             );
-            showValidMove(validMoveOfQueen);
+            showValidMove(idPiece, validMoveOfQueen);
             break;
         case rankPiece.KING:
             const collectMoveOfKing = findCollectMoveForKing(currentPosition);
@@ -294,29 +294,33 @@ function handleShowValidMove(piece, currentPosition) {
                 colorPiece,
                 collectMoveOfKing
             );
-            showValidMove(validMoveOfKing);
+            showValidMove(idPiece, validMoveOfKing);
             break;
         default:
             return [];
     }
 }
 
-function showValidMove(collectMove) {
-    collectMove.forEach((step) => {
+function showValidMove(idPiece, validMove) {
+    validMove.forEach((step) => {
         const square = document.getElementById(step);
         const point = document.createElement("div");
         if (square.innerHTML) {
             point.classList.add("bigPoint");
             square.appendChild(point);
             point.onclick = () => {
-                console.log("click Big");
-                handleCapture();
+                deletePiece(idPiece);
+                point.previousElementSibling.remove();
+                removeHighlight();
+                renderPieceInNewPosition(idPiece, step);
             };
         } else {
             point.classList.add("point");
             square.appendChild(point);
             point.onclick = () => {
                 console.log("click");
+                // console.log(point.nextSibling);
+                // removePieceInOldPosition();
             };
         }
     });
@@ -333,13 +337,23 @@ function showValidMove(collectMove) {
     //     });
     // });
 }
-function handleCapture() {
-    console.log("capture");
+
+function deletePiece(idPiece) {
+    const piece = document.getElementById(idPiece);
+    piece.remove();
 }
 
-function removePieceInOldPosition() {}
-
-function renderPieceInNewPosition() {}
+function renderPieceInNewPosition(idPiece, idPosition) {
+    const rank = getRankPiece(idPiece);
+    const color = getColorPiece(idPiece);
+    const piece = `<img 
+        class="piece ${color}Piece" 
+        id="${idPiece}" 
+        alt="${idPiece}" 
+        src="../assets/images/pieces/${color}-${rank}.svg">`;
+    const square = document.getElementById(idPosition);
+    square.innerHTML = piece;
+}
 
 function allowMove(whiteTurn) {
     const whitePieces = document.querySelectorAll(".whitePiece");
@@ -361,10 +375,8 @@ function allowMove(whiteTurn) {
     }
 }
 
-
-
 function initial() {
-    let whiteTurn = true;
+    let whiteTurn = false;
     renderBoardGame();
     renderPiece();
     addEventForPiece();
