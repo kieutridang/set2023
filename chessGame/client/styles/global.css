@@ -23,4 +23,6 @@ body {
     --text-color: #344542;
     --text-red: red;
     --text-gray: #b7c0d8;
+    --width-square: 72px;
+    --height-square: 72px;
 }
