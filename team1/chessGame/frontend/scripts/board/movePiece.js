@@ -80,6 +80,10 @@ function movePiece(block) {
             result.innerHTML = "Black win";
             result.className = "result";
 
+            const againButton = document.createElement("button");
+            againButton.innerHTML = "Play again";
+            againButton.className = "again-button";
+
             content.append(result);
         }
     }
