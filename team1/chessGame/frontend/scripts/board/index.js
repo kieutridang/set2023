@@ -24,12 +24,12 @@ const pieceTypes = {
 
 const board = [
     ["Rook-black", "Knight-black", "Bishop-black", "Queen-black", "King-black", "Bishop-black", "Knight-black", "Rook-black"],
-    ["Pawn-black", "Pawn-black", "Pawn-black", null, "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black"],
+    ["Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black", "Pawn-black"],
     [null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, "Bishop-white", null, null],
-    [null, null, null, "Pawn-white", null, null, null, null],
-    ["Pawn-white", "Pawn-white", "Pawn-white", null, "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white"],
+    [null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null],
+    ["Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white", "Pawn-white"],
     ["Rook-white", "Knight-white", "Bishop-white", "Queen-white", "King-white", "Bishop-white", "Knight-white", "Rook-white"],
 ];
 

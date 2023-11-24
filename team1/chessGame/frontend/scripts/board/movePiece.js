@@ -120,6 +120,8 @@ function movePiece(block) {
         }
     }
 
+    showHistoryMove(currentPositionX, currentPositionY, positionX, positionY);
+
     const audio = new Audio('../../assets/audio/move.mp3');
     audio.addEventListener('canplaythrough', (event) => {
         audio.play().catch(error => {
