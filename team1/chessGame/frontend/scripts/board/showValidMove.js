@@ -116,9 +116,7 @@ function showValidateMove(piece) {
             let validY = currentPositionY + dy;
             let block = document.querySelector(
                 `.chessboard__block[data-x='${validX}'][data-y='${validY}']`
-            );
-            let hasCaptured = false;
-
+            )
             while (block) {
                 if (isBlack) {
                     if (board[validX][validY] === null) {
@@ -130,12 +128,11 @@ function showValidateMove(piece) {
                         break;
                     }
                 } else {
-                    if (
-                        board[validX][validY] === null ||
-                        (board[validX][validY].includes("black") && !hasCaptured)
-                    ) {
+                    if (board[validX][validY] === null) {
                         block.classList.add("valid-move");
-                        if (board[validX][validY] !== null) hasCaptured = true;
+                    } else if (board[validX][validY].includes("black")) {
+                        block.classList.add("valid-move");
+                        break;
                     } else {
                         break;
                     }
@@ -172,7 +169,6 @@ function showValidateMove(piece) {
             let block = document.querySelector(
                 `.chessboard__block[data-x='${validX}'][data-y='${validY}']`
             );
-            let hasCaptured = false;
 
             while (block) {
                 if (isBlack) {
@@ -185,12 +181,11 @@ function showValidateMove(piece) {
                         break;
                     }
                 } else {
-                    if (
-                        board[validX][validY] === null ||
-                        (board[validX][validY].includes("black") && !hasCaptured)
-                    ) {
+                    if (board[validX][validY] === null) {
                         block.classList.add("valid-move");
-                        if (board[validX][validY] !== null) hasCaptured = true;
+                    } else if (board[validX][validY].includes("black")) {
+                        block.classList.add("valid-move");
+                        break;
                     } else {
                         break;
                     }
@@ -231,8 +226,6 @@ function showValidateMove(piece) {
             let block = document.querySelector(
                 `.chessboard__block[data-x='${validX}'][data-y='${validY}']`
             );
-            let hasCaptured = false;
-
             while (block) {
                 if (isBlack) {
                     if (board[validX][validY] === null) {
@@ -244,12 +237,11 @@ function showValidateMove(piece) {
                         break;
                     }
                 } else {
-                    if (
-                        board[validX][validY] === null ||
-                        (board[validX][validY].includes("black") && !hasCaptured)
-                    ) {
+                    if (board[validX][validY] === null) {
                         block.classList.add("valid-move");
-                        if (board[validX][validY] !== null) hasCaptured = true;
+                    } else if (board[validX][validY].includes("black")) {
+                        block.classList.add("valid-move");
+                        break;
                     } else {
                         break;
                     }
