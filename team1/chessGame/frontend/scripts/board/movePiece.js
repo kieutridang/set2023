@@ -84,7 +84,12 @@ function movePiece(block) {
             againButton.innerHTML = "Play again";
             againButton.className = "again-button";
 
+            againButton.addEventListener("click", () => {
+                location.reload();
+            });
+
             content.append(result);
+            content.append(againButton);
         }
     }
 
