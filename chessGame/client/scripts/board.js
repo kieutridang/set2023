@@ -1,10 +1,10 @@
-import { arrayInfoPieces, colorPiece } from "../untils/untils.js";
+import { arrayInfoPieces, rankPiece } from "../untils/untils.js";
 import handlerMove from "./piece.js";
 
-function getNamePiece(string) {
-    const regexFindNamePiece = /^(white|black)(\D+)(\d)?$/;
-    const pieceName = string.split(regexFindNamePiece)[2].toLowerCase();
-    return pieceName;
+function getRankPiece(string) {
+    const regexFindRankPiece = /^(white|black)(\D+)(\d)?$/;
+    const rankPiece = string.split(regexFindRankPiece)[2].toLowerCase();
+    return rankPiece;
 }
 
 function getColorPiece(string) {
@@ -28,86 +28,49 @@ function renderBoardGame() {
     }
 }
 
-function renderTextBoardGame() {
-    let counter = 8;
-    for (let row = 1; row < 9; row++) {
-        const numberIndex = document.getElementById(`${1}${row}`);
-
-        row % 2 === 0
-            ? (numberIndex.innerHTML += `<span class="whiteNumber">${counter--}</span>`)
-            : (numberIndex.innerHTML += `<span class="blackNumber">${counter--}</span>`);
-    }
-
-    const bufferText = ["A", "B", "C", "D", "E", "F", "G", "H"];
-    for (let col = 1; col < 9; col++) {
-        const textIndex = document.getElementById(`${col}${8}`);
-
-        if (col === 1) {
-            textIndex.innerHTML += `<span class="whiteText">${
-                bufferText[col - 1]
-            }</span>`;
-            continue;
-        }
-
-        col % 2 === 0
-            ? (textIndex.innerHTML += `<span class="blackText">${
-                  bufferText[col - 1]
-              }</span>`)
-            : (textIndex.innerHTML += `<span class="whiteText">${
-                  bufferText[col - 1]
-              }</span>`);
-    }
-}
-
-function renderPiece() {
-    for (let i = 0; i < 2; i++) {
-        for (let index = 0; index < arrayInfoPieces[i].length; index++) {
-            const square = document.getElementById(
-                `${arrayInfoPieces[i][index].x}${arrayInfoPieces[i][index].y}`
-            );
-            square.innerHTML += `<img class="piece" id="${arrayInfoPieces[i][index].name}" src="../assets/images/pieces/${arrayInfoPieces[i][index].color}-${arrayInfoPieces[i][index].rank}.svg">`;
-        }
-    }
-}
-
-function addEventForPiece() {
-    const pieces = document.querySelectorAll(".piece");
-    pieces.forEach((_piece) => {
-        _piece.addEventListener("click", () => {
-            const piece = _piece.id;
-            const currentPosition = {
-                x: _piece.parentNode.id[0],
-                y: _piece.parentNode.id[1],
-            };
-            removeHighlight();
-            highlightCurrentPosition(_piece.parentNode.id);
-            handleShowValidMove(piece, currentPosition);
+function renderPieces() {
+    arrayInfoPieces.forEach((colorPiece) => {
+        colorPiece.forEach((piece) => {
+            renderPiece(piece.name, `${piece.x}${piece.y}`);
         });
     });
+}
+
+function renderPiece(idPiece, idPosition) {
+    const square = document.getElementById(idPosition);
+    square.appendChild(createPiece(idPiece));
+}
+
+function createPiece(idPiece) {
+    const color = getColorPiece(idPiece);
+    const rank = getRankPiece(idPiece);
+    const piece = document.createElement("img");
+    piece.src = `../assets/images/pieces/${color}-${rank}.svg`;
+    piece.className = `piece ${color}Piece`;
+    piece.id = idPiece;
+    piece.alt = idPiece;
+    piece.addEventListener("click", () => {
+        const currentPosition = {
+            x: piece.parentNode.id[0],
+            y: piece.parentNode.id[1],
+        };
+        removeHighlight();
+        highlightCurrentPosition(piece.parentNode.id);
+        handleShowValidMove(idPiece, currentPosition);
+        // handleMove(idPiece, currentPosition);
+    });
+    return piece;
 }
 
 function highlightCurrentPosition(id) {
     document.getElementById(id).classList.add("highlightSquare");
 }
 
-function highlightPositionValidMove(id) {
-    const square = document.getElementById(id);
-    const point = document.createElement("div");
-    point.classList.add("point");
-    square.appendChild(point);
-}
-
-function highlightPositionCanCapture(id) {
-    console.log(id);
-    const square = document.getElementById(id);
-    const point = document.createElement("div");
-    point.classList.add("bigPoint");
-    square.appendChild(point);
-}
-
 function removeHighlight() {
     const points = document.querySelectorAll(".point");
     points.forEach((point) => point.remove());
+    const bigPoints = document.querySelectorAll(".bigPoint");
+    bigPoints.forEach((bigPoint) => bigPoint.remove());
     const highlightSquare = document.querySelector(".highlightSquare");
     if (highlightSquare) {
         highlightSquare.classList.remove("highlightSquare");
@@ -144,10 +107,6 @@ function findValidMoveForKnight(colorPiece, currentPosition) {
             y: y - 1,
         },
         {
-            x: x + 2,
-            y: y + 1,
-        },
-        {
             x: x - 1,
             y: y - 2,
         },
@@ -160,7 +119,7 @@ function findValidMoveForKnight(colorPiece, currentPosition) {
     collectMove.map((step) => {
         if (step.x > 0 && step.x < 9 && step.y > 0 && step.y < 9) {
             if (!checkFriendlyPiece(colorPiece, `${step.x}${step.y}`)) {
-                validMove.push([`${step.x}${step.y}`]);
+                validMove.push(`${step.x}${step.y}`);
             }
         }
     });
@@ -220,28 +179,32 @@ function findCollectMoveForRock(currentPosition) {
 }
 
 function findValidMove(pieceColor, _collectMove) {
-    const collectMove = JSON.parse(JSON.stringify(_collectMove));
+    let collectMove = JSON.parse(JSON.stringify(_collectMove));
     const validMove = [];
-
-    collectMove.forEach((direction) => {
-        let targetStep = -1;
-        direction.every((step, index) => {
+    //Remove position have friendly piece
+    collectMove = collectMove.map((direction) => {
+        let flagCanMove = true;
+        return direction.filter((step) => {
             if (checkFriendlyPiece(pieceColor, step)) {
-                targetStep = index;
+                flagCanMove = false;
                 return false;
             }
-            return true;
+            return flagCanMove;
         });
-        if (targetStep !== -1) {
-            const _validMove = direction.splice(0, targetStep);
-            if (_validMove) {
-                validMove.push(_validMove);
+    });
+    //Remove position is cover by enemy piece
+    collectMove = collectMove.map((direction) => {
+        let flagCanMove = true;
+        const validDirection = direction.filter((step) => {
+            if (flagCanMove) {
+                if (checkEnemyPiece(pieceColor, step)) {
+                    flagCanMove = false;
+                    return true;
+                }
             }
-        } else {
-            if (direction.length) {
-                validMove.push(direction);
-            }
-        }
+            return flagCanMove;
+        });
+        validMove.push(...validDirection);
     });
     return validMove;
 }
@@ -255,12 +218,21 @@ function checkFriendlyPiece(color, idPosition) {
     return false;
 }
 
-function handleShowValidMove(piece, currentPosition) {
-    const namePiece = getNamePiece(piece);
-    const colorPiece = getColorPiece(piece);
-    console.log(namePiece, "pick", currentPosition);
-    switch (namePiece) {
-        case "pawn":
+function checkEnemyPiece(color, idPosition) {
+    const square = document.getElementById(idPosition);
+    if (square.innerHTML) {
+        const pieceColor = getColorPiece(square.children[0].id);
+        return pieceColor !== color;
+    }
+    return false;
+}
+
+function handleShowValidMove(idPiece, currentPosition) {
+    const _rankPiece = getRankPiece(idPiece);
+    const colorPiece = getColorPiece(idPiece);
+    console.log(_rankPiece, "pick", currentPosition);
+    switch (_rankPiece) {
+        case rankPiece.PAWN:
             return [11, 22];
         case "rock":
             const collectMoveOfRock = findCollectMoveForRock(currentPosition);
@@ -268,59 +240,104 @@ function handleShowValidMove(piece, currentPosition) {
                 colorPiece,
                 collectMoveOfRock
             );
-            showValidMove(validMoveOfRock);
+            showValidMove(idPiece, validMoveOfRock);
             break;
-        case "knight":
+        case rankPiece.KNIGHT:
             const validMoveOfKnight = findValidMoveForKnight(
                 colorPiece,
                 currentPosition
             );
-            showValidMove(validMoveOfKnight);
+            showValidMove(idPiece, validMoveOfKnight);
             break;
-        case "bishop":
+        case rankPiece.BISHOP:
             const collectMoveOfBishop =
                 findCollectMoveForBishop(currentPosition);
             const validMoveOfBishop = findValidMove(
                 colorPiece,
                 collectMoveOfBishop
             );
-            showValidMove(validMoveOfBishop);
+            showValidMove(idPiece, validMoveOfBishop);
             break;
-        case "queen":
+        case rankPiece.QUEEN:
             const collectMoveOfQueen = findCollectMoveForQueen(currentPosition);
             const validMoveOfQueen = findValidMove(
                 colorPiece,
                 collectMoveOfQueen
             );
-            showValidMove(validMoveOfQueen);
+            showValidMove(idPiece, validMoveOfQueen);
             break;
-        case "king":
+        case rankPiece.KING:
             const collectMoveOfKing = findCollectMoveForKing(currentPosition);
             const validMoveOfKing = findValidMove(
                 colorPiece,
                 collectMoveOfKing
             );
-            showValidMove(validMoveOfKing);
+            showValidMove(idPiece, validMoveOfKing);
             break;
         default:
-            return [55];
+            return [];
     }
 }
 
-function showValidMove(collectMove) {
-    collectMove.forEach((direction) => {
-        direction.forEach((step) => {
-            const square = document.getElementById(step);
-            const point = document.createElement("div");
+function showValidMove(idPiece, validMove) {
+    validMove.forEach((step) => {
+        const square = document.getElementById(step);
+        const point = document.createElement("div");
+        if (square.innerHTML) {
+            point.classList.add("bigPoint");
+            square.appendChild(point);
+            point.onclick = () => {
+                deletePiece(idPiece);
+                point.previousElementSibling.remove();
+                removeHighlight();
+                renderPieceInNewPosition(idPiece, step);
+            };
+        } else {
             point.classList.add("point");
             square.appendChild(point);
-        });
+            point.onclick = () => {
+                deletePiece(idPiece);
+                removeHighlight();
+                renderPieceInNewPosition(idPiece, step);
+            };
+        }
     });
 }
 
+function deletePiece(idPiece) {
+    const piece = document.getElementById(idPiece);
+    piece.remove();
+}
+
+function renderPieceInNewPosition(idPiece, idPosition) {
+    const square = document.getElementById(idPosition);
+    square.appendChild(createPiece(idPiece));
+}
+
+function allowMove(whiteTurn) {
+    const whitePieces = document.querySelectorAll(".whitePiece");
+    const blackPieces = document.querySelectorAll(".blackPiece");
+    if (whiteTurn) {
+        whitePieces.forEach((piece) => {
+            piece.style.pointerEvents = "auto";
+        });
+        blackPieces.forEach((piece) => {
+            piece.style.pointerEvents = "none";
+        });
+    } else {
+        whitePieces.forEach((piece) => {
+            piece.style.pointerEvents = "none";
+        });
+        blackPieces.forEach((piece) => {
+            piece.style.pointerEvents = "auto";
+        });
+    }
+}
+
 function initial() {
+    let whiteTurn = false;
     renderBoardGame();
-    renderPiece();
-    addEventForPiece();
+    renderPieces();
+    allowMove(whiteTurn);
 }
 initial();

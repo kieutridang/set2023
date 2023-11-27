@@ -20,14 +20,14 @@ case (king)
 :findValidMovePawn();
 
 endswitch
-:decrease valid move();
 
-:showValidMove();
 
 
 if(isCheck?) then (yes)
     :decrease valid move();
 endif
+
+:showValidMove();
 :click in highlight position;
 
 if (checkPromote(piece, colorPiece, targetPosition)) then (yes)
