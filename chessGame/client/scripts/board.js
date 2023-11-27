@@ -28,77 +28,42 @@ function renderBoardGame() {
     }
 }
 
-function renderTextBoardGame() {
-    let counter = 8;
-    for (let row = 1; row < 9; row++) {
-        const numberIndex = document.getElementById(`${1}${row}`);
-
-        row % 2 === 0
-            ? (numberIndex.innerHTML += `<span class="whiteNumber">${counter--}</span>`)
-            : (numberIndex.innerHTML += `<span class="blackNumber">${counter--}</span>`);
-    }
-
-    const bufferText = ["A", "B", "C", "D", "E", "F", "G", "H"];
-    for (let col = 1; col < 9; col++) {
-        const textIndex = document.getElementById(`${col}${8}`);
-
-        if (col === 1) {
-            textIndex.innerHTML += `<span class="whiteText">${
-                bufferText[col - 1]
-            }</span>`;
-            continue;
-        }
-
-        col % 2 === 0
-            ? (textIndex.innerHTML += `<span class="blackText">${
-                  bufferText[col - 1]
-              }</span>`)
-            : (textIndex.innerHTML += `<span class="whiteText">${
-                  bufferText[col - 1]
-              }</span>`);
-    }
-}
-
-function renderPiece() {
-    for (let i = 0; i < 2; i++) {
-        for (let index = 0; index < arrayInfoPieces[i].length; index++) {
-            const square = document.getElementById(
-                `${arrayInfoPieces[i][index].x}${arrayInfoPieces[i][index].y}`
-            );
-            square.innerHTML += `<img 
-                class="piece ${arrayInfoPieces[i][index].color}Piece" 
-                id="${arrayInfoPieces[i][index].name}" 
-                alt="${arrayInfoPieces[i][index].name}" 
-                src="../assets/images/pieces/${arrayInfoPieces[i][index].color}-${arrayInfoPieces[i][index].rank}.svg">`;
-        }
-    }
-}
-
-function addEventForPiece() {
-    const pieces = document.querySelectorAll(".piece");
-    pieces.forEach((_piece) => {
-        _piece.addEventListener("click", () => {
-            const piece = _piece.id;
-            const currentPosition = {
-                x: _piece.parentNode.id[0],
-                y: _piece.parentNode.id[1],
-            };
-            removeHighlight();
-            highlightCurrentPosition(_piece.parentNode.id);
-            handleShowValidMove(piece, currentPosition);
+function renderPieces() {
+    arrayInfoPieces.forEach((colorPiece) => {
+        colorPiece.forEach((piece) => {
+            renderPiece(piece.name, `${piece.x}${piece.y}`);
         });
     });
 }
 
-function highlightCurrentPosition(id) {
-    document.getElementById(id).classList.add("highlightSquare");
+function renderPiece(idPiece, idPosition) {
+    const square = document.getElementById(idPosition);
+    square.appendChild(createPiece(idPiece));
 }
 
-function highlightPositionValidMove(id) {
-    const square = document.getElementById(id);
-    const point = document.createElement("div");
-    point.classList.add("point");
-    square.appendChild(point);
+function createPiece(idPiece) {
+    const color = getColorPiece(idPiece);
+    const rank = getRankPiece(idPiece);
+    const piece = document.createElement("img");
+    piece.src = `../assets/images/pieces/${color}-${rank}.svg`;
+    piece.className = `piece ${color}Piece`;
+    piece.id = idPiece;
+    piece.alt = idPiece;
+    piece.addEventListener("click", () => {
+        const currentPosition = {
+            x: piece.parentNode.id[0],
+            y: piece.parentNode.id[1],
+        };
+        removeHighlight();
+        highlightCurrentPosition(piece.parentNode.id);
+        handleShowValidMove(idPiece, currentPosition);
+        // handleMove(idPiece, currentPosition);
+    });
+    return piece;
+}
+
+function highlightCurrentPosition(id) {
+    document.getElementById(id).classList.add("highlightSquare");
 }
 
 function removeHighlight() {
@@ -214,28 +179,32 @@ function findCollectMoveForRock(currentPosition) {
 }
 
 function findValidMove(pieceColor, _collectMove) {
-    const collectMove = JSON.parse(JSON.stringify(_collectMove));
+    let collectMove = JSON.parse(JSON.stringify(_collectMove));
     const validMove = [];
-
-    collectMove.forEach((direction) => {
-        let targetStep = -1;
-        direction.every((step, index) => {
+    //Remove position have friendly piece
+    collectMove = collectMove.map((direction) => {
+        let flagCanMove = true;
+        return direction.filter((step) => {
             if (checkFriendlyPiece(pieceColor, step)) {
-                targetStep = index;
+                flagCanMove = false;
                 return false;
             }
-            return true;
+            return flagCanMove;
         });
-        if (targetStep !== -1) {
-            const _validMove = direction.splice(0, targetStep);
-            if (_validMove) {
-                validMove.push(..._validMove);
+    });
+    //Remove position is cover by enemy piece
+    collectMove = collectMove.map((direction) => {
+        let flagCanMove = true;
+        const validDirection = direction.filter((step) => {
+            if (flagCanMove) {
+                if (checkEnemyPiece(pieceColor, step)) {
+                    flagCanMove = false;
+                    return true;
+                }
             }
-        } else {
-            if (direction.length) {
-                validMove.push(...direction);
-            }
-        }
+            return flagCanMove;
+        });
+        validMove.push(...validDirection);
     });
     return validMove;
 }
@@ -244,7 +213,16 @@ function checkFriendlyPiece(color, idPosition) {
     const square = document.getElementById(idPosition);
     if (square.innerHTML) {
         const pieceColor = getColorPiece(square.children[0].id);
-        return pieceColor === color ? true : false;
+        return pieceColor === color;
+    }
+    return false;
+}
+
+function checkEnemyPiece(color, idPosition) {
+    const square = document.getElementById(idPosition);
+    if (square.innerHTML) {
+        const pieceColor = getColorPiece(square.children[0].id);
+        return pieceColor !== color;
     }
     return false;
 }
@@ -318,24 +296,12 @@ function showValidMove(idPiece, validMove) {
             point.classList.add("point");
             square.appendChild(point);
             point.onclick = () => {
-                console.log("click");
-                // console.log(point.nextSibling);
-                // removePieceInOldPosition();
+                deletePiece(idPiece);
+                removeHighlight();
+                renderPieceInNewPosition(idPiece, step);
             };
         }
     });
-
-    // collectMove.forEach((direction) => {
-    //     direction.forEach((step) => {
-    //         const square = document.getElementById(step);
-    //         const point = document.createElement("div");
-    //         point.classList.add("point");
-    //         square.appendChild(point);
-    //         point.onclick = () => {
-    //             console.log("click");
-    //         };
-    //     });
-    // });
 }
 
 function deletePiece(idPiece) {
@@ -344,15 +310,8 @@ function deletePiece(idPiece) {
 }
 
 function renderPieceInNewPosition(idPiece, idPosition) {
-    const rank = getRankPiece(idPiece);
-    const color = getColorPiece(idPiece);
-    const piece = `<img 
-        class="piece ${color}Piece" 
-        id="${idPiece}" 
-        alt="${idPiece}" 
-        src="../assets/images/pieces/${color}-${rank}.svg">`;
     const square = document.getElementById(idPosition);
-    square.innerHTML = piece;
+    square.appendChild(createPiece(idPiece));
 }
 
 function allowMove(whiteTurn) {
@@ -378,8 +337,7 @@ function allowMove(whiteTurn) {
 function initial() {
     let whiteTurn = false;
     renderBoardGame();
-    renderPiece();
-    addEventForPiece();
+    renderPieces();
     allowMove(whiteTurn);
 }
 initial();
