@@ -1,4 +1,4 @@
-function handleQueen(piece) {
+function handleRook(piece) {
   const [currentPositionX, currentPositionY] = getCurrentPosition(piece);
   piece.classList.add("pick");
 
@@ -7,10 +7,6 @@ function handleQueen(piece) {
     [-1, 0],
     [0, 1],
     [0, -1],
-    [1, 1],
-    [1, -1],
-    [-1, 1],
-    [-1, -1],
   ];
 
   const isBlack = piece.classList.contains("black-pieces") ? true : false;

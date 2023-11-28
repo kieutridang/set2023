@@ -1,5 +1,6 @@
 function handleKing(piece) {
   const [currentPositionX, currentPositionY] = getCurrentPosition(piece);
+  piece.classList.add("pick");
 
   const moves = [
     [1, 0],
