@@ -1,23 +1,26 @@
-function countTimeBlack(time) {
+//set time here
+let blackTime = 1000;
+let whiteTime = 1000;
+
+let blackInterval = null;
+let whiteInterval = null;
+
+function countTimeBlack() {
   let blackInterval = setInterval(function () {
-    time--;
-    blackTimeStamp.innerHTML = time;
+    blackTime--;
+    blackTimeStamp.innerHTML = blackTime;
   }, 1000);
   return blackInterval;
 }
 
-function countTimeWhite(time) {
+function countTimeWhite() {
   let whiteInterval = setInterval(function () {
-    time--;
-    whiteTimeStamp.innerHTML = time;
+    whiteTime--;
+    whiteTimeStamp.innerHTML = whiteTime;
   }, 1000);
   return whiteInterval;
 }
 
-function stopTimeBlack(blackInterval) {
-  clearInterval(blackInterval);
-}
-
-function stopTimeWhite(whiteInterval) {
-  clearInterval(whiteInterval);
+function stopCountTime(interval) {
+  clearInterval(interval);
 }
