@@ -1,5 +1,6 @@
 import { arrayInfoPieces, rankPiece } from "../untils/untils.js";
 import handlerMove from "./piece.js";
+let whiteTurn = true;
 
 function getRankPiece(string) {
     const regexFindRankPiece = /^(white|black)(\D+)(\d)?$/;
@@ -18,6 +19,9 @@ function renderBoardGame() {
     for (let row = 1; row < 9; row++) {
         for (let col = 1; col < 9; col++) {
             const square = document.createElement("div");
+            square.addEventListener("click", (event) => {
+                removeHighlight();
+            });
             square.classList.add(
                 "square",
                 (row + col) % 2 === 0 ? "whiteSquare" : "blackSquare"
@@ -49,7 +53,8 @@ function createPiece(idPiece) {
     piece.className = `piece ${color}Piece`;
     piece.id = idPiece;
     piece.alt = idPiece;
-    piece.addEventListener("click", () => {
+    piece.addEventListener("click", (event) => {
+        event.stopPropagation();
         const currentPosition = {
             x: piece.parentNode.id[0],
             y: piece.parentNode.id[1],
@@ -291,6 +296,7 @@ function showValidMove(idPiece, validMove) {
                 point.previousElementSibling.remove();
                 removeHighlight();
                 renderPieceInNewPosition(idPiece, step);
+                switchPlayer();
             };
         } else {
             point.classList.add("point");
@@ -299,6 +305,7 @@ function showValidMove(idPiece, validMove) {
                 deletePiece(idPiece);
                 removeHighlight();
                 renderPieceInNewPosition(idPiece, step);
+                switchPlayer();
             };
         }
     });
@@ -314,7 +321,12 @@ function renderPieceInNewPosition(idPiece, idPosition) {
     square.appendChild(createPiece(idPiece));
 }
 
-function allowMove(whiteTurn) {
+function switchPlayer() {
+    whiteTurn = !whiteTurn;
+    allowMove();
+}
+
+function allowMove() {
     const whitePieces = document.querySelectorAll(".whitePiece");
     const blackPieces = document.querySelectorAll(".blackPiece");
     if (whiteTurn) {
@@ -335,9 +347,9 @@ function allowMove(whiteTurn) {
 }
 
 function initial() {
-    let whiteTurn = false;
     renderBoardGame();
     renderPieces();
-    allowMove(whiteTurn);
+    allowMove();
 }
+
 initial();
