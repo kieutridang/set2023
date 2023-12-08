@@ -4,9 +4,16 @@ function movePiece(block) {
     const positionX = parseInt(block.dataset.x);
     const positionY = parseInt(block.dataset.y);
 
+
     //move piece
     board[positionX][positionY] = board[currentPositionX][currentPositionY];
     board[currentPositionX][currentPositionY] = null;
+
+    //promotion pawn
+    if (board[positionX][positionY].includes("Pawn")) {
+        promotePawn(positionX, positionY);
+    }
+
 
     //castling
     if (positionX == 7 && positionY == 2 && board[7][2] == "King-white") {
@@ -92,6 +99,7 @@ function movePiece(block) {
             content.append(againButton);
         }
     }
+
 
     checkmate(board);
 
