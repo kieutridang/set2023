@@ -12,18 +12,12 @@ const pieceTypes = {
   "Pawn-white": '<i class="fa-regular fa-chess-pawn pieces white-pieces"></i>',
   "Rook-black": '<i class="fa-regular fa-chess-rook pieces black-pieces"></i>',
   "Rook-white": '<i class="fa-regular fa-chess-rook pieces white-pieces"></i>',
-  "Knight-black":
-    '<i class="fa-regular fa-chess-knight pieces black-pieces"></i>',
-  "Knight-white":
-    '<i class="fa-regular fa-chess-knight pieces white-pieces"></i>',
-  "Bishop-black":
-    '<i class="fa-regular fa-chess-bishop pieces black-pieces"></i>',
-  "Bishop-white":
-    '<i class="fa-regular fa-chess-bishop pieces white-pieces"></i>',
-  "Queen-black":
-    '<i class="fa-regular fa-chess-queen pieces black-pieces"></i>',
-  "Queen-white":
-    '<i class="fa-regular fa-chess-queen pieces white-pieces"></i>',
+  "Knight-black": '<i class="fa-regular fa-chess-knight pieces black-pieces"></i>',
+  "Knight-white": '<i class="fa-regular fa-chess-knight pieces white-pieces"></i>',
+  "Bishop-black": '<i class="fa-regular fa-chess-bishop pieces black-pieces"></i>',
+  "Bishop-white": '<i class="fa-regular fa-chess-bishop pieces white-pieces"></i>',
+  "Queen-black": '<i class="fa-regular fa-chess-queen pieces black-pieces"></i>',
+  "Queen-white": '<i class="fa-regular fa-chess-queen pieces white-pieces"></i>',
   "King-black": '<i class="fa-regular fa-chess-king pieces black-pieces"></i>',
   "King-white": '<i class="fa-regular fa-chess-king pieces white-pieces"></i>',
 };
@@ -61,7 +55,7 @@ const board = [
     "Pawn-white",
     "Pawn-white",
     "Pawn-white",
-    "Pawn-white",
+    "Pawn-black",
   ],
   [
     "Rook-white",
@@ -71,7 +65,7 @@ const board = [
     "King-white",
     "Bishop-white",
     "Knight-white",
-    "Rook-white",
+    null,
   ],
 ];
 

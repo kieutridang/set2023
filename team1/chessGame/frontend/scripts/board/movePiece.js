@@ -4,9 +4,16 @@ function movePiece(block) {
     const positionX = parseInt(block.dataset.x);
     const positionY = parseInt(block.dataset.y);
 
+
     //move piece
-    board[positionX][positionY] = board[currentPositionX][currentPositionY]
+    board[positionX][positionY] = board[currentPositionX][currentPositionY];
     board[currentPositionX][currentPositionY] = null;
+
+    //promotion pawn
+    if (board[positionX][positionY].includes("Pawn")) {
+        promotePawn(positionX, positionY);
+    }
+
 
     //castling
     if (positionX == 7 && positionY == 2 && board[7][2] == "King-white") {
@@ -21,11 +28,14 @@ function movePiece(block) {
             board[7][5] = "Rook-white";
             board[7][7] = null;
         }
-
     }
 
     if (positionX == 0 && positionY == 2) {
-        if (board[0][1] == null && board[0][3] == null && board[0][2] == "King-black") {
+        if (
+            board[0][1] == null &&
+            board[0][3] == null &&
+            board[0][2] == "King-black"
+        ) {
             board[0][3] = "Rook-black";
             board[0][0] = null;
         }
@@ -36,7 +46,6 @@ function movePiece(block) {
             board[0][5] = "Rook-black";
             board[0][7] = null;
         }
-
     }
 
     function checkmate(board) {
@@ -69,8 +78,6 @@ function movePiece(block) {
                 location.reload();
             });
 
-
-
             content.append(result);
             content.append(againButton);
         }
@@ -93,13 +100,12 @@ function movePiece(block) {
         }
     }
 
+
     checkmate(board);
 
-
     //render board
-    chessboard.innerHTML = ""
+    chessboard.innerHTML = "";
     renderChessBoard(board);
-
 
     if (isCheckKing(board, positionX, positionY)) {
         const currentPiece = board[positionX][positionY];
@@ -122,11 +128,10 @@ function movePiece(block) {
 
     showHistoryMove(currentPositionX, currentPositionY, positionX, positionY);
 
-    const audio = new Audio('../../assets/audio/move.mp3');
-    audio.addEventListener('canplaythrough', (event) => {
-        audio.play().catch(error => {
+    const audio = new Audio("http://localhost:5500/set2023/team1/chessGame/frontend/assets/audio/move.mp3");
+    audio.addEventListener("canplaythrough", (event) => {
+        audio.play().catch((error) => {
             console.log(error);
         });
     });
-
 }
