@@ -12,9 +12,9 @@ const mongoClient = new MongoClient(url);
 
 try {
     await mongoClient.connect();
-    console.log("connect success");
+    console.log("connect db success");
 } catch (error) {
-    console.log("Connect failed");
+    console.log("Connect db failed");
 }
 
 app.get("/", function (req, res) {
@@ -49,8 +49,28 @@ app.post("/cache-db", jsonParser, async function (req, res) {
     let data = await client.json.get(req.body.collection);
     if (!data) {
         try {
-            data = await collection.find({}).toArray();
+            // data = await collection.findOne({ _id: id });
+            data = await collection.find().toArray();
             await client.json.set(req.body.collection, "$", data);
+            // await client.expire(req.body.collection, 60);
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    res.send(data);
+});
+
+app.post("/cache-db-id", jsonParser, async function (req, res) {
+    const database = mongoClient.db(req.body.database);
+    const collection = database.collection(req.body.collection);
+    let data = await client.json.get(req.body.collection);
+    if (!data) {
+        try {
+            // data = await collection.findOne({ _id: id });
+            data = await collection.find().toArray();
+            await client.json.set(req.body.collection, "$", data);
+            await client.expire(req.body.collection, 60);
         } catch (error) {
             console.log(error);
         }
@@ -59,7 +79,6 @@ app.post("/cache-db", jsonParser, async function (req, res) {
 });
 
 app.post("/db", jsonParser, async function (req, res) {
-    console.log(req.body);
     const database = mongoClient.db(req.body.database);
     const collection = database.collection(req.body.collection);
     let result;
