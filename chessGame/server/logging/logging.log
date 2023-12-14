@@ -1,0 +1,3 @@
+[32minfo[39m:    Info message
+[31merror[39m:   Error message
+[33mwarn[39m:    Warning message
